@@ -15,12 +15,12 @@
 			if(request.getAttribute("isLogin") != null && (boolean)request.getAttribute("isLogin") == false){
 				out.print("alert(\""+(String)request.getAttribute("error")+"\");");
 			}
-			try{
-				window.parent.location.href='login.jsp';
-			}catch(e){
-				
-			}
 		%>
+		try{
+			window.parent.location.href="login.jsp";
+		}catch(e){
+			
+		}
 		</script>
 	</head>
 	<body>
