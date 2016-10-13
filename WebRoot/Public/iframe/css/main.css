@@ -1,0 +1,71 @@
+*{
+	padding: 0;
+	margin: 0;
+	position: relative;
+	box-sizing: border-box;
+}
+html,body{
+	width: 100%;
+	height: 100%;
+	background: rgb(250,250,250);
+	padding: 10px;
+}
+a{
+	text-decoration: none;
+}
+.clear{
+	clear: both;
+	height: 0;
+}
+.card{
+	width: 300px;
+	height: 400px;
+	box-shadow: 0 0 10px #CA8EFF;
+	border-radius: 5px;
+	background: #A6FFFF;
+}
+.card:hover{
+	box-shadow: 0 0 10px #0066CC;
+}
+.card .ban{
+	width: 100%;
+	border-bottom: 2px solid 	#FFECF5;
+}
+.card ul{
+	list-style: none;
+}
+.card ul li{
+	height: 50pt;
+	font-weight: 900;
+	font-size: 30pt;
+	font-family: "微软雅黑";
+	text-align: center;
+	color: #4F4F4F;
+	-webkit-transform:skew(20deg);
+	transform: skew(-30deg);
+}
+.card ul li span{
+	display: inline-block;
+	font-size: 1.5em;
+	font-family: "arial black";
+	-webkit-transform:skew(-20deg);
+	transform: skew(-20deg);
+	transform:scale(1.3);
+	color: 	#009100;
+}
+.card .more{
+	position: absolute;
+	bottom: 15px;
+	right: 15px;
+	font-weight: 900;
+	font-size: 16pt;
+	color: #0066CC;
+	cursor: pointer;
+	display: none;
+}
+.card:hover .more{
+	display: block;
+}
+.card .more:hover{
+	color: #000079;
+}

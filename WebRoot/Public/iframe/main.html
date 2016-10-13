@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>主页面</title>
+		<link rel="stylesheet" type="text/css" href="css/main.css"/>
+		<script src="../js/function.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/ajax.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="card">
+			<img src="img/qd.png" class="ban"/>
+			<ul>
+				<li>打卡<span id="qdNum">0</span>次</li>
+				<li>签退<span id="qtNum">0</span>次</li>
+			</ul>
+			<span class="more">
+				查看打卡记录
+			</span>
+		</div>
+		<script type="text/javascript">
+			window.onload = function() {
+				$ajax({
+					url: "../../DK?action=getDKAllCount",
+					data: "",
+					method: "post",
+					dataType: "json",
+					callBack: function(data) {
+						console.log(data);
+						if(data.code){
+							errorAction(data);
+							return false;
+						}
+						document.getElementById('qdNum').innerHTML=data.qdNum;
+						document.getElementById('qtNum').innerHTML=data.qtNum;
+						
+					},
+					error: function(status) {
+						console.log(status);
+						alert("获取用户数据错误！");
+					}
+				});
+			}
+		</script>
+	</body>
+</html>
