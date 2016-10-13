@@ -35,7 +35,7 @@ public class SessionDestoryedListener implements HttpSessionListener {
          // TODO Auto-generated method stub
     	HttpSession session = arg0.getSession();
 		if(null != session.getAttribute("isLogin") && true == (boolean)session.getAttribute("isLogin")){
-			jdbcBean.addLog(null, (String)session.getAttribute("stuId"), null, "loginout","ÍË³ö");
+			jdbcBean.addLog(null, (String)session.getAttribute("stuId"), (String)session.getAttribute("stuName"), "loginout","ÍË³ö");
 		}
     }
 }

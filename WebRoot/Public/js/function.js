@@ -42,6 +42,15 @@ function ListingTag(id) {
 					
 				}
 			}
+			var loadFun = this.getAttribute('data-loadFun');
+			if(loadFun){
+				this.removeAttribute('data-loadFun');
+				try{
+					eval(''+loadFun+'');
+				}catch(e){
+					
+				}
+			}
 		}
 	}
 	li[0].click();

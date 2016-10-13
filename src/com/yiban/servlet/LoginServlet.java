@@ -68,15 +68,13 @@ public class LoginServlet extends HttpServlet {
 		if(true == user.isLogin(stuId, pass)){
 			session.setAttribute("isLogin",true);
 			session.setAttribute("stuId",stuId);
+			session.setAttribute("stuName",user.getStuName());
 			session.setAttribute("pass",pass);
 			session.setAttribute("User",user);
 			user.updateLoginInfo(request);
 			response.sendRedirect("index.html");
 //			System.out.println("µÇÂ¼³É¹¦");
 		}else{
-			session.removeAttribute("isLogin");
-			session.removeAttribute("stuId");
-			session.removeAttribute("pass");
 			request.setAttribute("isLogin",false);
 			request.setAttribute("error",user.getErrorMsg());
 			jdbcBean.addLog(null, null, null, "testlogin",stuId+"³¢ÊÔµÇÂ¼¡¾"+pass+"¡¿Ê§°Ü£»µÇÂ¼IP£º"+StringCode.getRealIp(request)+"£»UA£º"+request.getHeader("user-agent"));

@@ -77,15 +77,35 @@ a {
 #content>div#date{
 	
 }
+#content>div#AllDKLog>span#AllDKLogTableShowMore{
+	display: inline-block;
+	height: 30pt;
+	line-height: 30pt;
+	padding: 0 20px;
+	font-size: 20pt;
+	color: blue;
+	text-align: center;
+	font-weight: 900;
+	border:1px solid blue;
+	cursor:pointer;
+}
 #content>div#AllDKLog>table.AllDKLogTable{
 	border-collapse: collapse;
 	text-align: center;
 	min-width: 500px;
 	width: 100%;
 }
+#content>div#AllDKLog>table.AllDKLogTable th{
+	font-size: 18pt;
+	font-weight: 900;
+	color: blue;
+}
 #content>div#AllDKLog>table.AllDKLogTable td{
 	text-overflow:ellipsis;
 	white-space:nowrap;
+	font-size: 1.2em;
+	font-weight: 900;
+	padding: 10px 0;
 }
 div.dateTableDiv,div.info{
 	float: left;

@@ -99,8 +99,9 @@ public class YbUserDao extends YbUserStruct {
 	public boolean findUser(int stuId){
 		boolean re = false;
 		String sql = "SELECT * FROM `YbUser` WHERE `stuId` = ?";
+		PreparedStatement ps2 = null;
 		try {
-			PreparedStatement ps2 = conn.prepareStatement(sql);
+			ps2 = conn.prepareStatement(sql);
 			ps2.setString(1, Integer.toString(stuId));
 			ResultSet rs = ps2.executeQuery();
 			if(rs.next()){
@@ -127,6 +128,7 @@ public class YbUserDao extends YbUserStruct {
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
 			setErrorMsg(e.getMessage());
+			System.out.println(ps2);
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -452,7 +454,7 @@ public class YbUserDao extends YbUserStruct {
 				}
 			}else if(toDate == null){//分页显示
 				if(page == null || page.equals("")){
-					sql = "select * from `viewdklog` where `ybuserid`=? limit 0,10";
+					sql = "select * from `viewdklog` where `ybuserid`=? order by `time1` desc limit 0,10";
 					ps2 = conn.prepareStatement(sql);
 					ps2.setString(1, this.getId());
 				}else{
@@ -460,13 +462,13 @@ public class YbUserDao extends YbUserStruct {
 					if(StringCode.isInteger(page)){
 						start = (Integer.parseInt(page)-1)*10;
 					}
-					sql = "select * from `viewdklog` where `ybuserid`=? limit ?,10";
+					sql = "select * from `viewdklog` where `ybuserid`=? order by `time1` desc limit ?,10";
 					ps2 = conn.prepareStatement(sql);
 					ps2.setString(1, this.getId());
 					ps2.setInt(2, start);
 				}
 			}
-				
+//			System.out.println("toDate:"+toDate+";page:"+page);
 //			System.out.println(ps2.toString());
 			
 			ResultSet rs2 = ps2.executeQuery();

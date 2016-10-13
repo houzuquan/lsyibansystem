@@ -3,7 +3,6 @@ var nowSelectElmidArr = ['year1', 'month1'];
 var ul = document.getElementById('nav');
 var li = ul.getElementsByTagName('li');
 var monthHaveLog; //当前月份所拥有的记录
-ListingTag('nav');
 
 function dateView(year, month, tableElmid) {//绘制日期表格
 	var date = new Date();
@@ -253,33 +252,70 @@ function getDKForPage(page) {//通过分页显示签到内容
 				more.style.display='none';
 				return false;
 			}
+			var date1 = new Date();
+			var date2 = new Date();
 			for(i = 0; i < data.list.length; i++) {
 				var info = data.list[i];
 				var tr = document.createElement('tr');
+				var td0 = document.createElement('td');
 				var td1 = document.createElement('td');
 				var td2 = document.createElement('td');
 				var td3 = document.createElement('td');
 				var td4 = document.createElement('td');
 				var td5 = document.createElement('td');
 				var td6 = document.createElement('td');
+				var time1 = info.time1.split(" ");
+				var tt1 = time1[1].replace('.0','').split(':');
+				var tt2 = info.run1.replace('.0','').split(':');
+				td0.innerHTML=time1[0];
 				td1.innerHTML=info.dktext;
-				td2.innerHTML=info.time1;
-				td3.innerHTML="否";
+				td2.innerHTML=time1[1];
+				date1.setHours(tt1[0]);
+				date1.setMinutes(tt1[1]);
+				date1.setSeconds(tt1[2]);
+				date2.setHours(tt2[0]);
+				date2.setMinutes(tt2[1]);
+				date2.setSeconds(tt2[2]);
+				td3.innerHTML='否';
+				if(date1 > date2){
+					td3.innerHTML='是';
+					td3.style.background='red';
+					td3.style.color='blue';
+				}
+//				td3.innerHTML=date1 <= date2 ? "否" : "是" ;
+				tr.appendChild(td0);
 				tr.appendChild(td1);
 				tr.appendChild(td2);
 				tr.appendChild(td3);
 				if(info.isqt*1 == 1){
-					td4.innerHTML=info.time2;
+				var time2 = info.time2.split(" ");
+					td4.innerHTML=time2[1];
 					td5.innerHTML=info.text;
+				var tt1 = time2[1].replace('.0','').split(':');
+				var tt2 = info.run2.replace('.0','').split(':');
+					date1.setHours(tt1[0]);
+					date1.setMinutes(tt1[1]);
+					date1.setSeconds(tt1[2]);
+					date2.setHours(tt2[0]);
+					date2.setMinutes(tt2[1]);
+					date2.setSeconds(tt2[2]);
 					td6.innerHTML='否';
+					if(date1 < date2){
+						td6.innerHTML='是';
+						td6.style.background='red';
+						td6.style.color='blue';
+					}
+//					td6.innerHTML=date1 <= date2 ? "否" : "是" ;
 					tr.appendChild(td4);
 					tr.appendChild(td5);
 					tr.appendChild(td6);
 				}else{
 					var td7 = document.createElement('td');
 					td7.setAttribute('colspan',3);
+					td7.innerHTML='此次签到并未签退';
 					tr.appendChild(td7);
 				}
+				table.appendChild(tr);
 			}
 		},
 		error: function(status) {
@@ -288,3 +324,5 @@ function getDKForPage(page) {//通过分页显示签到内容
 		}
 	});
 }
+
+ListingTag('nav');

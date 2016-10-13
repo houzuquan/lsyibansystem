@@ -107,13 +107,16 @@ public class DKServlet extends HttpServlet {
 
 				case "getDKDateLog":
 					getDKDateLog=1;
+//					System.out.println("getDKDateLog");
 				case "getDKForPage":
+//					System.out.println("getDKForPage");
+//					System.out.println("getDKDateLog="+getDKDateLog);
 					ArrayList<HashMap<String,String>> list2 = null;
 					if(getDKDateLog == 1){
 						String toDate = request.getParameter("date");
 						list2 = user.getDKDateLog(toDate,null);
 					}else{
-						String page = request.getParameter("date");
+						String page = request.getParameter("page");
 						list2 = user.getDKDateLog(null,page);
 					}
 					

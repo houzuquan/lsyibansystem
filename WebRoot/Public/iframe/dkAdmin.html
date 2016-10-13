@@ -11,7 +11,7 @@
 	<body>
 		<div id="header">
 			<ul id="nav">
-				<li class="" data-go = "AllDKLog" data-fun="document.getElementById('AllDKLogTableShowMore').click();">
+				<li class="" data-go = "AllDKLog" data-loadFun="getDKForPage(1);">
 					打卡记录
 				</li>
 				<li class="" data-go = "date" data-fun="goToday(['dateTable','info','logList'],['year1','month1']);">
@@ -29,12 +29,12 @@
 		<div id="content">
 			<div id="AllDKLog">
 				<table border="1" cellpadding="0" cellspacing="0" class="AllDKLogTable" id="AllDKLogTable">
-					<tr><th>值班</th><th>签到时间</th><th>迟到</th><th>签退时间</th><th>签退内容</th><th>早退</th></tr>
+					<tr><th>日期</th><th>值班</th><th>签到时间</th><th>迟到</th><th>签退时间</th><th>签退内容</th><th>早退</th></tr>
+					<!--<tr><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td>2016-10-11 10:10:00.0</td><td>我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>
 					<tr><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td>2016-10-11 10:10:00.0</td><td>我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>
-					<tr><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td>2016-10-11 10:10:00.0</td><td>我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>
-					<tr><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td>2016-10-11 10:10:00.0</td><td>我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>
+					<tr><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td>2016-10-11 10:10:00.0</td><td>我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>-->
 				</table>
-				<span id="AllDKLogTableShowMore" data-nowpage="1">
+				<span id="AllDKLogTableShowMore" data-nowpage="2">
 					加载更多
 				</span>
 			</div>
