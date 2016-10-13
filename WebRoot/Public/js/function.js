@@ -34,9 +34,17 @@ function ListingTag(id) {
 			this.className = 'active';
 			var elm = document.getElementById(this.getAttribute('data-go'));
 				elm.style.display = 'block';
+			var fun = this.getAttribute('data-fun');
+			if(fun){
+				try{
+					eval(''+fun+'');
+				}catch(e){
+					
+				}
+			}
 		}
 	}
-//	li[0].click();
+	li[0].click();
 }
 function errorAction(codeData){
 	switch(codeData.code*1){

@@ -64,6 +64,9 @@ a {
 #content>div{
 	display: none;
 }
+#content>div:first-of-type{
+	display: block;
+}
 #content>div#date,#content>div#dateOther{
 	border:5px solid #6666FF;
 	position: absolute;
@@ -72,7 +75,17 @@ a {
 	margin-left: -380px;
 }
 #content>div#date{
-	display: block;
+	
+}
+#content>div#AllDKLog>table.AllDKLogTable{
+	border-collapse: collapse;
+	text-align: center;
+	min-width: 500px;
+	width: 100%;
+}
+#content>div#AllDKLog>table.AllDKLogTable td{
+	text-overflow:ellipsis;
+	white-space:nowrap;
 }
 div.dateTableDiv,div.info{
 	float: left;

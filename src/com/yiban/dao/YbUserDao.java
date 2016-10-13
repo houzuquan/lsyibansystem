@@ -433,22 +433,40 @@ public class YbUserDao extends YbUserStruct {
 	 * @return ArrayList<HashMap<String,String>>
 	 * 传入一个日期参数，返回这个日期的签到记录
 	 */
-	public ArrayList<HashMap<String,String>> getDKDateLog(String toDate){
+	public ArrayList<HashMap<String,String>> getDKDateLog(String toDate,String page){
 		/*传入一个日期，获取这个日期的具体打卡签到信息*/
 		ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
 		String sql;
-		PreparedStatement ps2;
+		PreparedStatement ps2 = null;
 		try {
-			if(toDate == null || toDate.equals("")){
-				sql = "select * from `viewdklog` where `ybuserid`=? and date(`time1`)=curdate()";
-				ps2 = conn.prepareStatement(sql);
-				ps2.setString(1, this.getId());
-			}else{
-				sql = "select * from `viewdklog` where `ybuserid`=? and date(`time1`)=date(?)";
-				ps2 = conn.prepareStatement(sql);
-				ps2.setString(1, this.getId());
-				ps2.setString(2, toDate);
+			if(page == null){//按日期查找
+				if(toDate == null || toDate.equals("")){
+					sql = "select * from `viewdklog` where `ybuserid`=? and date(`time1`)=curdate()";
+					ps2 = conn.prepareStatement(sql);
+					ps2.setString(1, this.getId());
+				}else{
+					sql = "select * from `viewdklog` where `ybuserid`=? and date(`time1`)=date(?)";
+					ps2 = conn.prepareStatement(sql);
+					ps2.setString(1, this.getId());
+					ps2.setString(2, toDate);
+				}
+			}else if(toDate == null){//分页显示
+				if(page == null || page.equals("")){
+					sql = "select * from `viewdklog` where `ybuserid`=? limit 0,10";
+					ps2 = conn.prepareStatement(sql);
+					ps2.setString(1, this.getId());
+				}else{
+					int start = 0;
+					if(StringCode.isInteger(page)){
+						start = (Integer.parseInt(page)-1)*10;
+					}
+					sql = "select * from `viewdklog` where `ybuserid`=? limit ?,10";
+					ps2 = conn.prepareStatement(sql);
+					ps2.setString(1, this.getId());
+					ps2.setInt(2, start);
+				}
 			}
+				
 //			System.out.println(ps2.toString());
 			
 			ResultSet rs2 = ps2.executeQuery();
@@ -461,24 +479,6 @@ public class YbUserDao extends YbUserStruct {
 					String cName = colname.getColumnName(i);
 					map.put(cName, rs2.getString(cName));
 				}
-//				map.put("dklogid",rs2.getString("dklogid"));
-//				map.put("dkid",rs2.getString("dkid"));
-//				map.put("time1",rs2.getString("time1"));
-//				map.put("time2",rs2.getString("time2"));
-//				map.put("ybuserid",rs2.getString("ybuserid"));
-//				map.put("type",rs2.getString("type"));
-//				map.put("text",rs2.getString("text"));
-//				map.put("isqd",rs2.getString("isqd"));
-//				map.put("isqt",rs2.getString("isqt"));
-//				map.put("stuId",rs2.getString("stuId"));
-//				map.put("stuName",rs2.getString("stuName"));
-//				map.put("dktext",rs2.getString("dktext"));
-//				map.put("start1",rs2.getString("start1"));
-//				map.put("start2",rs2.getString("start2"));
-//				map.put("end1",rs2.getString("end1"));
-//				map.put("end2",rs2.getString("end2"));
-//				map.put("run1",rs2.getString("run1"));
-//				map.put("run2",rs2.getString("run2"));
 				list.add(map);
 			}
 			jdbcBean.addLog(this.getId(), this.getStuId(), this.getStuName(), "getDKDateLog",this.getStuId() + this.getStuName()+"获取日期："+toDate+"打卡内容");

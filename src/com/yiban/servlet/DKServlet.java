@@ -66,6 +66,7 @@ public class DKServlet extends HttpServlet {
 			out.print("{\"code\":201,\"Msg\":\"非法访问2\"}");
 			jdbcBean.addLog(null, null, null, "post","尝试访问【"+request.getServletPath()+"】失败，无user信息；IP："+StringCode.getRealIp(request)+"；UA："+request.getHeader("user-agent"));
 		}else if(action != null){
+			int getDKDateLog=0;
 			switch(action){
 				case "qd":
 					if(user.dk_qd() == true){
@@ -105,8 +106,18 @@ public class DKServlet extends HttpServlet {
 					break;
 
 				case "getDKDateLog":
-					String toDate = request.getParameter("date");
-					ArrayList<HashMap<String,String>> list2 = user.getDKDateLog(toDate);
+					getDKDateLog=1;
+				case "getDKForPage":
+					ArrayList<HashMap<String,String>> list2 = null;
+					if(getDKDateLog == 1){
+						String toDate = request.getParameter("date");
+						list2 = user.getDKDateLog(toDate,null);
+					}else{
+						String page = request.getParameter("date");
+						list2 = user.getDKDateLog(null,page);
+					}
+					
+//					ArrayList<HashMap<String,String>> list2 = user.getDKDateLog(toDate);
 //					System.out.println(list2);
 					int len2 = list2.size();
 					String json2 = "{\"list\":[]}";
