@@ -17,7 +17,9 @@
 			}
 		%>
 		try{
-			window.parent.location.href="login.jsp";
+			if(window.parent != window){
+				window.parent.location.href="login.jsp";
+			}
 		}catch(e){
 			
 		}
