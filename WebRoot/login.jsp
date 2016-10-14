@@ -48,8 +48,8 @@
 			</div>-->
 		</form>
 		<script type="text/javascript">
+			var yzmUrl=document.getElementById("yzm").getAttribute('src');
 			document.getElementById("yzm").onclick=function(){
-				var yzmUrl=document.getElementById("yzm").getAttribute('src');
 				var time = new Date();
 				var url = yzmUrl + "?r=" + time.getTime();
 				this.setAttribute("src",url);
