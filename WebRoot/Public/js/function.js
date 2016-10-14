@@ -86,7 +86,7 @@ function showMsg(text){
 				yesFn : function(){
 					return true;
 				},
-				noFn : true
+				noFn : false
 			}
 		});
 	}catch(e){
@@ -98,7 +98,7 @@ function showMsg(text){
 					yesFn : function(){
 						return true;
 					},
-					noFn : true
+					noFn : false
 				}
 			});
 		}catch(e2){
