@@ -66,14 +66,43 @@ function errorAction(codeData){
 				try{
 					window.location.href=codeData.url;
 				}catch(e2){
-					alert(codeData.Msg);
+					showMsg(codeData.Msg);
 				}
 			}
 		break;
 		case 201:
-			alert(codeData.Msg);
+			showMsg(codeData.Msg);
 		break;
 		default:
-			alert(codeData.Msg);
+		showMsg(codeData.Msg);
+	}
+}
+function showMsg(text){
+	try{
+		window.parent.easyDialog.open({
+			container : {
+				header : '信息提示',
+				content : text,
+				yesFn : function(){
+					return true;
+				},
+				noFn : true
+			}
+		});
+	}catch(e){
+		try{
+			window.easyDialog.open({
+				container : {
+					header : '信息提示',
+					content : text,
+					yesFn : function(){
+						return true;
+					},
+					noFn : true
+				}
+			});
+		}catch(e2){
+			alert(text);
+		}
 	}
 }

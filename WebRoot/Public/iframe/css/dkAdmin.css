@@ -29,11 +29,11 @@ a {
 
 #header #nav li {
 	float: left;
-	width: 200px;
 	text-align: center;
 	font-weight: 900;
-	font-size: 18pt;
-	padding: 10px 0;
+	font-family: "微软雅黑";
+	font-size: 14pt;
+	padding: 10px 30px;
 	cursor: pointer;
 	background: #CAFFFF;
 	color: #009393;
@@ -94,6 +94,7 @@ a {
 	text-align: center;
 	min-width: 500px;
 	width: 100%;
+	margin-top: 20px;
 }
 #content>div#AllDKLog>table.AllDKLogTable th{
 	font-size: 18pt;
@@ -103,9 +104,17 @@ a {
 #content>div#AllDKLog>table.AllDKLogTable td{
 	text-overflow:ellipsis;
 	white-space:nowrap;
-	font-size: 1.2em;
+	overflow: hidden;
+	font-size: 1.1em;
 	font-weight: 900;
 	padding: 10px 0;
+	max-width: 200px;
+}
+#content>div#AllDKLog>table.AllDKLogTable tr{
+	cursor: default;
+}
+#content>div#AllDKLog>table.AllDKLogTable tr:hover:not(:first-child){
+	background: #FFFFCC;
 }
 div.dateTableDiv,div.info{
 	float: left;

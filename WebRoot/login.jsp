@@ -9,13 +9,15 @@
 		<meta http-equiv="Pragma" content="no-cache" />
 		<title>后台登陆程序</title>
 		<link rel="stylesheet" type="text/css" href="Public/css/login.css"/>
+		<link rel="stylesheet" type="text/css" href="Public/js/alert/easydialog.css"/>
+		<script src="Public/js/alert/easydialog.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="Public/js/login.js" type="text/javascript" charset="utf-8"></script>
 		<script src="Public/js/function.js" type="text/javascript" charset="utf-8"></script>
 		<script src="Public/js/ajax.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
 		<%
 			if(request.getAttribute("isLogin") != null && (boolean)request.getAttribute("isLogin") == false){
-				out.print("alert(\""+(String)request.getAttribute("error")+"\");");
+				out.print("showMsg(\""+(String)request.getAttribute("error")+"\");");
 			}
 		%>
 		try{
@@ -59,7 +61,7 @@
 				var password = document.getElementById("password").value;
 				var yzmText = document.getElementById("yzmText").value;
 				if(username == "" || password == "" || yzmText == ""){
-					alert("请检查是否输入完整！");
+					showMsg("请检查是否输入完整!");
 					return false;
 				}
 				$ajax({
@@ -78,7 +80,7 @@
 					},
 					error: function(status) {
 						console.log(status);
-						alert("获取数据错误！");
+						showMsg("获取数据错误!");
 					}
 				});
 //				ff.submit();

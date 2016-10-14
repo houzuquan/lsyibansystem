@@ -47,12 +47,12 @@
 						if(data.code){
 							errorAction(data);
 						}else{
-							alert(data.Msg);
+							showMsg(data.Msg);
 						}
 					},
 					error: function(status) {
 						console.log(status);
-						alert(status.Msg);
+						showMsg(status.Msg);
 					}
 				});
 			}
@@ -68,12 +68,12 @@
 						if(data.code){
 							errorAction(data);
 						}else{
-							alert(data.Msg);
+							showMsg(data.Msg);
 						}
 					},
 					error: function(status) {
 						console.log(status);
-						alert(status.Msg);
+						showMsg(status.Msg);
 					}
 				});
 			}

@@ -9,6 +9,8 @@
 		<meta name="Description" content="" />
 		<title>易班日常管理系统</title>
 		<link rel="stylesheet" type="text/css" href="Public/css/adminIndex.css" />
+		<link rel="stylesheet" type="text/css" href="Public/js/alert/easydialog.css"/>
+		<script src="Public/js/alert/easydialog.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="Public/js/function.js" type="text/javascript" charset="utf-8"></script>
 		<script src="Public/js/ajax.js" type="text/javascript" charset="utf-8"></script>
 	</head>
@@ -81,7 +83,7 @@
 					},
 					error: function(status) {
 						console.log(status);
-						alert("获取用户数据错误！");
+						showMsg("获取用户数据错误！");
 					}
 				});
 			}

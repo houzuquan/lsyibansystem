@@ -168,7 +168,7 @@ function getDKMonthHaveLog(month, backfun) {//获取当前月份有多少天有�
 		},
 		error: function(status) {
 			console.log(status);
-			alert("获取数据错误！");
+			showMsg("获取数据错误!");
 		}
 	});
 }
@@ -224,7 +224,7 @@ function getDKDateLog(theDate, logListid) {//按照日期，获取这天的签�
 		},
 		error: function(status) {
 			console.log(status);
-			alert("获取数据错误！");
+			showMsg("获取数据错误!");
 		}
 	});
 }
@@ -279,7 +279,7 @@ function getDKForPage(page) {//通过分页显示签到内容
 				td3.innerHTML='否';
 				if(date1 > date2){
 					td3.innerHTML='是';
-					td3.style.background='red';
+					td3.style.background='rgba(255,0,0,0.5)';
 					td3.style.color='blue';
 				}
 //				td3.innerHTML=date1 <= date2 ? "否" : "是" ;
@@ -291,6 +291,7 @@ function getDKForPage(page) {//通过分页显示签到内容
 				var time2 = info.time2.split(" ");
 					td4.innerHTML=time2[1];
 					td5.innerHTML=info.text;
+					td5.setAttribute('title',info.text);
 				var tt1 = time2[1].replace('.0','').split(':');
 				var tt2 = info.run2.replace('.0','').split(':');
 					date1.setHours(tt1[0]);
@@ -302,7 +303,7 @@ function getDKForPage(page) {//通过分页显示签到内容
 					td6.innerHTML='否';
 					if(date1 < date2){
 						td6.innerHTML='是';
-						td6.style.background='red';
+						td6.style.background='rgba(255,0,0,0.5)';
 						td6.style.color='blue';
 					}
 //					td6.innerHTML=date1 <= date2 ? "否" : "是" ;
@@ -313,6 +314,7 @@ function getDKForPage(page) {//通过分页显示签到内容
 					var td7 = document.createElement('td');
 					td7.setAttribute('colspan',3);
 					td7.innerHTML='此次签到并未签退';
+					td7.style.background='rgba(180,180,180,0.3)';
 					tr.appendChild(td7);
 				}
 				table.appendChild(tr);
@@ -320,7 +322,7 @@ function getDKForPage(page) {//通过分页显示签到内容
 		},
 		error: function(status) {
 			console.log(status);
-			alert("获取数据错误！");
+			showMsg("获取数据错误!");
 		}
 	});
 }
