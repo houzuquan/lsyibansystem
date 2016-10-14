@@ -40,6 +40,7 @@ public class LoginServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		if(null != session.getAttribute("isLogin") && true == (boolean)session.getAttribute("isLogin")){
 			if(action != null && action.equals("loginout") == true){
+				session.setAttribute("goout", true);
 				session.invalidate();
 				response.sendRedirect("login.jsp");
 			}else{

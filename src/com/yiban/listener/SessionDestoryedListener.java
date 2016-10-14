@@ -35,7 +35,16 @@ public class SessionDestoryedListener implements HttpSessionListener {
          // TODO Auto-generated method stub
     	HttpSession session = arg0.getSession();
 		if(null != session.getAttribute("isLogin") && true == (boolean)session.getAttribute("isLogin")){
-			jdbcBean.addLog(null, (String)session.getAttribute("stuId"), (String)session.getAttribute("stuName"), "loginout","退出");
+			String str="";
+			String loginout="loginout";
+			if(null != session.getAttribute("goout") && true == (boolean)session.getAttribute("goout")){
+				str="用户手动退出";
+				loginout="LoginOut";
+			}else{
+				str="系统自动退出退出";
+				loginout="autoLoginOut";
+			}
+			jdbcBean.addLog((String)session.getAttribute("id"), (String)session.getAttribute("stuId"), (String)session.getAttribute("stuName"), loginout,str);
 		}
     }
 }
