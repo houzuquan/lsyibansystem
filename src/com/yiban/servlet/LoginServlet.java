@@ -1,6 +1,7 @@
 package com.yiban.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,7 +35,7 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8;");
-//		PrintWriter out = response.getWriter();
+		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		String action = request.getParameter("action");
 		if(null != session.getAttribute("isLogin") && true == (boolean)session.getAttribute("isLogin")){
@@ -57,29 +58,42 @@ public class LoginServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8;");
-//		PrintWriter out = response.getWriter();
+		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
-		String action,stuId,pass;
+		String action,stuId,pass,yzmText,YzmCode;
 		action = request.getParameter("action");
 		stuId = request.getParameter("stuId");
 		pass = request.getParameter("pass");
+		yzmText = request.getParameter("yzmText");
+		YzmCode = (String)session.getAttribute("YzmCode");
+		int YzmCodeTime = (int)session.getAttribute("YzmCodeTime");
 		YbUserDao user = new YbUserDao();
 //		System.out.println("ÓÃ»§Ãû£º"+stuId+"£»ÃÜÂë£º"+pass);
-		if(true == user.isLogin(stuId, pass)){
-			session.setAttribute("isLogin",true);
-			session.setAttribute("stuId",stuId);
-			session.setAttribute("stuName",user.getStuName());
-			session.setAttribute("pass",pass);
-			session.setAttribute("User",user);
-			user.updateLoginInfo(request);
-			response.sendRedirect("index.html");
-//			System.out.println("µÇÂ¼³É¹¦");
+		if(YzmCode == null){
+			out.print("{\"code\":200,\"Msg\":\"²ÎÊý´íÎó\"}");
+		}else if(YzmCode.equals(StringCode.MD5(yzmText.toLowerCase()))){
+			if(true == user.isLogin(stuId, pass)){
+				session.setAttribute("isLogin",true);
+				session.setAttribute("id",user.getId());
+				session.setAttribute("stuId",stuId);
+				session.setAttribute("stuName",user.getStuName());
+				session.setAttribute("pass",pass);
+				session.setAttribute("User",user);
+				user.updateLoginInfo(request);
+//				response.sendRedirect("index.html");
+				out.print("{\"code\":301,\"Msg\":\"µÇÂ¼³É¹¦\",\"url\":\""+request.getContextPath()+"/index.html\"}");
+	//			System.out.println("µÇÂ¼³É¹¦");
+			}else{
+				request.setAttribute("isLogin",false);
+				request.setAttribute("error",user.getErrorMsg());
+				jdbcBean.addLog(null, null, null, "testlogin",stuId+"³¢ÊÔµÇÂ¼¡¾"+pass+"¡¿Ê§°Ü£»µÇÂ¼IP£º"+StringCode.getRealIp(request)+"£»UA£º"+request.getHeader("user-agent"));
+//				request.getRequestDispatcher("login.jsp").forward(request, response);
+				out.print("{\"code\":200,\"Msg\":\"ÕÊºÅ»òÃÜÂë´íÎó\"}");
+	//			System.out.println("µÇÂ¼Ê§°Ü");
+			}
 		}else{
-			request.setAttribute("isLogin",false);
-			request.setAttribute("error",user.getErrorMsg());
-			jdbcBean.addLog(null, null, null, "testlogin",stuId+"³¢ÊÔµÇÂ¼¡¾"+pass+"¡¿Ê§°Ü£»µÇÂ¼IP£º"+StringCode.getRealIp(request)+"£»UA£º"+request.getHeader("user-agent"));
-			request.getRequestDispatcher("login.jsp").forward(request, response);
-//			System.out.println("µÇÂ¼Ê§°Ü");
+			out.print("{\"code\":200,\"Msg\":\"ÑéÖ¤Âë´íÎó\"}");
 		}
+			
 	}
 }
