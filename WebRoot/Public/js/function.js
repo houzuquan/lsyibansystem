@@ -16,14 +16,14 @@ function ListingTag(id) {
 	/*
 	 * TAB页面切换
 	 */
-	var nav = document.getElementById('nav');
+	var nav = document.getElementById(id);
 	var li = nav.getElementsByTagName('li');
 	for(i = 0; i < li.length; i++) {
 		li[i].onclick = function() {
 //			console.log(this.innerHTML);
 			var li = this.parentElement.getElementsByTagName('li');
 			for(j = 0; j < li.length; j++) {
-				li[j].className = '';
+				li[j].className = li[j].className.replace('active','');
 				try {
 					var elm = document.getElementById(li[j].getAttribute('data-go'));
 					elm.style.display = 'none';
@@ -31,9 +31,11 @@ function ListingTag(id) {
 					
 				}
 			}
-			this.className = 'active';
+			this.className += ' active';
 			var elm = document.getElementById(this.getAttribute('data-go'));
+			if(elm){
 				elm.style.display = 'block';
+			}
 			var fun = this.getAttribute('data-fun');
 			if(fun){
 				try{
