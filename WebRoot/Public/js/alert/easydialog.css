@@ -4,7 +4,7 @@ button::-moz-focus-inner{ border:0; padding:0; margin:0; }
 
 .easyDialog_wrapper .easyDialog_content{ -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px; background:#fff; border:1px solid #e5e5e5; }
 
-.easyDialog_wrapper .easyDialog_title{ height:30px; line-height:30px; overflow:hidden; color:#666; padding:0 10px; font-size:14px; border-bottom:1px solid #e5e5e5; background:#f7f7f7; border-radius:4px 4px 0 0; }
+.easyDialog_wrapper .easyDialog_title{ height:30px; line-height:30px; overflow:hidden; color:#666; padding:0 10px; font-size:14px; border-bottom:1px solid #e5e5e5; background:#f7f7f7; border-radius:4px 4px 0 0; margin-top: 0px;margin-bottom: 0px;}
 
 .easyDialog_wrapper .close_btn{ font-family:arial; font-size:18px; _font-size:12px; font-weight:700; color:#999; text-decoration:none; float:right; }
 
