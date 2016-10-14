@@ -44,8 +44,9 @@
 		<div id="section">
 			<div id="leftNav">
 				<ul id="Lnav">
+					<li data-fun="goUrl('Public/iframe/main.html','iContent');">概况</li>
 					<li>通知管理</li>
-					<li class="active" onclick="goUrl('Public/iframe/dkAdmin.html','iContent');">打卡管理</li>
+					<li data-fun="goUrl('Public/iframe/dkAdmin.html','iContent');">打卡管理</li>
 					<li>部门管理</li>
 					<li>人员管理</li>
 					<li>权限管理</li>
@@ -60,6 +61,7 @@
 			<div class="clear"></div>
 		</div>
 		<script type="text/javascript">
+		ListingTag('Lnav');
 			window.onload = function() {
 				changeSectionSize();
 				$ajax({
