@@ -15,7 +15,7 @@
 				<li>打卡<span id="qdNum">0</span>次</li>
 				<li>签退<span id="qtNum">0</span>次</li>
 			</ul>
-			<span class="more" onclick="goUrl('./dkAdmin.html','');">
+			<span class="more" id="moreBtn">
 				查看打卡记录
 			</span>
 		</div>
@@ -41,6 +41,11 @@
 						alert("获取用户数据错误！");
 					}
 				});
+			}
+			document.getElementById('moreBtn').onclick=function(){
+				var Lnav = window.parent.document.getElementById('Lnav');
+				var li = Lnav.getElementsByTagName('li');
+				li[2].click();
 			}
 		</script>
 	</body>
