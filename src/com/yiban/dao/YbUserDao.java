@@ -148,9 +148,9 @@ public class YbUserDao extends YbUserStruct {
 		HashMap<String,String> dk = new HashMap<String,String>();
 		String NowDkSql;
 		if(isQd){
-			NowDkSql ="select * from `dk` where curtime() >= start1 and curtime() <= start2 ";//获取签到时间
+			NowDkSql ="select * from `dk` where curtime() >= start1 and curtime() <= start2 and isrun=1";//获取签到时间
 		}else{
-			NowDkSql ="select * from `dk` where curtime() >= end1 and curtime() <= end2 ";//获取签退时间
+			NowDkSql ="select * from `dk` where curtime() >= end1 and curtime() <= end2 and isrun=1";//获取签退时间
 		}
 		try {
 			ps = conn.prepareStatement(NowDkSql);
