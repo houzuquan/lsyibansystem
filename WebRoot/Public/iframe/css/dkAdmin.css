@@ -109,6 +109,7 @@ a {
 	font-weight: 900;
 	padding: 10px 0;
 	max-width: 200px;
+	font-family: Georgia, Verdana, Tahoma, sans-serif, 宋体;
 }
 #content>div#AllDKLog>table.AllDKLogTable tr{
 	cursor: default;

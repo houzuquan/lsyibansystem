@@ -3,11 +3,18 @@ package com.yiban.bean;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 public class Verify {
 	protected HashMap<String,Object> _config =	new HashMap<String,Object>();
@@ -28,28 +35,23 @@ public class Verify {
 	private String  fontttf = "";// 验证码字体，不设置随机获取
 	private int[]   bg = {243, 251, 254};// 背景颜色
 	private boolean reset = true;// 验证成功后是否重置
-//	private _image   = NULL;     // 验证码图片实例
-    private int[] 	_color   = null;     // 验证码字体颜色
-    private String[] 	codeStr = null;
-    private String nowFilePath = null;
-	String ttfPath = "Verify/ttfs/";
+    private String[] 	codeStr = null;//存储验证码内容
+    private String nowFilePath = null;//当前文件所在目录
+	String ttfPath = "Verify/ttfs/";//英文字体的相对路径
 	public Verify(){
 		this.setImageW(160);
 		this.setImageH(40);
 		nowFilePath = this.getClass().getResource("/").getPath();
     }
 	public void entry(){
-		_color = new int[3];
-		_color[0]=mt_rand(1,150);
-		_color[1]=mt_rand(1,150);
-		_color[2]=mt_rand(1,150);
 		image = new BufferedImage(imageW, imageH, BufferedImage.TYPE_INT_RGB);
 		g = image.getGraphics(); // 该画笔画在image上
+		g.setColor(new Color(bg[0],bg[1],bg[2]));
 		g.fillRect(0, 0, imageW, imageH);
 		if(this.useImgBg) {
-//            this._background();
+			// 绘制背景
+            this._background();
         }
-        
         if (this.useNoise) {
             // 绘杂点
             this._writeNoise();
@@ -61,96 +63,101 @@ public class Verify {
         // 绘验证码
         codeStr = new String[length]; // 验证码
         int codeNX = 0; // 验证码第N个字符的左边距
+    	int codeNY = (int)(fontSize*1.2);// 验证码第N个字符的上边距
+    		codeNX += 10;
+    	int fontWidth = (imageW-20)/length;//一个字体的所占的宽度
         if(useZh){ // 中文验证码
-//            for (i = 0; i<length; i++) {
-//                code[i] = iconv_substr(zhSet,floor(mt_rand(0,mb_strlen($this->zhSet,'utf-8')-1)),1,'utf-8');
-//            }
         	ttfPath = "Verify/zhttfs/";
-    		g.setFont(loadFont(30));
-        	codeNX  += 10;
-        	int fontWidth = (imageW-20)/length;
-        	char[] zh = zhSet.toCharArray();
+    		g.setFont(loadFont(30));// 载入字体文件
+        	char[] zh = zhSet.toCharArray();//把字符串转换成字符数组
             for (int i = 0; i<length; i++) {
-            	codeStr[i] = new Character(zh[mt_rand(0, zh.length-1)]).toString();
+            	codeStr[i] = new Character(zh[mt_rand(0, zh.length-1)]).toString();//从字符数组中取出字符然后转换成为字符串类型
                 g.setColor(new Color(mt_rand(1,150),mt_rand(1,150),mt_rand(1,150)));
-                g.drawString(codeStr[i], codeNX, 30);
-                codeNX  += fontWidth;//mt_rand(fontSize*1, fontSize*1.3);
+                RotateString(codeStr[i], codeNX, codeNY, g, mt_rand(-30,30));
+                codeNX += fontWidth;
             }
         }else{
-    		g.setFont(loadFont(30));
-        	codeNX  += 10;
-        	int fontWidth = (imageW-20)/length;
+        	char[] zh = codeSet.toCharArray();//把字符串转换成字符数组
             for (int i = 0; i<length; i++) {
-            	codeStr[i] = new Character(codeSet.charAt(mt_rand(0, codeSet.length()-1))).toString();
+        		g.setFont(loadFont(30));// 载入字体文件
+            	codeStr[i] = new Character(zh[mt_rand(0, zh.length-1)]).toString();
                 g.setColor(new Color(mt_rand(1,150),mt_rand(1,150),mt_rand(1,150)));
-                g.drawString(codeStr[i], codeNX, 30);
-                codeNX  += fontWidth;//mt_rand(fontSize*1, fontSize*1.3);
+                RotateString(codeStr[i], codeNX, codeNY, g, mt_rand(-40,40));
+                codeNX += fontWidth;
             }
         }
         
 	}
 	private void _background() {
-		// TODO 自动生成的方法存根
-		
+		File file = new File(nowFilePath + "Verify/bgs/");
+		String[] fileNames = file.list();
+		int r = mt_rand(0,fileNames.length-1);
+		String fileNamePath = nowFilePath + "Verify/bgs/" + fileNames[r];
+		File ttfFile = new File(fileNamePath);
+		Image bi = null;
+        try {
+			bi = ImageIO.read(ttfFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        g.drawImage(bi, 0, 0, imageW, imageH, null);
 	}
 	private void _writeNoise() {
-		// TODO 自动生成的方法存根
 		Random random = new Random();
 		//产生随即干扰点
-		for (int i = 0; i < 50; i++) {
-			g.setColor(new Color(mt_rand(150,225), mt_rand(150,225), mt_rand(150,225)));
+		g.setFont(new Font("宋体", Font.PLAIN, 12));// 载入字体文件
+		g.setColor(new Color(mt_rand(180,225), mt_rand(180,225), mt_rand(180,225)));
+		for (int i = 0; i < 20; i++) {
 			int x1 = random.nextInt(imageW);
 			int y1 = random.nextInt(imageH);
-			g.drawOval(x1, y1, 2, 2);
+			RotateString(new Character(codeSet.charAt(mt_rand(0, codeSet.length()-1))).toString(), x1, y1, g, mt_rand(-90,90));
+//			g.drawOval(x1, y1, 2, 2);
 		}
 	}
 	private void _writeCurve() {
-		 int px = 0,py = 0;
-	        
-	        // 曲线前部分
-	     int A = mt_rand(1, imageH/2);                  // 振幅
-	     int b = mt_rand(-imageH/4, imageH/4);   // Y轴方向偏移量
-	     int f = mt_rand(-imageH/4, imageH/4);   // X轴方向偏移量
-	     int T = mt_rand(imageH, imageW*2);  // 周期
-	     double w = (2* Math.PI)/T;
-	                        
-	     int px1 = 0;  // 曲线横坐标起始位置
-	     int px2 = mt_rand(imageW/2, imageW * 0.8);  // 曲线横坐标结束位置
+		int px = 0,py = 0;
+		// 曲线前部分
+		int A = mt_rand(1, imageH/2);                  // 振幅
+		int b = mt_rand(-imageH/4, imageH/4);   // Y轴方向偏移量
+		int f = mt_rand(-imageH/4, imageH/4);   // X轴方向偏移量
+		int T = mt_rand(imageH, imageW*2);  // 周期
+		double w = (2* Math.PI)/T;
+		
+		int px1 = 0;  // 曲线横坐标起始位置
+		int px2 = mt_rand(imageW/2, imageW * 0.8);  // 曲线横坐标结束位置
+		
+        if (w!=0) {
+    		g.setColor(new Color(mt_rand(155,225),mt_rand(155,225),mt_rand(155,225)));
+        	for (px=px1; px<=px2; ++px) {
+                py = (int)(A * Math.sin(w*px + f)+ b + imageH/2);  // y = Asin(ωx+φ) + b
+                int i = (int) (fontSize/5);
+                while (i > 0) {
+                    g.drawOval(px + i , py + i, 1, 1);
+                    i--;
+                }
+            }
+        }
 
-         g.setColor(new Color(mt_rand(155,255),mt_rand(155,255),mt_rand(155,255)));
-	        for (px=px1; px<=px2; px = px + 1) {
-	            if (w!=0) {
-	                py = (int)(A * Math.sin(w*px + f)+ b + imageH/2);  // y = Asin(ωx+φ) + b
-	                int i = (int) (fontSize/5);
-	                while (i > 0) {	
-//	                    imagesetpixel($this->_image, px + i , py + i, $this->_color);  
-	                	// 这里(while)循环画像素点比imagettftext和imagestring用字体大小一次画出（不用这while循环）性能要好很多
-	                    g.drawOval(px + i , py + i, 1, 1);
-	                    i--;
-	                }
-	            }
-	        }
-	        
-	        // 曲线后部分
-	        A = mt_rand(1, imageH/2);                  // 振幅		
-	        f = mt_rand(-imageH/4, imageH/4);   // X轴方向偏移量
-	        T = mt_rand(imageH, imageW*2);  // 周期
-	        w = (2* Math.PI)/T;		
-	        b = (int)(py - A * Math.sin(w*px + f) - imageH/2);
-	        px1 = px2;
-	        px2 = imageW;
+        // 曲线后部分
+        A = mt_rand(1, imageH/2);                  // 振幅
+        f = mt_rand(-imageH/4, imageH/4);   // X轴方向偏移量
+        T = mt_rand(imageH, imageW*2);  // 周期
+        w = (2* Math.PI)/T;
+        b = (int)(py - A * Math.sin(w*px + f) - imageH/2);
+        px1 = px2;
+        px2 = imageW;
 
-//            g.setColor(new Color(_color[0],_color[1],_color[2]));
-	        for (px=px1; px<=px2; px=px+ 1) {
-	            if (w!=0) {
-	                py = (int)(A * Math.sin(w*px + f)+ b + imageH/2);  // y = Asin(ωx+φ) + b
-	                int i = (int) (fontSize/5);
-	                while (i > 0) {	
-	                    g.drawOval(px + i , py + i, 1, 1);
-	                    i--;
-	                }
-	            }
-	        }
+        if (w!=0) {
+    		g.setColor(new Color(mt_rand(155,225),mt_rand(155,225),mt_rand(155,225)));
+        	for (px=px1; px<=px2; ++px) {
+                py = (int)(A * Math.sin(w*px + f)+ b + imageH/2);  // y = Asin(ωx+φ) + b
+                int i = (int) (fontSize/5);
+                while (i > 0) {
+                    g.drawOval(px + i , py + i, 1, 1);
+                    i--;
+                }
+            }
+        }
 	}
 	public int mt_rand(double min,double max){
 		return (int)(min+Math.random()*(max-min+1));
@@ -161,18 +168,8 @@ public class Verify {
 		{
 			File file = new File(nowFilePath + ttfPath);
 			String[] fileNames = file.list();
-//			if(fileNames.length == 0){
-//				throw new Exception();
-//			}
-//			System.out.println("文件数目："+fileNames.length);
 			int r = mt_rand(0,fileNames.length-1);
 			String fileNamePath = nowFilePath + ttfPath + fileNames[r];
-//			for(int i=0;i<fileNames.length;i++){
-//				System.out.print(fileNames[i]+"；");
-//			}
-//			System.out.println();
-//			System.out.println("第"+r+"个");
-//			System.out.println(fileNamePath);
 			File ttfFile = new File(fileNamePath);
 			FileInputStream aixing = new FileInputStream(ttfFile);
 			Font dynamicFont = Font.createFont(Font.TRUETYPE_FONT, aixing);
@@ -186,6 +183,20 @@ public class Verify {
 			e.printStackTrace();
 			return new Font("宋体", Font.PLAIN, 30);
 		}
+	}
+	/** 
+	* 旋转并且画出指定字符串 
+	* @param s 需要旋转的字符串 
+	* @param x 字符串的x坐标 
+	* @param y 字符串的Y坐标 
+	* @param g 画笔g 
+	* @param degree 旋转的角度 
+	*/
+	private void RotateString(String s,int x,int y,Graphics g,int degree){
+	    Graphics2D g2d = (Graphics2D) g.create();
+	    g2d.translate(x-1, y+3);// 平移原点到图形环境的中心,这个方法的作用实际上就是将字符串移动到某一个位置
+	    g2d.rotate(degree* Math.PI / 180);// 旋转文本
+	    g2d.drawString( s, 0, 0);// 特别需要注意的是,这里的画笔已经具有了上次指定的一个位置,所以这里指定的其实是一个相对位置
 	}
 	public BufferedImage getImage() {
 		return image;

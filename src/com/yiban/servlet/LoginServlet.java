@@ -67,11 +67,15 @@ public class LoginServlet extends HttpServlet {
 		pass = request.getParameter("pass");
 		yzmText = request.getParameter("yzmText");
 		YzmCode = (String)session.getAttribute("YzmCode");
-		int YzmCodeTime = (int)session.getAttribute("YzmCodeTime");
+		int YzmCodeTime = (int)session.getAttribute("YzmCodeTime");//验证码有效时间
+		long YzmCodeNowTime = (long)session.getAttribute("YzmCodeNowTime");//验证码生成时间
+		long nowTime = System.currentTimeMillis();
 		YbUserDao user = new YbUserDao();
 //		System.out.println("用户名："+stuId+"；密码："+pass);
 		if(YzmCode == null){
 			out.print("{\"code\":200,\"Msg\":\"参数错误\"}");
+		}else if((nowTime - YzmCodeNowTime) > YzmCodeTime*1000){
+			out.print("{\"code\":200,\"Msg\":\"验证码失效，请重新输入！\"}");
 		}else if(YzmCode.equals(StringCode.MD5(yzmText.toLowerCase()))){
 			if(true == user.isLogin(stuId, pass)){
 				session.setAttribute("isLogin",true);
@@ -81,16 +85,13 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("pass",pass);
 				session.setAttribute("User",user);
 				user.updateLoginInfo(request);
-//				response.sendRedirect("index.html");
 				out.print("{\"code\":301,\"Msg\":\"登录成功\",\"url\":\""+request.getContextPath()+"/index.html\"}");
-	//			System.out.println("登录成功");
 			}else{
 				request.setAttribute("isLogin",false);
 				request.setAttribute("error",user.getErrorMsg());
 				jdbcBean.addLog(null, null, null, "testlogin",stuId+"尝试登录【"+pass+"】失败；登录IP："+StringCode.getRealIp(request)+"；UA："+request.getHeader("user-agent"));
 //				request.getRequestDispatcher("login.jsp").forward(request, response);
 				out.print("{\"code\":200,\"Msg\":\"帐号或密码错误\"}");
-	//			System.out.println("登录失败");
 			}
 		}else{
 			out.print("{\"code\":200,\"Msg\":\"验证码错误\"}");
