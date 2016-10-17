@@ -59,7 +59,6 @@ public class Yzm extends HttpServlet {
 			code += str[i];
 		}
 		session.setAttribute("YzmCode", StringCode.MD5(code.toLowerCase()));
-		session.setAttribute("YzmCodeTime", 300);//验证码有效时间。s
 		session.setAttribute("YzmCodeNowTime", System.currentTimeMillis());//验证码生成时间。ms
 		// 输出图像到页面
 		ImageIO.write(img.getImage(), "PNG", os);

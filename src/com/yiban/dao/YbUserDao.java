@@ -58,7 +58,9 @@ public class YbUserDao extends YbUserStruct {
 			return false;
 		}
 		if(true == this.findUser(stuId)){
-			if(true == StringCode.MD5(pass).equals(this.getPass())){
+			if(this.getIsLogin().equals("0")){
+				setErrorMsg("该用户不可登录");
+			}else if(true == StringCode.MD5(pass).equals(this.getPass())){
 				return true;
 			}else{
 				setErrorMsg("帐号或密码错误");
@@ -123,6 +125,9 @@ public class YbUserDao extends YbUserStruct {
 				this.setLoginTime(rs.getString("loginTime"));
 				this.setLoginIP(rs.getString("loginIP"));
 				this.setLoginUa(rs.getString("loginUa"));
+				this.setLoginNum(rs.getString("loginNum"));
+				this.setIsLogin(rs.getString("isLogin"));
+				this.setOtherAllow(rs.getString("otherAllow"));
 			}
 			jdbcBean.free(rs, ps2, null);
 		} catch (SQLException e) {
