@@ -100,7 +100,7 @@ public class YbUserDao extends YbUserStruct {
 	 */
 	public boolean findUser(int stuId){
 		boolean re = false;
-		String sql = "SELECT * FROM (SELECT a.*,b.sectionName,b.allow FROM `ybuser` a LEFT OUTER JOIN `section` b ON a.sectionId=b.sectionId ) d WHERE d.`stuId` = ?";
+		String sql = "SELECT * FROM (SELECT a.*,b.sectionName,b.allow FROM `YbUser` a LEFT OUTER JOIN `section` b ON a.sectionId=b.sectionId ) d WHERE d.`stuId` = ?";
 		PreparedStatement ps2 = null;
 		try {
 			ps2 = conn.prepareStatement(sql);
@@ -507,23 +507,23 @@ public class YbUserDao extends YbUserStruct {
 		try {
 			if(section.equals("0")){
 				if(ttime.equals("")){
-					sql="SELECT c.stuName 'name',a.sectionName 'sectionName',b.time1,b.time2,b.text,b.isqd,b.isqt,d.text 'dktext',d.start1,d.start2,d.end1,d.end2,d.run1,d.run2 FROM `section` a,`dklog` b,`ybuser` c,`dk` d WHERE a.sectionid=c.sectionid and b.ybuserid=c.id and d.dkid=b.dkid order by b.time1 desc limit ?,10";
+					sql="SELECT c.stuName 'name',a.sectionName 'sectionName',b.time1,b.time2,b.text,b.isqd,b.isqt,d.text 'dktext',d.start1,d.start2,d.end1,d.end2,d.run1,d.run2 FROM `section` a,`dklog` b,`YbUser` c,`dk` d WHERE a.sectionid=c.sectionid and b.ybuserid=c.id and d.dkid=b.dkid order by b.time1 desc limit ?,10";
 					ps2 = conn.prepareStatement(sql);
 					ps2.setInt(1, start);
 				}else{
-					sql = "SELECT c.stuName 'name',a.sectionName 'sectionName',b.time1,b.time2,b.text,b.isqd,b.isqt,d.text 'dktext',d.start1,d.start2,d.end1,d.end2,d.run1,d.run2 FROM `section` a,`dklog` b,`ybuser` c,`dk` d WHERE a.sectionid=c.sectionid and b.ybuserid=c.id and d.dkid=b.dkid :ttime order by b.time1 desc limit ?,10";
+					sql = "SELECT c.stuName 'name',a.sectionName 'sectionName',b.time1,b.time2,b.text,b.isqd,b.isqt,d.text 'dktext',d.start1,d.start2,d.end1,d.end2,d.run1,d.run2 FROM `section` a,`dklog` b,`YbUser` c,`dk` d WHERE a.sectionid=c.sectionid and b.ybuserid=c.id and d.dkid=b.dkid :ttime order by b.time1 desc limit ?,10";
 					sql=sql.replaceAll(":ttime", ttime);
 					ps2 = conn.prepareStatement(sql);
 					ps2.setInt(1, start);
 				}
 			}else{
 				if(ttime.equals("")){
-					sql = "SELECT c.stuName 'name',a.sectionName 'sectionName',b.time1,b.time2,b.text,b.isqd,b.isqt,d.text 'dktext',d.start1,d.start2,d.end1,d.end2,d.run1,d.run2 FROM `section` a,`dklog` b,`ybuser` c,`dk` d WHERE a.sectionid=c.sectionid and b.ybuserid=c.id and d.dkid=b.dkid and c.sectionid=? order by b.time1 desc limit ?,10";
+					sql = "SELECT c.stuName 'name',a.sectionName 'sectionName',b.time1,b.time2,b.text,b.isqd,b.isqt,d.text 'dktext',d.start1,d.start2,d.end1,d.end2,d.run1,d.run2 FROM `section` a,`dklog` b,`YbUser` c,`dk` d WHERE a.sectionid=c.sectionid and b.ybuserid=c.id and d.dkid=b.dkid and c.sectionid=? order by b.time1 desc limit ?,10";
 					ps2 = conn.prepareStatement(sql);
 					ps2.setString(1, section);
 					ps2.setInt(2, start);
 				}else{
-					sql = "SELECT c.stuName 'name',a.sectionName 'sectionName',b.time1,b.time2,b.text,b.isqd,b.isqt,d.text 'dktext',d.start1,d.start2,d.end1,d.end2,d.run1,d.run2 FROM `section` a,`dklog` b,`ybuser` c,`dk` d WHERE a.sectionid=c.sectionid and b.ybuserid=c.id and d.dkid=b.dkid and c.sectionid=? :ttime order by b.time1 desc limit ?,10";
+					sql = "SELECT c.stuName 'name',a.sectionName 'sectionName',b.time1,b.time2,b.text,b.isqd,b.isqt,d.text 'dktext',d.start1,d.start2,d.end1,d.end2,d.run1,d.run2 FROM `section` a,`dklog` b,`YbUser` c,`dk` d WHERE a.sectionid=c.sectionid and b.ybuserid=c.id and d.dkid=b.dkid and c.sectionid=? :ttime order by b.time1 desc limit ?,10";
 					sql=sql.replaceAll(":ttime", ttime);
 					ps2 = conn.prepareStatement(sql);
 					ps2.setString(1, section);
