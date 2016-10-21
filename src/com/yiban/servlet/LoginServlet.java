@@ -98,7 +98,7 @@ public class LoginServlet extends HttpServlet {
 			}
 		}catch(Exception e){
 			out.print("{\"code\":200,\"Msg\":\"请求出现错误，请刷新页面！\"}");
-			System.out.println(e.getMessage());
+//			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}

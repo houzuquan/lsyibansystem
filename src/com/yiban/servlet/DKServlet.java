@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -154,6 +155,58 @@ public class DKServlet extends HttpServlet {
 						json2 +="]}";
 					}
 					out.print(json2);
+					break;
+				case "getSection":
+					ArrayList<HashMap<String, String>> list3 = user.getSection();
+					int len3 = list3.size();
+					String json3 = "{\"list\":[]}";
+					if(len3 >= 1){
+						json3 = "{\"list\":[";
+						for(int i=0;i<len3;i++){
+							HashMap<String,String> map = list3.get(i);
+							json3 += "{\"id\":\"" + map.get("id") 
+							+ "\",\"text\":\"" + map.get("text") 
+							+ "\"}";
+							if(i<len3-1){
+								json3 +=",";
+							}
+						}
+						json3 +="]}";
+					}
+					out.print(json3);
+					break;
+				case "searchOtherDK":
+					String page = request.getParameter("page");
+					String section = request.getParameter("section");
+					String time1 = request.getParameter("time1");
+					String time2 = request.getParameter("time2");
+					ArrayList<HashMap<String, String>> list4 = user.searchOtherDK(page, section,time1,time2);
+					if(list4 == null){
+						out.print("{\"code\":201,\"Msg\":\""+user.getErrorMsg()+"\"}");
+					}else if(list4.size() >= 1){
+						int len4 = list4.size();
+						StringBuffer json1 = new StringBuffer("{\"list\":[");
+						for(int i=0;i<len4;i++){
+							HashMap<String,String> map = list4.get(i);
+							Iterator<String> it = map.keySet().iterator();
+							json1.append("{");
+							while(it.hasNext()){
+								String key = it.next();
+								json1.append("\""+key+"\":\""+map.get(key)+"\"");
+								if(it.hasNext()){
+									json1.append(",");
+								}
+							}
+							json1.append("}");
+							if(i<len4-1){
+								json1.append(",");
+							}
+						}
+						json1.append("]}");
+						out.print(json1.toString());
+					}else{
+						out.print("{\"list\":[]}");
+					}
 					break;
 				default:
 					out.print("{\"code\":201,\"Msg\":\"·Ç·¨·ÃÎÊ3\"}");

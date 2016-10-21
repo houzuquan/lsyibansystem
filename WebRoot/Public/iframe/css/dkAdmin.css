@@ -67,17 +67,40 @@ a {
 #content>div:first-of-type{
 	display: block;
 }
-#content>div#date,#content>div#dateOther{
+#content>div#date{
 	border:5px solid #6666FF;
 	position: absolute;
 	left: 50%;
 	top: 30px;
 	margin-left: -380px;
 }
+#content>div#dateOther{
+	
+}
+#content>div#dateOther>div#searchBox{
+	margin-top: 30px;
+}
+#content>div#dateOther>div#searchBox>input,#content>div#dateOther>div#searchBox>select{
+	font-size: 20pt;
+	font-weight: 900;
+	font-family: "微软雅黑";
+	text-align: center;
+	border: 1px solid #669999;
+	background: #CCFFFF;
+	margin-bottom: 5px;
+}
+#content>div#dateOther>div#searchBox>input[type=button]{
+	padding: 5px 20px;
+	cursor: pointer;
+}
+#content>div#dateOther>div#searchBox>input[type=button]:hover{
+	background: #CCCC00;
+	border-radius: 5px;
+}
 #content>div#date{
 	
 }
-#content>div#AllDKLog>span#AllDKLogTableShowMore{
+#content>div#AllDKLog>span#AllDKLogTableShowMore,#content>div#dateOther>span#bmDKLogTableShowMore{
 	display: inline-block;
 	height: 30pt;
 	line-height: 30pt;
@@ -89,19 +112,27 @@ a {
 	border:1px solid blue;
 	cursor:pointer;
 }
-#content>div#AllDKLog>table.AllDKLogTable{
+#content>div#AllDKLog>span#AllDKLogTableShowMore:hover{
+	background: #CCCC00;
+	border-radius: 5px;
+}
+#content>div#dateOther>span#bmDKLogTableShowMore:hover{
+	background: #CCCC00;
+	border-radius: 5px;
+}
+#content>div>table.AllDKLogTable{
 	border-collapse: collapse;
 	text-align: center;
 	min-width: 500px;
 	width: 100%;
 	margin-top: 20px;
 }
-#content>div#AllDKLog>table.AllDKLogTable th{
+#content>div>table.AllDKLogTable th{
 	font-size: 18pt;
 	font-weight: 900;
 	color: blue;
 }
-#content>div#AllDKLog>table.AllDKLogTable td{
+#content>div>table.AllDKLogTable td{
 	text-overflow:ellipsis;
 	white-space:nowrap;
 	overflow: hidden;
@@ -111,10 +142,10 @@ a {
 	max-width: 200px;
 	font-family: Georgia, Verdana, Tahoma, sans-serif, 宋体;
 }
-#content>div#AllDKLog>table.AllDKLogTable tr{
+#content>div>table.AllDKLogTable tr{
 	cursor: default;
 }
-#content>div#AllDKLog>table.AllDKLogTable tr:hover:not(:first-child){
+#content>div>table.AllDKLogTable tr:hover:not(:first-child){
 	background: #FFFFCC;
 }
 div.dateTableDiv,div.info{

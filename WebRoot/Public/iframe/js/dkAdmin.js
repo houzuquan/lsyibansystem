@@ -250,6 +250,12 @@ function getDKForPage(page) {//通过分页显示签到内容
 			}
 			if(data.list.length == 0) {
 				more.style.display='none';
+				var tr = document.createElement('tr');
+				var td0 = document.createElement('td');
+				td0.setAttribute('colspan',7);
+				td0.innerHTML='没有更多信息';
+				tr.appendChild(td0);
+				table.appendChild(tr);
 				return false;
 			}
 			var date1 = new Date();
@@ -269,7 +275,7 @@ function getDKForPage(page) {//通过分页显示签到内容
 				var tt2 = info.run1.replace('.0','').split(':');
 				td0.innerHTML=time1[0];
 				td1.innerHTML=info.dktext;
-				td2.innerHTML=time1[1];
+				td2.innerHTML=time1[1].replace('.0','');
 				date1.setHours(tt1[0]);
 				date1.setMinutes(tt1[1]);
 				date1.setSeconds(tt1[2]);
@@ -289,7 +295,7 @@ function getDKForPage(page) {//通过分页显示签到内容
 				tr.appendChild(td3);
 				if(info.isqt*1 == 1){
 				var time2 = info.time2.split(" ");
-					td4.innerHTML=time2[1];
+					td4.innerHTML=time2[1].replace('.0','');
 					td5.innerHTML=info.text;
 					td5.setAttribute('title',info.text);
 				var tt1 = time2[1].replace('.0','').split(':');
@@ -322,9 +328,177 @@ function getDKForPage(page) {//通过分页显示签到内容
 		},
 		error: function(status) {
 			console.log(status);
+//			more.style.display='none';
+			var tr = document.createElement('tr');
+			var td0 = document.createElement('td');
+			td0.setAttribute('colspan',7);
+			td0.innerHTML='获取数据错误！没有更多信息';
+			tr.appendChild(td0);
+			table.appendChild(tr);
+//			showMsg("获取数据错误！");
+		}
+	});
+}
+function getSection() {
+	var section = document.getElementById('section');
+//	section.innerHTML = '';
+	$ajax({
+		url: "../../DK?action=getSection",
+		data: "",
+		method: "post",
+		dataType: "json",
+		callBack: function(data) {
+			console.log(data);
+			if(data.code) {
+				errorAction(data);
+				return false;
+			}
+			if(data.list.length == 0) {
+				return false;
+			}
+			for(i = 0; i < data.list.length; i++) {
+				var info = data.list[i];
+				var options = document.createElement('option');
+				options.value=info.id;
+				options.innerHTML=info.text;
+				section.appendChild(options);
+			}
+		},
+		error: function(status) {
+			console.log(status);
 			showMsg("获取数据错误!");
 		}
 	});
 }
 
+document.getElementById('bmDKLogTableShowMore').onclick=function(){
+	var page = this.getAttribute('data-nowpage');
+	this.setAttribute('data-nowpage',page*1+1);
+	searchOtherDK(page);
+}
+function searchOtherDK(page){
+	var table = document.getElementById('bmDKLogTable');
+	var more = document.getElementById('bmDKLogTableShowMore');
+	var section = document.getElementById('section');
+	var time1 = document.getElementById('otherTime1');
+	var time2 = document.getElementById('otherTime2');
+	if(page*1 == 1){
+		var trH = table.getElementsByTagName('tr')[0].outerHTML.toString();
+		table.innerHTML='';
+		table.innerHTML=trH;
+		more.setAttribute('data-nowpage',2);
+	}
+	$ajax({
+		url: "../../DK?action=searchOtherDK",
+		data: "page="+page+"&section="+section.value+"&time1="+time1.value+"&time2="+time2.value,
+		method: "post",
+		dataType: "json",
+		callBack: function(data) {
+			console.log(data);
+			if(data.code) {
+				errorAction(data);
+				return false;
+			}
+			if(data.list.length == 0) {
+				more.style.display='none';
+				var tr = document.createElement('tr');
+				var td0 = document.createElement('td');
+				td0.setAttribute('colspan',10);
+				td0.innerHTML='没有更多信息';
+				tr.appendChild(td0);
+				table.appendChild(tr);
+				return false;
+			}
+			if(page*1==1){
+				more.style.display='inline-block';
+			}
+			var date1 = new Date();
+			var date2 = new Date();
+			for(i = 0; i < data.list.length; i++) {
+				var info = data.list[i];
+				var tr = document.createElement('tr');
+				var tdName = document.createElement('td');
+				var tdSection = document.createElement('td');
+				var tdDate = document.createElement('td');
+				var tdDktext = document.createElement('td');
+				var tdQd = document.createElement('td');
+				var tdC = document.createElement('td');
+				var tdQt = document.createElement('td');
+				var tdQttext = document.createElement('td');
+				var tdZ = document.createElement('td');
+				
+				var time1 = info.time1.split(" ");
+				var tt1 = time1[1].replace('.0','').split(':');
+				console.log(tt1);
+				var tt2 = info.run1.replace('.0','').split(':');
+				tdName.innerHTML=info.name;
+				tdSection.innerHTML=info.sectionName;
+				tdDate.innerHTML=time1[0];
+				tdDktext.innerHTML=info.dktext;
+				tdQd.innerHTML=time1[1].replace('.0','');
+				date1.setHours(tt1[0]);
+				date1.setMinutes(tt1[1]);
+				date1.setSeconds(tt1[2]);
+				date2.setHours(tt2[0]);
+				date2.setMinutes(tt2[1]);
+				date2.setSeconds(tt2[2]);
+				tdC.innerHTML='否';
+				if(date1 > date2){
+					tdC.innerHTML='是';
+					tdC.style.background='rgba(255,0,0,0.5)';
+					tdC.style.color='blue';
+				}
+//				td3.innerHTML=date1 <= date2 ? "否" : "是" ;
+				tr.appendChild(tdName);
+				tr.appendChild(tdSection);
+				tr.appendChild(tdDate);
+				tr.appendChild(tdDktext);
+				tr.appendChild(tdQd);
+				tr.appendChild(tdC);
+				if(info.isqt*1 == 1){
+				var time2 = info.time2.split(" ");
+					tdQt.innerHTML=time2[1].replace('.0','');
+					tdQttext.innerHTML=info.text;
+					tdQttext.setAttribute('title',info.text);
+				var tt1 = time2[1].replace('.0','').split(':');
+				var tt2 = info.run2.replace('.0','').split(':');
+					date1.setHours(tt1[0]);
+					date1.setMinutes(tt1[1]);
+					date1.setSeconds(tt1[2]);
+					date2.setHours(tt2[0]);
+					date2.setMinutes(tt2[1]);
+					date2.setSeconds(tt2[2]);
+					tdZ.innerHTML='否';
+					if(date1 < date2){
+						tdZ.innerHTML='是';
+						tdZ.style.background='rgba(255,0,0,0.5)';
+						tdZ.style.color='blue';
+					}
+//					td6.innerHTML=date1 <= date2 ? "否" : "是" ;
+					tr.appendChild(tdQt);
+					tr.appendChild(tdQttext);
+					tr.appendChild(tdZ);
+				}else{
+					var td7 = document.createElement('td');
+					td7.setAttribute('colspan',3);
+					td7.innerHTML='此次签到并未签退';
+					td7.style.background='rgba(180,180,180,0.3)';
+					tr.appendChild(td7);
+				}
+				table.appendChild(tr);
+			}
+		},
+		error: function(status) {
+			console.log(status);
+//			more.style.display='none';
+			var tr = document.createElement('tr');
+			var td0 = document.createElement('td');
+			td0.setAttribute('colspan',9);
+			td0.innerHTML='获取数据错误！没有更多信息';
+			tr.appendChild(td0);
+			table.appendChild(tr);
+//			showMsg("获取数据错误!");
+		}
+	});
+}
 ListingTag('nav');

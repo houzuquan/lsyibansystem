@@ -1,7 +1,12 @@
 package com.yiban.struct;
 
 public class YbUserStruct {
-	private String id,stuId,stuName,pass,sectionId,stuClass,bankId,birthday,birthdayType,hobby,phone,addTime,addIP,addUa,loginTime,loginIP,loginUa,otherAllow,loginNum,isLogin;
+	private String id,stuId,stuName,
+					pass,sectionId,stuClass,bankId,
+					birthday,birthdayType,hobby,phone,
+					addTime,addIP,addUa,loginTime,loginIP,
+					loginUa,otherAllow,loginNum,isLogin,
+					sectionName,sectionAllow;
 
 	public String getOtherAllow() {
 		return otherAllow;
@@ -161,5 +166,21 @@ public class YbUserStruct {
 
 	public void setIsLogin(String isLogin) {
 		this.isLogin = isLogin;
+	}
+
+	public String getSectionAllow() {
+		return sectionAllow;
+	}
+
+	public void setSectionAllow(String sectionAllow) {
+		this.sectionAllow = sectionAllow;
+	}
+
+	public String getSectionName() {
+		return sectionName;
+	}
+
+	public void setSectionName(String sectionName) {
+		this.sectionName = sectionName;
 	}
 }

@@ -100,7 +100,7 @@ public class YbUserDao extends YbUserStruct {
 	 */
 	public boolean findUser(int stuId){
 		boolean re = false;
-		String sql = "SELECT * FROM `YbUser` WHERE `stuId` = ?";
+		String sql = "SELECT * FROM (SELECT a.*,b.sectionName,b.allow FROM `ybuser` a LEFT OUTER JOIN `section` b ON a.sectionId=b.sectionId ) d WHERE d.`stuId` = ?";
 		PreparedStatement ps2 = null;
 		try {
 			ps2 = conn.prepareStatement(sql);
@@ -128,6 +128,8 @@ public class YbUserDao extends YbUserStruct {
 				this.setLoginNum(rs.getString("loginNum"));
 				this.setIsLogin(rs.getString("isLogin"));
 				this.setOtherAllow(rs.getString("otherAllow"));
+				this.setSectionName(rs.getString("sectionName"));
+				this.setSectionAllow(rs.getString("allow"));
 			}
 			jdbcBean.free(rs, ps2, null);
 		} catch (SQLException e) {
@@ -153,7 +155,7 @@ public class YbUserDao extends YbUserStruct {
 		HashMap<String,String> dk = new HashMap<String,String>();
 		String NowDkSql;
 		if(isQd){
-			NowDkSql ="select * from `dk` where curtime() >= start1 and curtime() <= start2 and isrun=1";//获取签到时间
+			NowDkSql ="select * from `dk` where curtime() >= start1 and curtime() < run2 and isrun=1";//获取签到时间
 		}else{
 			NowDkSql ="select * from `dk` where curtime() >= end1 and curtime() <= end2 and isrun=1";//获取签退时间
 		}
@@ -300,55 +302,6 @@ public class YbUserDao extends YbUserStruct {
 		return re;
 	}
 	/**
-	 * @return HashMap<String,String>
-	 * 通过数据库视图层返回当前用户的所有关联信息
-	 */
-	public HashMap<String,String> getMyUserInfo(){
-		/*获取当前用户的全部信息*/
-		HashMap<String,String> myinfo = new HashMap<String,String>();
-		String NowDkSql;
-		NowDkSql ="select * from `userInfo` where id=?";//获取签到时间
-		try {
-			ps = conn.prepareStatement(NowDkSql);
-			ps.setString(1, this.getId());
-			ResultSet rs = ps.executeQuery();
-			ResultSetMetaData colname = rs.getMetaData();
-			int colnum = colname.getColumnCount();
-			int i;
-			if(rs.next()){
-				for(i=1;i<=colnum;i++){
-					String cName = colname.getColumnName(i);
-					myinfo.put(cName, rs.getString(cName));
-				}
-//				myinfo.put("id",rs.getString("id"));
-//				myinfo.put("stuId",rs.getString("stuId"));
-//				myinfo.put("stuName",rs.getString("stuName"));
-//				myinfo.put("pass",rs.getString("pass"));
-//				myinfo.put("sectionId",rs.getString("sectionId"));
-//				myinfo.put("stuClass",rs.getString("stuClass"));
-//				myinfo.put("bankId",rs.getString("bankId"));
-//				myinfo.put("birthday",rs.getString("birthday"));
-//				myinfo.put("birthdayType",rs.getString("birthdayType"));
-//				myinfo.put("hobby",rs.getString("hobby"));
-//				myinfo.put("phone",rs.getString("phone"));
-//				myinfo.put("addTime",rs.getString("addTime"));
-//				myinfo.put("addIP",rs.getString("addIP"));
-//				myinfo.put("addUa",rs.getString("addUa"));
-//				myinfo.put("loginTime",rs.getString("loginTime"));
-//				myinfo.put("loginIP",rs.getString("loginIP"));
-//				myinfo.put("loginUa",rs.getString("loginUa"));
-//				myinfo.put("sectionName",rs.getString("sectionName"));
-			}
-			jdbcBean.free(rs, ps, null);
-		}catch(SQLException e){
-			setErrorMsg(e.getMessage());
-		}catch (Exception e) {
-			// TODO 自动生成的 catch 块
-			e.printStackTrace();
-		}
-		return myinfo;
-	}
-	/**
 	 * @param request
 	 * 登录时更新当前用户的登录信息
 	 */
@@ -396,6 +349,7 @@ public class YbUserDao extends YbUserStruct {
 			jdbcBean.free(rs2, ps2, null);
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
+			this.setErrorMsg(e.getMessage());
 			e.printStackTrace();
 		}
 		return dkcount;
@@ -431,6 +385,7 @@ public class YbUserDao extends YbUserStruct {
 			jdbcBean.free(rs2, ps2, null);
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
+			this.setErrorMsg(e.getMessage());
 			e.printStackTrace();
 		}
 		return list;
@@ -492,8 +447,108 @@ public class YbUserDao extends YbUserStruct {
 			jdbcBean.free(rs2, ps2, null);
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
+			this.setErrorMsg(e.getMessage());
 			e.printStackTrace();
 		}catch(Exception e){
+			this.setErrorMsg(e.getMessage());
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public ArrayList<HashMap<String,String>> getSection(){
+		ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
+		String sql;
+		PreparedStatement ps2 = null;
+		try {
+			sql = "SELECT `sectionId` as 'id',`sectionName` as 'text' FROM `section`";
+			ps2 = conn.prepareStatement(sql);
+			ResultSet rs2 = ps2.executeQuery();
+			ResultSetMetaData colname = rs2.getMetaData();
+			int colnum = colname.getColumnCount();
+			int i;
+			while(rs2.next()){
+				HashMap<String,String> map = new HashMap<String,String>();
+				for(i=1;i<=colnum;i++){
+					String cName = colname.getColumnName(i);
+					map.put(cName, rs2.getString(cName));
+				}
+				list.add(map);
+			}
+			jdbcBean.free(rs2, ps2, null);
+		} catch (SQLException e) {
+			// TODO 自动生成的 catch 块
+			this.setErrorMsg(e.getMessage());
+			e.printStackTrace();
+		}catch(Exception e){
+			this.setErrorMsg(e.getMessage());
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public ArrayList<HashMap<String,String>> searchOtherDK(String page,String section,String time1,String time2){
+		if(!this.isHaveAllow("21,")){
+			this.setErrorMsg("没有权限访问该选项！");
+			return null;
+		}
+		ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
+		String sql;
+		PreparedStatement ps2 = null;
+		int start = 0;
+		if(StringCode.isInteger(page)){
+			start = (Integer.parseInt(page)-1)*10;
+		}
+		String ttime = "";
+		if(time1 != null && !time1.equals("")){
+			ttime+=" and date(b.time1)>='"+time1+"' ";
+		}
+		if(time2 != null && !time2.equals("")){
+			ttime+=" and date(b.time1)<='"+time2+"' ";
+		}
+		try {
+			if(section.equals("0")){
+				if(ttime.equals("")){
+					sql="SELECT c.stuName 'name',a.sectionName 'sectionName',b.time1,b.time2,b.text,b.isqd,b.isqt,d.text 'dktext',d.start1,d.start2,d.end1,d.end2,d.run1,d.run2 FROM `section` a,`dklog` b,`ybuser` c,`dk` d WHERE a.sectionid=c.sectionid and b.ybuserid=c.id and d.dkid=b.dkid order by b.time1 desc limit ?,10";
+					ps2 = conn.prepareStatement(sql);
+					ps2.setInt(1, start);
+				}else{
+					sql = "SELECT c.stuName 'name',a.sectionName 'sectionName',b.time1,b.time2,b.text,b.isqd,b.isqt,d.text 'dktext',d.start1,d.start2,d.end1,d.end2,d.run1,d.run2 FROM `section` a,`dklog` b,`ybuser` c,`dk` d WHERE a.sectionid=c.sectionid and b.ybuserid=c.id and d.dkid=b.dkid :ttime order by b.time1 desc limit ?,10";
+					sql=sql.replaceAll(":ttime", ttime);
+					ps2 = conn.prepareStatement(sql);
+					ps2.setInt(1, start);
+				}
+			}else{
+				if(ttime.equals("")){
+					sql = "SELECT c.stuName 'name',a.sectionName 'sectionName',b.time1,b.time2,b.text,b.isqd,b.isqt,d.text 'dktext',d.start1,d.start2,d.end1,d.end2,d.run1,d.run2 FROM `section` a,`dklog` b,`ybuser` c,`dk` d WHERE a.sectionid=c.sectionid and b.ybuserid=c.id and d.dkid=b.dkid and c.sectionid=? order by b.time1 desc limit ?,10";
+					ps2 = conn.prepareStatement(sql);
+					ps2.setString(1, section);
+					ps2.setInt(2, start);
+				}else{
+					sql = "SELECT c.stuName 'name',a.sectionName 'sectionName',b.time1,b.time2,b.text,b.isqd,b.isqt,d.text 'dktext',d.start1,d.start2,d.end1,d.end2,d.run1,d.run2 FROM `section` a,`dklog` b,`ybuser` c,`dk` d WHERE a.sectionid=c.sectionid and b.ybuserid=c.id and d.dkid=b.dkid and c.sectionid=? :ttime order by b.time1 desc limit ?,10";
+					sql=sql.replaceAll(":ttime", ttime);
+					ps2 = conn.prepareStatement(sql);
+					ps2.setString(1, section);
+					ps2.setInt(2, start);
+				}
+			}
+			ResultSet rs2 = ps2.executeQuery();
+			ResultSetMetaData colname = rs2.getMetaData();
+			int colnum = colname.getColumnCount();
+			int i;
+			while(rs2.next()){
+				HashMap<String,String> map = new HashMap<String,String>();
+				for(i=1;i<=colnum;i++){
+					String cName = colname.getColumnName(i);
+					map.put(cName, rs2.getString(cName));
+				}
+				list.add(map);
+			}
+			jdbcBean.free(rs2, ps2, null);
+		} catch (SQLException e) {
+			// TODO 自动生成的 catch 块
+			this.setErrorMsg(e.getMessage());
+			e.printStackTrace();
+		}catch(Exception e){
+			this.setErrorMsg(e.getMessage());
 			e.printStackTrace();
 		}
 		return list;
@@ -505,6 +560,20 @@ public class YbUserDao extends YbUserStruct {
 	 */
 	public boolean isHaveAllow(String allow){
 		/*判断当前用户是否拥有某种权限*/
+		String sectionAllow = this.getSectionAllow();
+		String otherAllow = this.getOtherAllow();
+		if(sectionAllow != null && sectionAllow.indexOf("1,") >= 0){
+			return true;
+		}
+		if(otherAllow != null && otherAllow.indexOf("1,") >= 0){
+			return true;
+		}
+		if(sectionAllow != null && sectionAllow.indexOf(allow) >= 0){
+			return true;
+		}
+		if(otherAllow != null && otherAllow.indexOf(allow) >= 0){
+			return true;
+		}
 		return false;
 	}
 }

@@ -7,7 +7,7 @@
 		<meta name="Keywords" content=""/>
 		<meta name="Description" content=""/>
 		<meta http-equiv="Pragma" content="no-cache" />
-		<title>后台登陆程序</title>
+		<title>易班日常管理系统</title>
 		<link rel="stylesheet" type="text/css" href="Public/css/login.css"/>
 		<link rel="stylesheet" type="text/css" href="Public/js/alert/easydialog.css"/>
 		<script src="Public/js/alert/easydialog.min.js" type="text/javascript" charset="utf-8"></script>
