@@ -42,16 +42,12 @@ public class Yzm extends HttpServlet {
 		response.setDateHeader("Expires", 0);
 		OutputStream os = response.getOutputStream();
 		Verify img = new Verify();
-		boolean[] UserZh = {true,false};
-		int[] codeLen = {3,5};
-		int zh = img.mt_rand(0, 1);
+		boolean[] UserZh = {true,false,false,false};
+		int[] codeLen = {2,5,5,5};
+		int zh = img.mt_rand(0, UserZh.length-1);
 		img.setUseZh(UserZh[zh]);
 		img.setLength(codeLen[zh]);
-//		img.setUseImgBg(UserZh[img.mt_rand(0, 1)]);
-//		if(img.isUseImgBg()){
-//			img.setUseNoise(false);
-//			img.setUseCurve(false);
-//		}
+		
 		img.entry();
 		String[] str = img.getCodeStr();
 		String code = "";
