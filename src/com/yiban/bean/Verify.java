@@ -15,7 +15,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 public class Verify {
-	protected HashMap<String,Object> _config =	new HashMap<String,Object>();
+	protected HashMap<String,Object> _config = new HashMap<String,Object>();
 	protected BufferedImage image = null;
 	Graphics g = null;
 	private String  seKey = "houkunlin.cn";// 验证码加密密钥
