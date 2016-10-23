@@ -7,6 +7,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -78,11 +79,14 @@ public class YbUserDao extends YbUserStruct {
 	 */
 	public boolean findUser(String stuId){
 		int id = -1;
+		boolean re = false;
 		try{
 			if(StringCode.isInteger(stuId) == true){
 				id=Integer.parseInt(stuId);
+				re = this.findUser(id);
 			}else{
 				id=-1;
+				setErrorMsg("帐号类型不正确");
 			}
 		}catch(NumberFormatException e){
 			setErrorMsg("帐号类型不正确");
@@ -91,21 +95,24 @@ public class YbUserDao extends YbUserStruct {
 			setErrorMsg("帐号类型不正确");
 			e.printStackTrace();
 		}
-		return this.findUser(id);
+		return re;
 	}
 	/**
 	 * @param stuId
 	 * @return boolean
-	 * 通过学号找到一条用户信息
+	 * 通过学号找到第一个用户，并设置信息，找到返回true否则返回false
 	 */
 	public boolean findUser(int stuId){
 		boolean re = false;
 		String sql = "SELECT * FROM (SELECT a.*,b.sectionName,b.allow FROM `YbUser` a LEFT OUTER JOIN `section` b ON a.sectionId=b.sectionId ) d WHERE d.`stuId` = ?";
 		PreparedStatement ps2 = null;
+		ResultSet rs = null;
+		Logger log = Logger.getLogger(this.getClass().getName());
 		try {
 			ps2 = conn.prepareStatement(sql);
 			ps2.setString(1, Integer.toString(stuId));
-			ResultSet rs = ps2.executeQuery();
+			log.info("查找用户："+ps2.toString());
+			rs = ps2.executeQuery();
 			if(rs.next()){
 				re = true;
 				this.setId(rs.getString("id"));
@@ -131,22 +138,22 @@ public class YbUserDao extends YbUserStruct {
 				this.setSectionName(rs.getString("sectionName"));
 				this.setSectionAllow(rs.getString("allow"));
 			}
-			jdbcBean.free(rs, ps2, null);
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
 			setErrorMsg(e.getMessage());
-			System.out.println(ps2);
-			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO 自动生成的 catch 块
 			setErrorMsg(e.getMessage());
 			e.printStackTrace();
 		}
+		finally{
+			jdbcBean.free(rs, ps2, null);
+		}
 		return re;
 	}
 	/**
-	 * @param isQd
+	 * @param isQd 判断是签到时间还是签退时间
 	 * @return HashMap<String,String>
 	 * 找到当前的签到时间段，并返回
 	 */
@@ -226,7 +233,7 @@ public class YbUserDao extends YbUserStruct {
 		return re;
 	}
 	/**
-	 * @param nowdk
+	 * @param nowdk 传入当前时间段打卡时间信息
 	 * @return boolean
 	 * 判断一个打卡时间段是否存在签到记录
 	 */
@@ -259,7 +266,7 @@ public class YbUserDao extends YbUserStruct {
 		return re;
 	}
 	/**
-	 * @param qtText
+	 * @param qtText 签退内容
 	 * @return boolean
 	 * 打卡签退
 	 */
@@ -302,7 +309,7 @@ public class YbUserDao extends YbUserStruct {
 		return re;
 	}
 	/**
-	 * @param request
+	 * @param request 请求信息 HttpServletRequest ，更新登录信息
 	 * 登录时更新当前用户的登录信息
 	 */
 	public void updateLoginInfo(HttpServletRequest request){
@@ -326,7 +333,7 @@ public class YbUserDao extends YbUserStruct {
 		}
 	}
 	/**
-	 * @return
+	 * @return HashMap<String,String> 返回打卡总数统计
 	 * 获取当前用户的所有签到和签退统计数
 	 */
 	public HashMap<String,String> getDKAllCount(){
@@ -355,7 +362,7 @@ public class YbUserDao extends YbUserStruct {
 		return dkcount;
 	}
 	/**
-	 * @param dateMonth
+	 * @param dateMonth 传入月份，找出这个月的打卡日期信息
 	 * @return ArrayList<String>
 	 * 传入一个月份信息，返回这个月都有哪天有签到记录信息
 	 */
@@ -391,8 +398,8 @@ public class YbUserDao extends YbUserStruct {
 		return list;
 	}
 	/**
-	 * @param toDate
-	 * @return ArrayList<HashMap<String,String>>
+	 * @param toDate 传入日期，找到这天的具体打卡信息
+	 * @return ArrayList<HashMap<String,String>> 返回打卡信息键值对数组
 	 * 传入一个日期参数，返回这个日期的签到记录
 	 */
 	public ArrayList<HashMap<String,String>> getDKDateLog(String toDate,String page){
@@ -455,6 +462,10 @@ public class YbUserDao extends YbUserStruct {
 		}
 		return list;
 	}
+	/**
+	 * @return ArrayList<HashMap<String,String>> 返回部门键值对数组
+	 * 返回所有部门信息
+	 */
 	public ArrayList<HashMap<String,String>> getSection(){
 		ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
 		String sql;
@@ -485,6 +496,14 @@ public class YbUserDao extends YbUserStruct {
 		}
 		return list;
 	}
+	/**
+	 * @param page 页数，
+	 * @param section 部门id
+	 * @param time1 开始时间
+	 * @param time2 结束时间
+	 * @return ArrayList<HashMap<String,String>>
+	 * 查找一个时间段内的某个部门的打卡信息，更具页数显示相关页信息
+	 */
 	public ArrayList<HashMap<String,String>> searchOtherDK(String page,String section,String time1,String time2){
 		if(!this.isHaveAllow("21,")){
 			this.setErrorMsg("没有权限访问该选项！");
@@ -554,7 +573,7 @@ public class YbUserDao extends YbUserStruct {
 		return list;
 	}
 	/**
-	 * @param allow
+	 * @param allow 权限代码
 	 * @return boolean
 	 * 传入权限代码，判断这个用户是否有相关权限，有则返回true
 	 */

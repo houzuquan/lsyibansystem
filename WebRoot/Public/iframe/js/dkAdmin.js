@@ -75,8 +75,8 @@ function dateView(year, month, tableElmid) {//绘制日期表格
 	var info = document.getElementById(tableElmid[1]);
 	info.style.height = table.parentElement.offsetHeight + 'px';
 	info.parentElement.style.width = (table.offsetWidth + info.offsetWidth + 10) + 'px';
-	getDKDateLog(toDayDate, tableElmid[2]);
-
+//	getDKDateLog(toDayDate, tableElmid[2]);
+	document.getElementById('D'+toDayDate).click();
 }
 
 function createSelectInfo(year, month, tableElmid, selectElmid) {//创建下拉框内容并监听选择内容改变时间
