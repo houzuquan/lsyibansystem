@@ -22,7 +22,7 @@ public class YbUserDao extends YbUserStruct {
 		try{
 			conn=jdbcBean.getConnection();
 		} catch (SQLException e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} catch(Exception e){
@@ -32,7 +32,7 @@ public class YbUserDao extends YbUserStruct {
 	}
 	/**
 	 * @param errorMsg
-	 * ÉèÖÃ´íÎóĞÅÏ¢£¬¹²Íâ²¿µ÷ÓÃ
+	 * è®¾ç½®é”™è¯¯ä¿¡æ¯ï¼Œå…±å¤–éƒ¨è°ƒç”¨
 	 */
 	public void setErrorMsg(String errorMsg) {
 		ErrorMsg = errorMsg;
@@ -41,7 +41,7 @@ public class YbUserDao extends YbUserStruct {
 	}
 	/**
 	 * @return ErrorMsg
-	 * ·µ»Ø´íÎóĞÅÏ¢
+	 * è¿”å›é”™è¯¯ä¿¡æ¯
 	 */
 	public String getErrorMsg() {
 		return ErrorMsg;
@@ -50,31 +50,31 @@ public class YbUserDao extends YbUserStruct {
 	 * @param stuId
 	 * @param pass
 	 * @return boolean
-	 * ´«ÈëÑ§ºÅºÍÃÜÂë£¬ÅĞ¶ÏÊÇ·ñÄÜ¹»µÇÂ¼£¬µÇÂ¼³É¹¦·µ»Øtrue·ñÔò·µ»Øfalse
+	 * ä¼ å…¥å­¦å·å’Œå¯†ç ï¼Œåˆ¤æ–­æ˜¯å¦èƒ½å¤Ÿç™»å½•ï¼Œç™»å½•æˆåŠŸè¿”å›trueå¦åˆ™è¿”å›false
 	 */
 	public boolean isLogin(String stuId,String pass){
 		if(stuId == null || pass == null || stuId.equals("") == true || pass.equals("") == true ){
-			setErrorMsg("ÕÊºÅ»òÃÜÂë²»ÄÜÎª¿Õ");
+			setErrorMsg("å¸å·æˆ–å¯†ç ä¸èƒ½ä¸ºç©º");
 			return false;
 		}
 		if(true == this.findUser(stuId)){
 			if(this.getIsLogin().equals("0")){
-				setErrorMsg("¸ÃÓÃ»§²»¿ÉµÇÂ¼");
+				setErrorMsg("è¯¥ç”¨æˆ·ä¸å¯ç™»å½•");
 			}else if(true == StringCode.MD5(pass).equals(this.getPass())){
 				return true;
 			}else{
-				setErrorMsg("ÕÊºÅ»òÃÜÂë´íÎó");
+				setErrorMsg("å¸å·æˆ–å¯†ç é”™è¯¯");
 			}
 			return false;
 		}else{
-			setErrorMsg("²»´æÔÚÕÊºÅ");
+			setErrorMsg("ä¸å­˜åœ¨å¸å·");
 			return false;
 		}
 	}
 	/**
 	 * @param stuId
 	 * @return boolean
-	 * Í¨¹ıÑ§ºÅÕÒµ½µÚÒ»¸öÓÃ»§£¬²¢ÉèÖÃĞÅÏ¢£¬ÕÒµ½·µ»Øtrue·ñÔò·µ»Øfalse
+	 * é€šè¿‡å­¦å·æ‰¾åˆ°ç¬¬ä¸€ä¸ªç”¨æˆ·ï¼Œå¹¶è®¾ç½®ä¿¡æ¯ï¼Œæ‰¾åˆ°è¿”å›trueå¦åˆ™è¿”å›false
 	 */
 	public boolean findUser(String stuId){
 		int id = -1;
@@ -85,10 +85,10 @@ public class YbUserDao extends YbUserStruct {
 				id=-1;
 			}
 		}catch(NumberFormatException e){
-			setErrorMsg("ÕÊºÅÀàĞÍ²»ÕıÈ·");
+			setErrorMsg("å¸å·ç±»å‹ä¸æ­£ç¡®");
 			e.printStackTrace();
 		}catch(Exception e){
-			setErrorMsg("ÕÊºÅÀàĞÍ²»ÕıÈ·");
+			setErrorMsg("å¸å·ç±»å‹ä¸æ­£ç¡®");
 			e.printStackTrace();
 		}
 		return this.findUser(id);
@@ -96,7 +96,7 @@ public class YbUserDao extends YbUserStruct {
 	/**
 	 * @param stuId
 	 * @return boolean
-	 * Í¨¹ıÑ§ºÅÕÒµ½Ò»ÌõÓÃ»§ĞÅÏ¢
+	 * é€šè¿‡å­¦å·æ‰¾åˆ°ä¸€æ¡ç”¨æˆ·ä¿¡æ¯
 	 */
 	public boolean findUser(int stuId){
 		boolean re = false;
@@ -133,13 +133,13 @@ public class YbUserDao extends YbUserStruct {
 			}
 			jdbcBean.free(rs, ps2, null);
 		} catch (SQLException e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			setErrorMsg(e.getMessage());
 			System.out.println(ps2);
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			setErrorMsg(e.getMessage());
 			e.printStackTrace();
 		}
@@ -148,16 +148,16 @@ public class YbUserDao extends YbUserStruct {
 	/**
 	 * @param isQd
 	 * @return HashMap<String,String>
-	 * ÕÒµ½µ±Ç°µÄÇ©µ½Ê±¼ä¶Î£¬²¢·µ»Ø
+	 * æ‰¾åˆ°å½“å‰çš„ç­¾åˆ°æ—¶é—´æ®µï¼Œå¹¶è¿”å›
 	 */
 	public HashMap<String,String> findNowDk(boolean isQd){
-		/*´«ÈëÒ»¸ö²ÎÊı£¬ÅĞ¶ÏÊÇ»ñÈ¡Ç©µ½Ê±¼ä»¹ÊÇ»ñÈ¡Ç©ÍËÊ±¼ä*/
+		/*ä¼ å…¥ä¸€ä¸ªå‚æ•°ï¼Œåˆ¤æ–­æ˜¯è·å–ç­¾åˆ°æ—¶é—´è¿˜æ˜¯è·å–ç­¾é€€æ—¶é—´*/
 		HashMap<String,String> dk = new HashMap<String,String>();
 		String NowDkSql;
 		if(isQd){
-			NowDkSql ="select * from `dk` where curtime() >= start1 and curtime() < run2 and isrun=1";//»ñÈ¡Ç©µ½Ê±¼ä
+			NowDkSql ="select * from `dk` where curtime() >= start1 and curtime() < run2 and isrun=1";//è·å–ç­¾åˆ°æ—¶é—´
 		}else{
-			NowDkSql ="select * from `dk` where curtime() >= end1 and curtime() <= end2 and isrun=1";//»ñÈ¡Ç©ÍËÊ±¼ä
+			NowDkSql ="select * from `dk` where curtime() >= end1 and curtime() <= end2 and isrun=1";//è·å–ç­¾é€€æ—¶é—´
 		}
 		try {
 			ps = conn.prepareStatement(NowDkSql);
@@ -175,10 +175,10 @@ public class YbUserDao extends YbUserStruct {
 			}
 			jdbcBean.free(rs, ps, null);
 		} catch (SQLException e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			e.printStackTrace();
 			return null;
 		}
@@ -186,18 +186,18 @@ public class YbUserDao extends YbUserStruct {
 	}
 	/**
 	 * @return boolean
-	 * ´ò¿¨Ç©µ½
+	 * æ‰“å¡ç­¾åˆ°
 	 */
 	public boolean dk_qd(){
-		/*½øĞĞ´ò¿¨Ç©µ½²Ù×÷*/
+		/*è¿›è¡Œæ‰“å¡ç­¾åˆ°æ“ä½œ*/
 		boolean re = false;
 		HashMap<String,String> nowdk = this.findNowDk(true);
 		if(nowdk == null || nowdk.isEmpty() == true){
-			setErrorMsg("²»ÔÚ´ò¿¨Ê±¼äÄÚ£¡");
+			setErrorMsg("ä¸åœ¨æ‰“å¡æ—¶é—´å†…ï¼");
 			return false;
 		}
 		if(this.dk_isqd(nowdk) == true){
-			setErrorMsg("Ç©µ½Ê§°Ü£¬µ±Ç°Ê±¼ä¶ÎÒÑ¾­Ç©µ½¹ıÁË£¡");
+			setErrorMsg("ç­¾åˆ°å¤±è´¥ï¼Œå½“å‰æ—¶é—´æ®µå·²ç»ç­¾åˆ°è¿‡äº†ï¼");
 			return false;
 		}
 		try {
@@ -210,16 +210,16 @@ public class YbUserDao extends YbUserStruct {
 			if(insertId > 0){
 				re = true;
 			}else{
-				setErrorMsg("Ç©µ½Ê§°Ü£¬ÇëÉÔºòÖØÊÔ£¡");
+				setErrorMsg("ç­¾åˆ°å¤±è´¥ï¼Œè¯·ç¨å€™é‡è¯•ï¼");
 				re = false;
 			}
-			jdbcBean.addLog(this.getId(), this.getStuId(), this.getStuName(), "qd",this.getStuId() + this.getStuName()+"Ç©µ½£»½á¹û£º"+re);
+			jdbcBean.addLog(this.getId(), this.getStuId(), this.getStuName(), "qd",this.getStuId() + this.getStuName()+"ç­¾åˆ°ï¼›ç»“æœï¼š"+re);
 			jdbcBean.free(null, ps2, null);
 		} catch (SQLException e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			setErrorMsg(e.getMessage());
 			e.printStackTrace();
 		}
@@ -228,13 +228,13 @@ public class YbUserDao extends YbUserStruct {
 	/**
 	 * @param nowdk
 	 * @return boolean
-	 * ÅĞ¶ÏÒ»¸ö´ò¿¨Ê±¼ä¶ÎÊÇ·ñ´æÔÚÇ©µ½¼ÇÂ¼
+	 * åˆ¤æ–­ä¸€ä¸ªæ‰“å¡æ—¶é—´æ®µæ˜¯å¦å­˜åœ¨ç­¾åˆ°è®°å½•
 	 */
 	public boolean dk_isqd(HashMap<String,String> nowdk){
-		/*ÅĞ¶Ïµ±Ç°Ê±¼ä¶ÎÊÇ·ñ´æÔÚ´ò¿¨Ç©µ½ĞÅÏ¢*/
+		/*åˆ¤æ–­å½“å‰æ—¶é—´æ®µæ˜¯å¦å­˜åœ¨æ‰“å¡ç­¾åˆ°ä¿¡æ¯*/
 		boolean re = false;
 		if(nowdk == null || nowdk.isEmpty() == true){
-			setErrorMsg("²»ÔÚ´ò¿¨Ê±¼äÄÚ£¡");
+			setErrorMsg("ä¸åœ¨æ‰“å¡æ—¶é—´å†…ï¼");
 			return false;
 		}
 		String dkid = nowdk.get("dkid");
@@ -248,12 +248,12 @@ public class YbUserDao extends YbUserStruct {
 			if(rs2.next()){
 				re = true;
 			}else{
-				setErrorMsg("µ±Ç°Ê±¼ä¶ÎÃ»ÓĞ´ò¿¨Ç©µ½¼ÇÂ¼£¡");
+				setErrorMsg("å½“å‰æ—¶é—´æ®µæ²¡æœ‰æ‰“å¡ç­¾åˆ°è®°å½•ï¼");
 				re = false;
 			}
 			jdbcBean.free(rs2, ps2, null);
 		} catch (SQLException e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			e.printStackTrace();
 		}
 		return re;
@@ -261,14 +261,14 @@ public class YbUserDao extends YbUserStruct {
 	/**
 	 * @param qtText
 	 * @return boolean
-	 * ´ò¿¨Ç©ÍË
+	 * æ‰“å¡ç­¾é€€
 	 */
 	public boolean dk_qt(String qtText){
-		/*½øĞĞ´ò¿¨Ç©ÍË²Ù×÷*/
+		/*è¿›è¡Œæ‰“å¡ç­¾é€€æ“ä½œ*/
 		boolean re = false;
 		HashMap<String,String> nowdk = this.findNowDk(false);
 		if(nowdk == null || nowdk.isEmpty() == true){
-			setErrorMsg("²»ÔÚ´ò¿¨Ç©ÍËÊ±¼äÄÚ£¡");
+			setErrorMsg("ä¸åœ¨æ‰“å¡ç­¾é€€æ—¶é—´å†…ï¼");
 			return false;
 		}
 		try {
@@ -286,16 +286,16 @@ public class YbUserDao extends YbUserStruct {
 			if(insertId > 0){
 				re = true;
 			}else{
-				setErrorMsg("Ç©ÍËÊ§°Ü£¬ÇëÉÔºòÖØÊÔ£¡\\nÔ­Òò£º»òĞíÄú±¾´ÎÖµ°àÎ´Ç©µ½£¡");
+				setErrorMsg("ç­¾é€€å¤±è´¥ï¼Œè¯·ç¨å€™é‡è¯•ï¼\\nåŸå› ï¼šæˆ–è®¸æ‚¨æœ¬æ¬¡å€¼ç­æœªç­¾åˆ°ï¼");
 				re = false;
 			}
-			jdbcBean.addLog(this.getId(), this.getStuId(), this.getStuName(), "qt",this.getStuId() + this.getStuName()+"Ç©ÍË£»½á¹û£º"+re+"£»Ç©ÍËÄÚÈİ£º"+qtText);
+			jdbcBean.addLog(this.getId(), this.getStuId(), this.getStuName(), "qt",this.getStuId() + this.getStuName()+"ç­¾é€€ï¼›ç»“æœï¼š"+re+"ï¼›ç­¾é€€å†…å®¹ï¼š"+qtText);
 			jdbcBean.free(null, ps2, null);
 		} catch (SQLException e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			setErrorMsg(e.getMessage());
 			e.printStackTrace();
 		}
@@ -303,10 +303,10 @@ public class YbUserDao extends YbUserStruct {
 	}
 	/**
 	 * @param request
-	 * µÇÂ¼Ê±¸üĞÂµ±Ç°ÓÃ»§µÄµÇÂ¼ĞÅÏ¢
+	 * ç™»å½•æ—¶æ›´æ–°å½“å‰ç”¨æˆ·çš„ç™»å½•ä¿¡æ¯
 	 */
 	public void updateLoginInfo(HttpServletRequest request){
-		/*½øĞĞµÇÂ¼²Ù×÷ÊÇ¸üĞÂµÇÂ¼Êı¾İ*/
+		/*è¿›è¡Œç™»å½•æ“ä½œæ˜¯æ›´æ–°ç™»å½•æ•°æ®*/
 		String Sql = "update `YbUser` set `loginTime`=now(),`loginIP`=?,`loginUa`=?,`loginNum`=`loginNum`+1 where `id`=?";
 		PreparedStatement ps2;
 		try {
@@ -315,22 +315,22 @@ public class YbUserDao extends YbUserStruct {
 			ps2.setString(2, request.getHeader("user-agent"));
 			ps2.setString(3, this.getId());
 			ps2.executeUpdate();
-			jdbcBean.addLog(this.getId(), this.getStuId(), this.getStuName(), "login",this.getStuId() + this.getStuName()+"µÇÂ¼ÏµÍ³£»IP£º"+StringCode.getRealIp(request)+"£»UA£º"+request.getHeader("user-agent"));
+			jdbcBean.addLog(this.getId(), this.getStuId(), this.getStuName(), "login",this.getStuId() + this.getStuName()+"ç™»å½•ç³»ç»Ÿï¼›IPï¼š"+StringCode.getRealIp(request)+"ï¼›UAï¼š"+request.getHeader("user-agent"));
 			jdbcBean.free(null, ps2, null);
 		}catch(SQLException e){
 			setErrorMsg(e.getMessage());
 		}catch (Exception e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			setErrorMsg(e.getMessage());
 			e.printStackTrace();
 		}
 	}
 	/**
 	 * @return
-	 * »ñÈ¡µ±Ç°ÓÃ»§µÄËùÓĞÇ©µ½ºÍÇ©ÍËÍ³¼ÆÊı
+	 * è·å–å½“å‰ç”¨æˆ·çš„æ‰€æœ‰ç­¾åˆ°å’Œç­¾é€€ç»Ÿè®¡æ•°
 	 */
 	public HashMap<String,String> getDKAllCount(){
-		/*»ñÈ¡µ±Ç°ÓÃ»§µÄ´ò¿¨ÊıÁ¿Í³¼Æ*/
+		/*è·å–å½“å‰ç”¨æˆ·çš„æ‰“å¡æ•°é‡ç»Ÿè®¡*/
 		HashMap<String,String> dkcount = new HashMap<String,String>();
 		dkcount.put("qdNum", "0");
 		dkcount.put("qtNum", "0");
@@ -348,7 +348,7 @@ public class YbUserDao extends YbUserStruct {
 			}
 			jdbcBean.free(rs2, ps2, null);
 		} catch (SQLException e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			this.setErrorMsg(e.getMessage());
 			e.printStackTrace();
 		}
@@ -357,10 +357,10 @@ public class YbUserDao extends YbUserStruct {
 	/**
 	 * @param dateMonth
 	 * @return ArrayList<String>
-	 * ´«ÈëÒ»¸öÔÂ·İĞÅÏ¢£¬·µ»ØÕâ¸öÔÂ¶¼ÓĞÄÄÌìÓĞÇ©µ½¼ÇÂ¼ĞÅÏ¢
+	 * ä¼ å…¥ä¸€ä¸ªæœˆä»½ä¿¡æ¯ï¼Œè¿”å›è¿™ä¸ªæœˆéƒ½æœ‰å“ªå¤©æœ‰ç­¾åˆ°è®°å½•ä¿¡æ¯
 	 */
 	public ArrayList<String> getDKMonthHaveLog(String dateMonth){
-		/*Í¨¹ı´«ÈëÒ»¸öÔÂ·İ£¬»ñÈ¡Õâ¸öÔÂ·İ¶¼ÓĞÄÄĞ©ÈÕ×ÓÓĞÇ©µ½ÄÚÈİ£¬²¢·µ»ØÓĞÇ©µ½ÄÚÈİµÄÈÕÆÚ*/
+		/*é€šè¿‡ä¼ å…¥ä¸€ä¸ªæœˆä»½ï¼Œè·å–è¿™ä¸ªæœˆä»½éƒ½æœ‰å“ªäº›æ—¥å­æœ‰ç­¾åˆ°å†…å®¹ï¼Œå¹¶è¿”å›æœ‰ç­¾åˆ°å†…å®¹çš„æ—¥æœŸ*/
 		ArrayList<String> list = new ArrayList<String>();
 		String sql;
 		PreparedStatement ps2;
@@ -384,7 +384,7 @@ public class YbUserDao extends YbUserStruct {
 			}
 			jdbcBean.free(rs2, ps2, null);
 		} catch (SQLException e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			this.setErrorMsg(e.getMessage());
 			e.printStackTrace();
 		}
@@ -393,15 +393,15 @@ public class YbUserDao extends YbUserStruct {
 	/**
 	 * @param toDate
 	 * @return ArrayList<HashMap<String,String>>
-	 * ´«ÈëÒ»¸öÈÕÆÚ²ÎÊı£¬·µ»ØÕâ¸öÈÕÆÚµÄÇ©µ½¼ÇÂ¼
+	 * ä¼ å…¥ä¸€ä¸ªæ—¥æœŸå‚æ•°ï¼Œè¿”å›è¿™ä¸ªæ—¥æœŸçš„ç­¾åˆ°è®°å½•
 	 */
 	public ArrayList<HashMap<String,String>> getDKDateLog(String toDate,String page){
-		/*´«ÈëÒ»¸öÈÕÆÚ£¬»ñÈ¡Õâ¸öÈÕÆÚµÄ¾ßÌå´ò¿¨Ç©µ½ĞÅÏ¢*/
+		/*ä¼ å…¥ä¸€ä¸ªæ—¥æœŸï¼Œè·å–è¿™ä¸ªæ—¥æœŸçš„å…·ä½“æ‰“å¡ç­¾åˆ°ä¿¡æ¯*/
 		ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
 		String sql;
 		PreparedStatement ps2 = null;
 		try {
-			if(page == null){//°´ÈÕÆÚ²éÕÒ
+			if(page == null){//æŒ‰æ—¥æœŸæŸ¥æ‰¾
 				if(toDate == null || toDate.equals("")){
 					sql = "select * from `viewdklog` where `ybuserid`=? and date(`time1`)=curdate()";
 					ps2 = conn.prepareStatement(sql);
@@ -412,7 +412,7 @@ public class YbUserDao extends YbUserStruct {
 					ps2.setString(1, this.getId());
 					ps2.setString(2, toDate);
 				}
-			}else if(toDate == null){//·ÖÒ³ÏÔÊ¾
+			}else if(toDate == null){//åˆ†é¡µæ˜¾ç¤º
 				if(page == null || page.equals("")){
 					sql = "select * from `viewdklog` where `ybuserid`=? order by `time1` desc limit 0,10";
 					ps2 = conn.prepareStatement(sql);
@@ -443,10 +443,10 @@ public class YbUserDao extends YbUserStruct {
 				}
 				list.add(map);
 			}
-			jdbcBean.addLog(this.getId(), this.getStuId(), this.getStuName(), "getDKDateLog",this.getStuId() + this.getStuName()+"»ñÈ¡ÈÕÆÚ£º"+toDate+"´ò¿¨ÄÚÈİ");
+			jdbcBean.addLog(this.getId(), this.getStuId(), this.getStuName(), "getDKDateLog",this.getStuId() + this.getStuName()+"è·å–æ—¥æœŸï¼š"+toDate+"æ‰“å¡å†…å®¹");
 			jdbcBean.free(rs2, ps2, null);
 		} catch (SQLException e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			this.setErrorMsg(e.getMessage());
 			e.printStackTrace();
 		}catch(Exception e){
@@ -476,7 +476,7 @@ public class YbUserDao extends YbUserStruct {
 			}
 			jdbcBean.free(rs2, ps2, null);
 		} catch (SQLException e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			this.setErrorMsg(e.getMessage());
 			e.printStackTrace();
 		}catch(Exception e){
@@ -487,7 +487,7 @@ public class YbUserDao extends YbUserStruct {
 	}
 	public ArrayList<HashMap<String,String>> searchOtherDK(String page,String section,String time1,String time2){
 		if(!this.isHaveAllow("21,")){
-			this.setErrorMsg("Ã»ÓĞÈ¨ÏŞ·ÃÎÊ¸ÃÑ¡Ïî£¡");
+			this.setErrorMsg("æ²¡æœ‰æƒé™è®¿é—®è¯¥é€‰é¡¹ï¼");
 			return null;
 		}
 		ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
@@ -544,7 +544,7 @@ public class YbUserDao extends YbUserStruct {
 			}
 			jdbcBean.free(rs2, ps2, null);
 		} catch (SQLException e) {
-			// TODO ×Ô¶¯Éú³ÉµÄ catch ¿é
+			// TODO è‡ªåŠ¨ç”Ÿæˆçš„ catch å—
 			this.setErrorMsg(e.getMessage());
 			e.printStackTrace();
 		}catch(Exception e){
@@ -556,10 +556,10 @@ public class YbUserDao extends YbUserStruct {
 	/**
 	 * @param allow
 	 * @return boolean
-	 * ´«ÈëÈ¨ÏŞ´úÂë£¬ÅĞ¶ÏÕâ¸öÓÃ»§ÊÇ·ñÓĞÏà¹ØÈ¨ÏŞ£¬ÓĞÔò·µ»Øtrue
+	 * ä¼ å…¥æƒé™ä»£ç ï¼Œåˆ¤æ–­è¿™ä¸ªç”¨æˆ·æ˜¯å¦æœ‰ç›¸å…³æƒé™ï¼Œæœ‰åˆ™è¿”å›true
 	 */
 	public boolean isHaveAllow(String allow){
-		/*ÅĞ¶Ïµ±Ç°ÓÃ»§ÊÇ·ñÓµÓĞÄ³ÖÖÈ¨ÏŞ*/
+		/*åˆ¤æ–­å½“å‰ç”¨æˆ·æ˜¯å¦æ‹¥æœ‰æŸç§æƒé™*/
 		String sectionAllow = this.getSectionAllow();
 		String otherAllow = this.getOtherAllow();
 		if(sectionAllow != null && sectionAllow.indexOf("1,") >= 0){

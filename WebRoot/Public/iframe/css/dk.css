@@ -5,8 +5,7 @@
 	box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
 	width: 100%;
 	height: 100%;
 	background: rgb(250, 250, 250);
@@ -56,7 +55,8 @@ a {
 	background: #6A6AFF;
 	color: #D2E9FF;
 }
-#content #nav li.active:hover{
+
+#content #nav li.active:hover {
 	background: #6A6AFF;
 	color: #D2E9FF;
 }
@@ -70,6 +70,7 @@ a {
 	background: #00E3E3;
 	color: #0000E3;
 }
+
 #qian #btnQian {
 	display: block;
 	font-weight: 900;
@@ -81,21 +82,26 @@ a {
 	line-height: 300px;
 	border-radius: 50%;
 	box-shadow: 0 0 10px #00DB00;
-	background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(	#0066CC), to(rgba(255, 0, 0, 1)));
+	background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#0066CC),
+		to(rgba(255, 0, 0, 1)));
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	margin-left: 150px;
 	margin-top: 60px;
 	cursor: pointer;
 }
-#qian #btnQian:hover{
+
+#qian #btnQian:hover {
 	box-shadow: 0 0 10px #66B3FF;
-	background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(	#0066CC), to(#D2E9FF));
+	background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#0066CC),
+		to(#D2E9FF));
 }
-#out{
+
+#out {
 	display: none;
 }
-#out textarea{
+
+#out textarea {
 	display: block;
 	resize: none;
 	width: 500px;
@@ -110,7 +116,8 @@ a {
 	font-weight: 900;
 	box-shadow: 0 0 10px #00E3E3 inset;
 }
-#out input[type=button]{
+
+#out input[type=button] {
 	display: block;
 	width: 300px;
 	padding: 10px 0;
@@ -123,7 +130,11 @@ a {
 	border-radius: 5px;
 	border: 2px dotted #97CBFF;
 }
-#out input[type=button]:hover{
+
+#out input[type=button]:hover {
 	background: #8CEA00;
 }
-.bodyBox {}
+
+.bodyBox {
+	
+}

@@ -1,44 +1,53 @@
-*{
+* {
 	padding: 0;
 	margin: 0;
 	position: relative;
 	box-sizing: border-box;
 }
-html,body{
+
+html, body {
 	width: 100%;
 	height: 100%;
 	min-width: 1002px;
-	background: rgb(250,250,250);
+	background: rgb(250, 250, 250);
 }
-a{
+
+a {
 	text-decoration: none;
 }
-.clear{
+
+.clear {
 	clear: both;
 	height: 0;
 }
-#header{
+
+#header {
 	width: 100%;
 	height: 70px;
-	background: rgb(0,165,237);
+	background: rgb(0, 165, 237);
 }
-#header #logo,#header #headerNav{
+
+#header #logo, #header #headerNav {
 	float: left;
 	height: 100%;
 }
-#header #logo img{
+
+#header #logo img {
 	height: 100%;
 	cursor: pointer;
 }
-#header #headerNav{
-	width: calc( 100% - 350px);
+
+#header #headerNav {
+	width: calc(100% - 350px);
 }
-#header #headerNav>#userInfo{
+
+#header #headerNav>#userInfo {
 	list-style: none;
 	height: 100%;
 	float: right;
 }
-#header #headerNav>#userInfo>li{
+
+#header #headerNav>#userInfo>li {
 	float: left;
 	font-size: 14pt;
 	font-weight: 900;
@@ -47,13 +56,15 @@ a{
 	width: 150px;
 	line-height: 35px;
 	cursor: pointer;
-	color:#F0F8FF;
+	color: #F0F8FF;
 }
-#header #headerNav>#userInfo>li:hover{
-	background:#00FFFF;
+
+#header #headerNav>#userInfo>li:hover {
+	background: #00FFFF;
 	color: #4A4AFF;
 }
-#header #headerNav>#userInfo>li:last-of-type{
+
+#header #headerNav>#userInfo>li:last-of-type {
 	background: red;
 	width: 100px;
 	text-align: center;
@@ -62,77 +73,84 @@ a{
 	font-size: 18pt;
 	color: white;
 }
-#header #headerNav>#userInfo>li:last-of-type:hover{
+
+#header #headerNav>#userInfo>li:last-of-type:hover {
 	background: white;
 	color: red;
 }
 
-
-#header #headerNav>#userInfo>li>ul{
+#header #headerNav>#userInfo>li>ul {
 	display: none;
 	list-style: none;
 	width: 100%;
-	background: rgb(0,165,237);
+	background: rgb(0, 165, 237);
 	z-index: 99;
 }
-#header #headerNav>#userInfo>li>ul li{
+
+#header #headerNav>#userInfo>li>ul li {
 	line-height: 35pt;
-	color:#0000C6;
-	background:#ECECFF;
+	color: #0000C6;
+	background: #ECECFF;
 }
-#header #headerNav>#userInfo>li>ul li:hover{
+
+#header #headerNav>#userInfo>li>ul li:hover {
 	color: #F0F8FF;
-	background: rgb(0,165,237);
+	background: rgb(0, 165, 237);
 }
-#header #headerNav>#userInfo>li:hover>ul{
+
+#header #headerNav>#userInfo>li:hover>ul {
 	display: block;
 }
 
-
-
-
-
-#section{
+#section {
 	width: 100%;
 	min-height: calc(100% - 70px);
 }
-#section>#content{
+
+#section>#content {
 	width: calc(100% - 200px);
-	height:100%;
+	height: 100%;
 	margin-left: 200px;
 }
-#section>#leftNav{
+
+#section>#leftNav {
 	width: 200px;
-	background: rgb(240,240,240);
+	background: rgb(240, 240, 240);
 	position: absolute;
 	top: 0;
 	left: 0;
 	bottom: 0;
 	border-right: 1px solid #87CEFA;
 }
-#section>#leftNav>#Lnav{
+
+#section>#leftNav>#Lnav {
 	list-style: none;
 }
-#section>#leftNav>#Lnav>li{
+
+#section>#leftNav>#Lnav>li {
 	line-height: 30pt;
 	padding-left: 16pt;
 	cursor: pointer;
 	font-weight: 900;
 }
-#section>#leftNav>#Lnav>li:hover{
-	background:  #DCDCDC;
+
+#section>#leftNav>#Lnav>li:hover {
+	background: #DCDCDC;
 	color: #8470FF;
 }
-#section>#leftNav>#Lnav>li.active{
-	background:  #DCDCDC;
+
+#section>#leftNav>#Lnav>li.active {
+	background: #DCDCDC;
 	color: #8470FF;
 }
-#section>#leftNav>#Lnav>li.hr{
-	border-top: 1px solid rgb(220,220,220);
+
+#section>#leftNav>#Lnav>li.hr {
+	border-top: 1px solid rgb(220, 220, 220);
 	width: 80%;
 	margin: 5px auto;
 }
-#section>#content>#iContent{
+
+#section>#content>#iContent {
 	width: 100%;
 	height: 100%;
 	border: 0;

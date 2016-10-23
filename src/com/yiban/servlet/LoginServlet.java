@@ -68,14 +68,14 @@ public class LoginServlet extends HttpServlet {
 			pass = request.getParameter("pass");
 			yzmText = request.getParameter("yzmText");
 			YzmCode = (String)session.getAttribute("YzmCode");
-			Object YzmCodeNowTime = session.getAttribute("YzmCodeNowTime");//ÑéÖ¤ÂëÉú³ÉÊ±¼ä
+			Object YzmCodeNowTime = session.getAttribute("YzmCodeNowTime");//éªŒè¯ç ç”Ÿæˆæ—¶é—´
 			long nowTime = System.currentTimeMillis();
 			YbUserDao user = new YbUserDao();
-	//		System.out.println("ÓÃ»§Ãû£º"+stuId+"£»ÃÜÂë£º"+pass);
+	//		System.out.println("ç”¨æˆ·åï¼š"+stuId+"ï¼›å¯†ç ï¼š"+pass);
 			if(YzmCode == null || yzmText == null){
-				out.print("{\"code\":200,\"Msg\":\"²ÎÊı´íÎó\"}");
+				out.print("{\"code\":200,\"Msg\":\"å‚æ•°é”™è¯¯\"}");
 			}else if(YzmCodeNowTime == null || (nowTime - (long)YzmCodeNowTime) > 300*1000){
-				out.print("{\"code\":200,\"Msg\":\"ÑéÖ¤ÂëÊ§Ğ§£¬ÇëÖØĞÂÊäÈë£¡\"}");
+				out.print("{\"code\":200,\"Msg\":\"éªŒè¯ç å¤±æ•ˆï¼Œè¯·é‡æ–°è¾“å…¥ï¼\"}");
 			}else if(YzmCode.equals(StringCode.MD5(yzmText.toLowerCase()))){
 				if(true == user.isLogin(stuId, pass)){
 					session.setAttribute("isLogin",true);
@@ -85,19 +85,19 @@ public class LoginServlet extends HttpServlet {
 					session.setAttribute("pass",pass);
 					session.setAttribute("User",user);
 					user.updateLoginInfo(request);
-					out.print("{\"code\":301,\"Msg\":\"µÇÂ¼³É¹¦\",\"url\":\""+request.getContextPath()+"/index.html\"}");
+					out.print("{\"code\":301,\"Msg\":\"ç™»å½•æˆåŠŸ\",\"url\":\""+request.getContextPath()+"/index.html\"}");
 				}else{
 					request.setAttribute("isLogin",false);
 					request.setAttribute("error",user.getErrorMsg());
-					jdbcBean.addLog(null, null, null, "testlogin",stuId+"³¢ÊÔµÇÂ¼¡¾"+pass+"¡¿Ê§°Ü£»µÇÂ¼IP£º"+StringCode.getRealIp(request)+"£»UA£º"+request.getHeader("user-agent"));
+					jdbcBean.addLog(null, null, null, "testlogin",stuId+"å°è¯•ç™»å½•ã€"+pass+"ã€‘å¤±è´¥ï¼›ç™»å½•IPï¼š"+StringCode.getRealIp(request)+"ï¼›UAï¼š"+request.getHeader("user-agent"));
 	//				request.getRequestDispatcher("login.jsp").forward(request, response);
 					out.print("{\"code\":200,\"Msg\":\""+user.getErrorMsg()+"\"}");
 				}
 			}else{
-				out.print("{\"code\":200,\"Msg\":\"ÑéÖ¤Âë´íÎó\"}");
+				out.print("{\"code\":200,\"Msg\":\"éªŒè¯ç é”™è¯¯\"}");
 			}
 		}catch(Exception e){
-			out.print("{\"code\":200,\"Msg\":\"ÇëÇó³öÏÖ´íÎó£¬ÇëË¢ĞÂÒ³Ãæ£¡\"}");
+			out.print("{\"code\":200,\"Msg\":\"è¯·æ±‚å‡ºç°é”™è¯¯ï¼Œè¯·åˆ·æ–°é¡µé¢ï¼\"}");
 //			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}

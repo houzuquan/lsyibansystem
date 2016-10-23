@@ -51,7 +51,7 @@ public class LoginFilter implements Filter {
 			YbUserDao user = (YbUserDao)session.getAttribute("User");
 			if(user == null){
 				s = true;
-//				System.out.println("莫名其妙失去用户数据");
+//				System.out.println("鑾悕鍏跺澶卞幓鐢ㄦ埛鏁版嵁");
 				user = new YbUserDao();
 			}
 			if(stuId != null && pass != null && true == user.isLogin((String)session.getAttribute("stuId"), (String)session.getAttribute("pass"))){

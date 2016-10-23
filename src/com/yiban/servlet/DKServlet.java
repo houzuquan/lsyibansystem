@@ -39,14 +39,14 @@ public class DKServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8;");
 		PrintWriter out = response.getWriter();
-		out.print("{\"code\":201,\"Msg\":\"·Ç·¨·ÃÎÊ1\"}");
+		out.print("{\"code\":201,\"Msg\":\"éæ³•è®¿é—®1\"}");
 		HttpSession session = request.getSession();
 		String action = request.getParameter("action");
 		YbUserDao user = (YbUserDao)session.getAttribute("User");
 		if(user == null){
-			jdbcBean.addLog(null, null, null, "get","³¢ÊÔ·ÃÎÊ¡¾"+request.getServletPath()+"¡¿Ê§°Ü£¬ÎŞuserĞÅÏ¢£»IP£º"+StringCode.getRealIp(request)+"£»UA£º"+request.getHeader("user-agent"));
+			jdbcBean.addLog(null, null, null, "get","å°è¯•è®¿é—®ã€"+request.getServletPath()+"ã€‘å¤±è´¥ï¼Œæ— userä¿¡æ¯ï¼›IPï¼š"+StringCode.getRealIp(request)+"ï¼›UAï¼š"+request.getHeader("user-agent"));
 		}else{
-			jdbcBean.addLog(user.getId(), user.getStuId(), user.getStuName(), "get","³¢ÊÔ·ÃÎÊ¡¾"+request.getServletPath()+"¡¿Ê§°Ü£»IP£º"+StringCode.getRealIp(request)+"£»UA£º"+request.getHeader("user-agent"));
+			jdbcBean.addLog(user.getId(), user.getStuId(), user.getStuName(), "get","å°è¯•è®¿é—®ã€"+request.getServletPath()+"ã€‘å¤±è´¥ï¼›IPï¼š"+StringCode.getRealIp(request)+"ï¼›UAï¼š"+request.getHeader("user-agent"));
 		}
 		
 	}
@@ -64,24 +64,24 @@ public class DKServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		YbUserDao user = (YbUserDao)session.getAttribute("User");
 		if(user == null){
-			out.print("{\"code\":201,\"Msg\":\"·Ç·¨·ÃÎÊ2\"}");
-			jdbcBean.addLog(null, null, null, "post","³¢ÊÔ·ÃÎÊ¡¾"+request.getServletPath()+"¡¿Ê§°Ü£¬ÎŞuserĞÅÏ¢£»IP£º"+StringCode.getRealIp(request)+"£»UA£º"+request.getHeader("user-agent"));
+			out.print("{\"code\":201,\"Msg\":\"éæ³•è®¿é—®2\"}");
+			jdbcBean.addLog(null, null, null, "post","å°è¯•è®¿é—®ã€"+request.getServletPath()+"ã€‘å¤±è´¥ï¼Œæ— userä¿¡æ¯ï¼›IPï¼š"+StringCode.getRealIp(request)+"ï¼›UAï¼š"+request.getHeader("user-agent"));
 		}else if(action != null){
 			int getDKDateLog=0;
 			switch(action){
 				case "qd":
 					if(user.dk_qd() == true){
-						out.print("{\"code\":200,\"Msg\":\"Ç©µ½³É¹¦£¡\"}");
+						out.print("{\"code\":200,\"Msg\":\"ç­¾åˆ°æˆåŠŸï¼\"}");
 					}else{
-						out.print("{\"code\":201,\"Msg\":\"Ç©µ½Ê§°Ü£¡"+user.getErrorMsg()+"\"}");
+						out.print("{\"code\":201,\"Msg\":\"ç­¾åˆ°å¤±è´¥ï¼"+user.getErrorMsg()+"\"}");
 					}
 					break;
 				case "qt":
 					String text = request.getParameter("text");
 					if(user.dk_qt(text) == true){
-						out.print("{\"code\":200,\"Msg\":\"Ç©ÍË³É¹¦£¡\"}");
+						out.print("{\"code\":200,\"Msg\":\"ç­¾é€€æˆåŠŸï¼\"}");
 					}else{
-						out.print("{\"code\":201,\"Msg\":\"Ç©ÍËÊ§°Ü£¡"+user.getErrorMsg()+"\"}");
+						out.print("{\"code\":201,\"Msg\":\"ç­¾é€€å¤±è´¥ï¼"+user.getErrorMsg()+"\"}");
 					}
 					break;
 				case "getDKAllCount":
@@ -209,12 +209,12 @@ public class DKServlet extends HttpServlet {
 					}
 					break;
 				default:
-					out.print("{\"code\":201,\"Msg\":\"·Ç·¨·ÃÎÊ3\"}");
-					jdbcBean.addLog(user.getId(), user.getStuId(), user.getStuName(), "post","³¢ÊÔ·ÃÎÊ¡¾"+request.getServletPath()+"¡¿Ê§°Ü£¬·Ç·¨²Ù×÷ĞÅÏ¢£»IP£º"+StringCode.getRealIp(request)+"£»UA£º"+request.getHeader("user-agent"));
+					out.print("{\"code\":201,\"Msg\":\"éæ³•è®¿é—®3\"}");
+					jdbcBean.addLog(user.getId(), user.getStuId(), user.getStuName(), "post","å°è¯•è®¿é—®ã€"+request.getServletPath()+"ã€‘å¤±è´¥ï¼Œéæ³•æ“ä½œä¿¡æ¯ï¼›IPï¼š"+StringCode.getRealIp(request)+"ï¼›UAï¼š"+request.getHeader("user-agent"));
 			}
 		}else{
-			out.print("{\"code\":201,\"Msg\":\"·Ç·¨·ÃÎÊ4\"}");
-			jdbcBean.addLog(user.getId(), user.getStuId(), user.getStuName(), "post","³¢ÊÔ·ÃÎÊ¡¾"+request.getServletPath()+"¡¿Ê§°Ü£¬ÎŞ²Ù×÷ĞÅÏ¢£»IP£º"+StringCode.getRealIp(request)+"£»UA£º"+request.getHeader("user-agent"));
+			out.print("{\"code\":201,\"Msg\":\"éæ³•è®¿é—®4\"}");
+			jdbcBean.addLog(user.getId(), user.getStuId(), user.getStuName(), "post","å°è¯•è®¿é—®ã€"+request.getServletPath()+"ã€‘å¤±è´¥ï¼Œæ— æ“ä½œä¿¡æ¯ï¼›IPï¼š"+StringCode.getRealIp(request)+"ï¼›UAï¼š"+request.getHeader("user-agent"));
 		}
 	}
 }

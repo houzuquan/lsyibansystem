@@ -34,9 +34,9 @@ public class Yzm extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		// ÉèÖÃÏìÓ¦Í· Content-typeÀàĞÍ
+		// è®¾ç½®å“åº”å¤´ Content-typeç±»å‹
 		response.setContentType("image/png");
-		// ÒÔÏÂÈı¾äÊÇÓÃÓÚÉèÖÃÒ³Ãæ²»»º´æ
+		// ä»¥ä¸‹ä¸‰å¥æ˜¯ç”¨äºè®¾ç½®é¡µé¢ä¸ç¼“å­˜
 		response.setHeader("Pragma", "No-cache");
 		response.setHeader("Cache-Control", "No-cache");
 		response.setDateHeader("Expires", 0);
@@ -59,8 +59,8 @@ public class Yzm extends HttpServlet {
 			code += str[i];
 		}
 		session.setAttribute("YzmCode", StringCode.MD5(code.toLowerCase()));
-		session.setAttribute("YzmCodeNowTime", System.currentTimeMillis());//ÑéÖ¤ÂëÉú³ÉÊ±¼ä¡£ms
-		// Êä³öÍ¼Ïñµ½Ò³Ãæ
+		session.setAttribute("YzmCodeNowTime", System.currentTimeMillis());//éªŒè¯ç ç”Ÿæˆæ—¶é—´ã€‚ms
+		// è¾“å‡ºå›¾åƒåˆ°é¡µé¢
 		ImageIO.write(img.getImage(), "PNG", os);
 	}
 	public void drawImage(){

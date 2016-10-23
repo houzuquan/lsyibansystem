@@ -55,7 +55,7 @@ public class LoginAjaxFilter implements Filter {
 			YbUserDao user = (YbUserDao)session.getAttribute("User");
 			if(user == null){
 				s = true;
-//				System.out.println("ÄªÃûÆäÃîÊ§È¥ÓÃ»§Êı¾İ");
+//				System.out.println("è«åå…¶å¦™å¤±å»ç”¨æˆ·æ•°æ®");
 				user = new YbUserDao();
 			}
 			if(stuId != null && pass != null && true == user.isLogin((String)session.getAttribute("stuId"), (String)session.getAttribute("pass"))){
@@ -72,7 +72,7 @@ public class LoginAjaxFilter implements Filter {
 		if(isLogin){
 			chain.doFilter(request, response);
 		}else{
-			out.print("{\"code\":301,\"Msg\":\"µÇÂ¼Ê§°Ü1\",\"url\":\""+req.getContextPath()+"/login.jsp\"}");
+			out.print("{\"code\":301,\"Msg\":\"ç™»å½•å¤±è´¥1\",\"url\":\""+req.getContextPath()+"/login.jsp\"}");
 		}
 	}
 

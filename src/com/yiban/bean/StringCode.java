@@ -10,11 +10,11 @@ public class StringCode {
 	public static String enUnicode(String string) {
 	    StringBuffer unicode = new StringBuffer();
 	    for (int i = 0; i < string.length(); i++) {
-	        // È¡³öÃ¿Ò»¸ö×Ö·û
+	        // å–å‡ºæ¯ä¸€ä¸ªå­—ç¬¦
 	        char c = string.charAt(i);
-	        // ×ª»»Îªunicode
+	        // è½¬æ¢ä¸ºunicode
 	        String cc = Integer.toHexString(c);
-	        //²¹ÆëÎ»Êý
+	        //è¡¥é½ä½æ•°
 	        for(int j = 4 ,len = cc.length(); j > len ; j--){
 	        	cc = "0" + cc;
 	        }
@@ -26,21 +26,21 @@ public class StringCode {
 	    StringBuffer string = new StringBuffer();
 	    String[] hex = unicode.split("\\\\u");
 	    for (int i = 1; i < hex.length; i++) {
-	        // ×ª»»³öÃ¿Ò»¸ö´úÂëµã
+	        // è½¬æ¢å‡ºæ¯ä¸€ä¸ªä»£ç ç‚¹
 	        int data = Integer.parseInt(hex[i], 16);
-	        // ×·¼Ó³Éstring
+	        // è¿½åŠ æˆstring
 	        string.append((char) data);
 	    }
 	    return string.toString();
 	}
 	public static String MD5(String str){
 		try{
-			// Éú³ÉÒ»¸öMD5¼ÓÃÜ¼ÆËãÕªÒª
+			// ç”Ÿæˆä¸€ä¸ªMD5åŠ å¯†è®¡ç®—æ‘˜è¦
 			MessageDigest md = MessageDigest.getInstance("MD5");
-			// ¼ÆËãmd5º¯Êý
+			// è®¡ç®—md5å‡½æ•°
 			md.update(str.getBytes());
-			// digest()×îºóÈ·¶¨·µ»Ømd5 hashÖµ£¬·µ»ØÖµÎª8Îª×Ö·û´®¡£ÒòÎªmd5 hashÖµÊÇ16Î»µÄhexÖµ£¬Êµ¼ÊÉÏ¾ÍÊÇ8Î»µÄ×Ö·û
-			// BigIntegerº¯ÊýÔò½«8Î»µÄ×Ö·û´®×ª»»³É16Î»hexÖµ£¬ÓÃ×Ö·û´®À´±íÊ¾£»µÃµ½×Ö·û´®ÐÎÊ½µÄhashÖµ
+			// digest()æœ€åŽç¡®å®šè¿”å›žmd5 hashå€¼ï¼Œè¿”å›žå€¼ä¸º8ä¸ºå­—ç¬¦ä¸²ã€‚å› ä¸ºmd5 hashå€¼æ˜¯16ä½çš„hexå€¼ï¼Œå®žé™…ä¸Šå°±æ˜¯8ä½çš„å­—ç¬¦
+			// BigIntegerå‡½æ•°åˆ™å°†8ä½çš„å­—ç¬¦ä¸²è½¬æ¢æˆ16ä½hexå€¼ï¼Œç”¨å­—ç¬¦ä¸²æ¥è¡¨ç¤ºï¼›å¾—åˆ°å­—ç¬¦ä¸²å½¢å¼çš„hashå€¼
 			return new BigInteger(1, md.digest()).toString(16);
 		}catch(Exception e){
 			return null;

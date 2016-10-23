@@ -34,7 +34,7 @@ public class MyInfoServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8;");
 		PrintWriter out = response.getWriter();
-		out.print("{\"code\":201,\"Msg\":\"·Ç·¨·ÃÎÊ1\"}");
+		out.print("{\"code\":201,\"Msg\":\"éæ³•è®¿é—®1\"}");
 	}
 
 	/**

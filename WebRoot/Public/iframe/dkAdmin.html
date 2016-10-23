@@ -1,61 +1,74 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title></title>
-		<link rel="stylesheet" type="text/css" href="css/dkAdmin.css"/>
-		<script src="../js/function.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../js/ajax.js" type="text/javascript" charset="utf-8"></script>
-	</head>
-	<body>
-		<div id="header">
-			<ul id="nav">
-				<li class="" data-go = "AllDKLog" data-loadFun="getDKForPage(1);">
-					打卡记录
-				</li>
-				<li class="" data-go = "date" data-fun="goToday(['dateTable','info','logList'],['year1','month1']);">
-					我的打卡
-				</li>
-				<li class="active" data-go = "dateOther" data-loadFun = "getSection();" data-fun2="goToday(['dateTable2','info2','logList2'],['year2','month2']);">
-					其他部门打卡
-				</li>
-				<li>
-					打卡管理
-				</li>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="css/dkAdmin.css" />
+<script src="../js/function.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/ajax.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div id="header">
+		<ul id="nav">
+			<li class="" data-go="AllDKLog" data-loadFun="getDKForPage(1);">
+				打卡记录</li>
+			<li class="" data-go="date"
+				data-fun="goToday(['dateTable','info','logList'],['year1','month1']);">
+				我的打卡</li>
+			<li class="active" data-go="dateOther" data-loadFun="getSection();"
+				data-fun2="goToday(['dateTable2','info2','logList2'],['year2','month2']);">
+				其他部门打卡</li>
+			<li>打卡管理</li>
 			<div class="clear"></div>
-			</ul>
+		</ul>
+	</div>
+	<div id="content">
+		<div id="AllDKLog">
+			<table border="1" cellpadding="0" cellspacing="0"
+				class="AllDKLogTable" id="AllDKLogTable">
+				<tr>
+					<th>日期</th>
+					<th>值班</th>
+					<th>签到时间</th>
+					<th>迟到</th>
+					<th>签退时间</th>
+					<th>签退内容</th>
+					<th>早退</th>
+				</tr>
+				<!--<tr><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td>2016-10-11 10:10:00.0</td><td title="">我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>-->
+				<!--<tr><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td>2016-10-11 10:10:00.0</td><td title="我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻">我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>-->
+				<!--<tr><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td style="background: rgba(255,0,0,0.5);color: blue;">否</td><td>2016-10-11 10:10:00.0</td><td>我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>-->
+				<!--<tr><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td colspan="3" style="background: rgba(180,180,180,0.3);">未签到</td></tr>-->
+			</table>
+			<span id="AllDKLogTableShowMore" data-nowpage="2"> 加载更多 </span>
 		</div>
-		<div id="content">
-			<div id="AllDKLog">
-				<table border="1" cellpadding="0" cellspacing="0" class="AllDKLogTable" id="AllDKLogTable">
-					<tr><th>日期</th><th>值班</th><th>签到时间</th><th>迟到</th><th>签退时间</th><th>签退内容</th><th>早退</th></tr>
-					<!--<tr><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td>2016-10-11 10:10:00.0</td><td title="">我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>-->
-					<!--<tr><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td>2016-10-11 10:10:00.0</td><td title="我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻">我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>-->
-					<!--<tr><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td style="background: rgba(255,0,0,0.5);color: blue;">否</td><td>2016-10-11 10:10:00.0</td><td>我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>-->
-					<!--<tr><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td colspan="3" style="background: rgba(180,180,180,0.3);">未签到</td></tr>-->
-				</table>
-				<span id="AllDKLogTableShowMore" data-nowpage="2">
-					加载更多
-				</span>
-			</div>
-			<div id="date">
-				<div id="dateTableDiv" class="dateTableDiv">
-					<div>
-						<select name="year1" id="year1">
-						</select>
-						<select name="month1" id="month1">
-						</select>
-						<input type="button" name="" id="" value="返回今天" onclick="goToday(['dateTable','info','logList'],['year1','month1']);"/>
-					</div>
-					<table id="dateTable" class="dateTable" border="1" cellpadding="0" cellspacing="0">
-						<tr><th>星期日</th><th>星期一</th><th>星期二</th><th>星期三</th><th>星期四</th><th>星期五</th><th>星期六</th></tr>
-					</table>
+		<div id="date">
+			<div id="dateTableDiv" class="dateTableDiv">
+				<div>
+					<select name="year1" id="year1">
+					</select> <select name="month1" id="month1">
+					</select> <input type="button" name="" id="" value="返回今天"
+						onclick="goToday(['dateTable','info','logList'],['year1','month1']);" />
 				</div>
-				<div id="info" class="info">
-					<h3 class="title">打卡记录</h3>
-					<ul class="logList" id="logList">
-						<!--<li>
+				<table id="dateTable" class="dateTable" border="1" cellpadding="0"
+					cellspacing="0">
+					<tr>
+						<th>星期日</th>
+						<th>星期一</th>
+						<th>星期二</th>
+						<th>星期三</th>
+						<th>星期四</th>
+						<th>星期五</th>
+						<th>星期六</th>
+					</tr>
+				</table>
+			</div>
+			<div id="info" class="info">
+				<h3 class="title">打卡记录</h3>
+				<ul class="logList" id="logList">
+					<!--<li>
 							早上一二节
 							<ul class="logListMy">
 								<li>9:30签到</li>
@@ -69,36 +82,46 @@
 								<li>12:15签退</li>
 							</ul>
 						</li>-->
-					</ul>
-				</div>
-				<div class="clear"></div>
+				</ul>
 			</div>
-			<div id="dateOther">
-				<div id="searchBox">
-					<select name="bm" id="section">
-						<option value="0">全部</option>
-					</select>
-					<input type="date" name="" id="otherTime1" value="" />
-					<input type="date" name="" id="otherTime2" value="" />
-					<input type="button" name="" id="searchOtherDK" onclick="searchOtherDK(1);" value="查询" />
-				</div>
-				<table border="1" cellpadding="0" cellspacing="0" class="AllDKLogTable" id="bmDKLogTable">
-					<tr><th>姓名</th><th>部门</th><th>日期</th><th>值班</th><th>签到时间</th><th>迟到</th><th>签退时间</th><th>签退内容</th><th>早退</th></tr>
-					<!--<tr><td>姓名</td><td>未知部门</td><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td>2016-10-11 10:10:00.0</td><td title="">我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>-->
-					<!--<tr><td>姓名</td><td>未知部门</td><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td>2016-10-11 10:10:00.0</td><td title="我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻">我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>-->
-					<!--<tr><td>姓名</td><td>未知部门</td><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td style="background: rgba(255,0,0,0.5);color: blue;">否</td><td>2016-10-11 10:10:00.0</td><td>我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>-->
-					<!--<tr><td>姓名</td><td>未知部门</td><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td colspan="3" style="background: rgba(180,180,180,0.3);">未签到</td></tr>-->
-				</table>
-				<span id="bmDKLogTableShowMore" data-nowpage="2" style="display: none;">
-					加载更多
-				</span>
-				<div class="clear"></div>
-			</div>
+			<div class="clear"></div>
 		</div>
-		<script src="js/dkAdmin.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">
+		<div id="dateOther">
+			<div id="searchBox">
+				<select name="bm" id="section">
+					<option value="0">全部</option>
+				</select> <input type="date" name="" id="otherTime1" value="" /> <input
+					type="date" name="" id="otherTime2" value="" /> <input
+					type="button" name="" id="searchOtherDK"
+					onclick="searchOtherDK(1);" value="查询" />
+			</div>
+			<table border="1" cellpadding="0" cellspacing="0"
+				class="AllDKLogTable" id="bmDKLogTable">
+				<tr>
+					<th>姓名</th>
+					<th>部门</th>
+					<th>日期</th>
+					<th>值班</th>
+					<th>签到时间</th>
+					<th>迟到</th>
+					<th>签退时间</th>
+					<th>签退内容</th>
+					<th>早退</th>
+				</tr>
+				<!--<tr><td>姓名</td><td>未知部门</td><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td>2016-10-11 10:10:00.0</td><td title="">我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>-->
+				<!--<tr><td>姓名</td><td>未知部门</td><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td>2016-10-11 10:10:00.0</td><td title="我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻">我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>-->
+				<!--<tr><td>姓名</td><td>未知部门</td><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td style="background: rgba(255,0,0,0.5);color: blue;">否</td><td>2016-10-11 10:10:00.0</td><td>我的签到内容是傻傻傻傻傻傻</td><td>否</td></tr>-->
+				<!--<tr><td>姓名</td><td>未知部门</td><td>2016-10-10</td><td>早上一二节</td><td>2016-10-11 08:10:00.0</td><td>否</td><td colspan="3" style="background: rgba(180,180,180,0.3);">未签到</td></tr>-->
+			</table>
+			<span id="bmDKLogTableShowMore" data-nowpage="2"
+				style="display: none;"> 加载更多 </span>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<script src="js/dkAdmin.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
 		//getDKMonthHaveLog
 			
 		</script>
-	</body>
+</body>
 </html>

@@ -38,10 +38,10 @@ public class SessionDestoryedListener implements HttpSessionListener {
 			String str="";
 			String loginout="loginout";
 			if(null != session.getAttribute("goout") && true == (boolean)session.getAttribute("goout")){
-				str="ÓÃ»§ÊÖ¶¯ÍË³ö";
+				str="ç”¨æˆ·æ‰‹åŠ¨é€€å‡º";
 				loginout="LoginOut";
 			}else{
-				str="ÏµÍ³×Ô¶¯ÍË³öÍË³ö";
+				str="ç³»ç»Ÿè‡ªåŠ¨é€€å‡ºé€€å‡º";
 				loginout="autoLoginOut";
 			}
 			jdbcBean.addLog((String)session.getAttribute("id"), (String)session.getAttribute("stuId"), (String)session.getAttribute("stuName"), loginout,str);
