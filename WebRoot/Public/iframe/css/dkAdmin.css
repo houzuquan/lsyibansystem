@@ -61,26 +61,31 @@ a {
 	background: #00E3E3;
 	color: #0000E3;
 }
-#content>div{
+
+#content>div {
 	display: none;
 }
-#content>div:first-of-type{
+
+#content>div:first-of-type {
 	display: block;
 }
-#content>div#date{
-	border:5px solid #6666FF;
+
+#content>div#date {
+	border: 5px solid #6666FF;
 	position: absolute;
 	left: 50%;
 	top: 30px;
 	margin-left: -380px;
 }
-#content>div#dateOther{
-	
-}
-#content>div#dateOther>div#searchBox{
+
+#content>div#dateOther {}
+
+#content>div#dateOther>div#searchBox {
 	margin-top: 30px;
 }
-#content>div#dateOther>div#searchBox>input,#content>div#dateOther>div#searchBox>select{
+
+#content>div#dateOther>div#searchBox>input,
+#content>div#dateOther>div#searchBox>select {
 	font-size: 20pt;
 	font-weight: 900;
 	font-family: "微软雅黑";
@@ -89,18 +94,21 @@ a {
 	background: #CCFFFF;
 	margin-bottom: 5px;
 }
-#content>div#dateOther>div#searchBox>input[type=button]{
+
+#content>div#dateOther>div#searchBox>input[type=button] {
 	padding: 5px 20px;
 	cursor: pointer;
 }
-#content>div#dateOther>div#searchBox>input[type=button]:hover{
+
+#content>div#dateOther>div#searchBox>input[type=button]:hover {
 	background: #CCCC00;
 	border-radius: 5px;
 }
-#content>div#date{
-	
-}
-#content>div#AllDKLog>span#AllDKLogTableShowMore,#content>div#dateOther>span#bmDKLogTableShowMore{
+
+#content>div#date {}
+
+#content>div#AllDKLog>span#AllDKLogTableShowMore,
+#content>div#dateOther>span#bmDKLogTableShowMore {
 	display: inline-block;
 	height: 30pt;
 	line-height: 30pt;
@@ -109,32 +117,37 @@ a {
 	color: blue;
 	text-align: center;
 	font-weight: 900;
-	border:1px solid blue;
-	cursor:pointer;
+	border: 1px solid blue;
+	cursor: pointer;
 }
-#content>div#AllDKLog>span#AllDKLogTableShowMore:hover{
+
+#content>div#AllDKLog>span#AllDKLogTableShowMore:hover {
 	background: #CCCC00;
 	border-radius: 5px;
 }
-#content>div#dateOther>span#bmDKLogTableShowMore:hover{
+
+#content>div#dateOther>span#bmDKLogTableShowMore:hover {
 	background: #CCCC00;
 	border-radius: 5px;
 }
-#content>div>table.AllDKLogTable{
+
+#content>div>table.AllDKLogTable {
 	border-collapse: collapse;
 	text-align: center;
 	min-width: 500px;
 	width: 100%;
 	margin-top: 20px;
 }
-#content>div>table.AllDKLogTable th{
+
+#content>div>table.AllDKLogTable th {
 	font-size: 18pt;
 	font-weight: 900;
 	color: blue;
 }
-#content>div>table.AllDKLogTable td{
-	text-overflow:ellipsis;
-	white-space:nowrap;
+
+#content>div>table.AllDKLogTable td {
+	text-overflow: ellipsis;
+	white-space: nowrap;
 	overflow: hidden;
 	font-size: 1.1em;
 	font-weight: 900;
@@ -142,23 +155,29 @@ a {
 	max-width: 200px;
 	font-family: Georgia, Verdana, Tahoma, sans-serif, 宋体;
 }
-#content>div>table.AllDKLogTable tr{
+
+#content>div>table.AllDKLogTable tr {
 	cursor: default;
 }
-#content>div>table.AllDKLogTable tr:hover:not(:first-child){
+
+#content>div>table.AllDKLogTable tr:hover:not(:first-child) {
 	background: #FFFFCC;
 }
-div.dateTableDiv,div.info{
+
+div.dateTableDiv,
+div.info {
 	float: left;
 }
 
-div.dateTableDiv>div{
+div.dateTableDiv>div {
 	border-bottom: 2px dashed #6666FF;
 	margin-bottom: 10px;
 	padding: 5px 5px 0 5px;
 	width: 500px;
 }
-div.dateTableDiv>div>select,div.dateTableDiv>div>input[type=button]{
+
+div.dateTableDiv>div>select,
+div.dateTableDiv>div>input[type=button] {
 	width: 5em;
 	font-size: 20pt;
 	font-weight: 900;
@@ -168,52 +187,68 @@ div.dateTableDiv>div>select,div.dateTableDiv>div>input[type=button]{
 	background: #CCFFFF;
 	margin-bottom: 5px;
 }
-div.dateTableDiv>div>select>option{
-}
+
+div.dateTableDiv>div>select>option {}
+
 .dateTable {
 	border-collapse: collapse;
 	width: 500px;
 	text-align: center;
 }
-.dateTable th{
+
+.dateTable th {
 	padding: 5px 0;
 	border-bottom: 2px solid black;
 }
-.dateTable th:first-of-type,.dateTable th:last-of-type,.dateTable td:first-of-type,.dateTable td:last-of-type{
-	background: rgb(230,230,230);
+
+.dateTable th:first-of-type,
+.dateTable th:last-of-type,
+.dateTable td:first-of-type,
+.dateTable td:last-of-type {
+	background: rgb(230, 230, 230);
 	color: #CC9933;
 	font-weight: 900;
 	font-family: "微软雅黑";
 }
-.dateTable td{
+
+.dateTable td {
 	height: 80px;
 	cursor: pointer;
 	font-size: 16pt;
 	font-weight: 900;
 }
-.dateTable td.active{/*今天*/
+
+.dateTable td.active {
+	/*今天*/
 	background: #999933;
 	box-shadow: 0 0 10px #666600;
 }
-.dateTable td.active2{/*有信息*/
+
+.dateTable td.active2 {
+	/*有信息*/
 	background: #CCCC00;
 }
-.dateTable td.active3{/*选中的*/
+
+.dateTable td.active3 {
+	/*选中的*/
 	background: #CCCCFF;
 	box-shadow: 0 0 10px #FFFF66 inset;
 }
-.dateTable td:hover{
+
+.dateTable td:hover {
 	padding: 0;
 	box-shadow: 0 0 10px #663300 inset;
 }
-.info{
+
+.info {
 	width: 250px;
 	height: 500px;
 	border-left: 5px solid #6666FF;
 	overflow: auto;
 	overflow-y: hidden;
 }
-.info>h3.title{
+
+.info>h3.title {
 	text-align: center;
 	font-size: 20pt;
 	padding: 5px 0;
@@ -221,22 +256,28 @@ div.dateTableDiv>div>select>option{
 	border-bottom: 2px dashed #6666FF;
 }
 
+
 /************************************/
-ul.logList,ul.logList ul{
+
+ul.logList,
+ul.logList ul {
 	list-style: none;
 }
-ul.logList>li{
+
+ul.logList>li {
 	padding-top: 5px;
 	background: #99CCFF;
 	border-bottom: 1px solid #FFFFFF;
 	font-weight: 900;
 	font-size: 1.2em;
 }
-ul.logList>li>ul{
+
+ul.logList>li>ul {
 	background: #ABCDEF;
 	margin-top: 5px;
 }
-ul.logList>li>ul>li{
+
+ul.logList>li>ul>li {
 	border-bottom: 1px solid #CCCCCC;
 	padding-left: 20px;
 	font-weight: 500;

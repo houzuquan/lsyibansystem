@@ -41,21 +41,21 @@ function $ajax(data, cBack) {
 				/**
 				 *实现回调
 				 */
-				try{
+				try {
 					if(jsonP == "" || jsonP == undefined || jsonP == "undefined") {
 						if(dataType == "json") {
-							text = eval("("+text+")");
+							text = eval("(" + text + ")");
 						}
-						if(typeof callBack == "function"){
+						if(typeof callBack == "function") {
 							callBack(text);
-						}else{
+						} else {
 							console.log("回调函数错误！");
 						}
-						
+
 					} else { //jsonP
 						eval(text);
 					}
-				}catch(E){
+				} catch(E) {
 					console.log(E);
 					errorBack("服务器返回信息处理失败");
 				}

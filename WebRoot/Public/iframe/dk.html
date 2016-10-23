@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-<title>打卡</title>
-<link rel="stylesheet" type="text/css" href="css/dk.css" />
-<script src="../js/function.js" type="text/javascript" charset="utf-8"></script>
-<script src="../js/ajax.js" type="text/javascript" charset="utf-8"></script>
-</head>
-<body>
-	<div id="content">
-		<ul id="nav">
-			<li data-go="qian" class="active">打卡签到</li>
-			<li data-go="out">签退</li>
-			<div class="clear"></div>
-		</ul>
-		<div id="qian" class="bodyBox">
-			<span id="btnQian"> 签 </span>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>打卡</title>
+		<link rel="stylesheet" type="text/css" href="css/dk.css" />
+		<script src="../js/function.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/ajax.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div id="content">
+			<ul id="nav">
+				<li data-go="qian" class="active">打卡签到</li>
+				<li data-go="out">签退</li>
+				<div class="clear"></div>
+			</ul>
+			<div id="qian" class="bodyBox">
+				<span id="btnQian"> 签 </span>
+			</div>
+			<div id="out" class="bodyBox">
+				<textarea name="outlog" id="outlog" placeholder="需要记录点什么吗？？？"></textarea>
+				<input type="button" name="btnSubmit" id="btnSubmit" value="签退" />
+			</div>
 		</div>
-		<div id="out" class="bodyBox">
-			<textarea name="outlog" id="outlog" placeholder="需要记录点什么吗？？？"></textarea>
-			<input type="button" name="btnSubmit" id="btnSubmit" value="签退" />
-		</div>
-	</div>
-	<script type="text/javascript">
+		<script type="text/javascript">
 			var url = window.location.href;
 			var mao = url.split('?');
 			ListingTag('nav');
 			var nav = document.getElementById('nav');
 			var li = nav.getElementsByTagName('li');
-			for(i=0;i<li.length;i++){
-				if(mao[i] == li[i].getAttribute('data-go')){
+			for(i = 0; i < li.length; i++) {
+				if(mao[i] == li[i].getAttribute('data-go')) {
 					li[i].click();
 				}
 			}
-			document.getElementById('btnQian').onclick=function(){
+			document.getElementById('btnQian').onclick = function() {
 				$ajax({
 					url: "../../DK?action=qd",
 					data: "",
@@ -43,9 +44,9 @@
 					dataType: "json",
 					callBack: function(data) {
 						console.log(data);
-						if(data.code){
+						if(data.code) {
 							errorAction(data);
-						}else{
+						} else {
 							showMsg(data.Msg);
 						}
 					},
@@ -55,18 +56,18 @@
 					}
 				});
 			}
-			document.getElementById('btnSubmit').onclick=function(){
+			document.getElementById('btnSubmit').onclick = function() {
 				var text = document.getElementById('outlog').value;
 				$ajax({
 					url: "../../DK?action=qt",
-					data: "text="+text,
+					data: "text=" + text,
 					method: "post",
 					dataType: "json",
 					callBack: function(data) {
 						console.log(data);
-						if(data.code){
+						if(data.code) {
 							errorAction(data);
-						}else{
+						} else {
 							showMsg(data.Msg);
 						}
 					},
@@ -77,5 +78,6 @@
 				});
 			}
 		</script>
-</body>
+	</body>
+
 </html>

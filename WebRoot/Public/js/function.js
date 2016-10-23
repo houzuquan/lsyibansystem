@@ -5,6 +5,7 @@ function goUrl(url, iframeId) {
 	}
 	window.location.href = url;
 }
+
 function PrefixInteger(num, n) {
 	/*
 	 * num传入的数字，n需要的字符长度
@@ -12,6 +13,7 @@ function PrefixInteger(num, n) {
 	 */
 	return(Array(n).join(0) + num).slice(-n);
 }
+
 function ListingTag(id) {
 	/*
 	 * TAB页面切换
@@ -20,88 +22,90 @@ function ListingTag(id) {
 	var li = nav.getElementsByTagName('li');
 	for(i = 0; i < li.length; i++) {
 		li[i].onclick = function() {
-//			console.log(this.innerHTML);
+			//			console.log(this.innerHTML);
 			var li = this.parentElement.getElementsByTagName('li');
 			for(j = 0; j < li.length; j++) {
-				li[j].className = li[j].className.replace('active','');
+				li[j].className = li[j].className.replace('active', '');
 				try {
 					var elm = document.getElementById(li[j].getAttribute('data-go'));
 					elm.style.display = 'none';
-				}catch(e){
-					
+				} catch(e) {
+
 				}
 			}
 			this.className += ' active';
 			var elm = document.getElementById(this.getAttribute('data-go'));
-			if(elm){
+			if(elm) {
 				elm.style.display = 'block';
 			}
 			var fun = this.getAttribute('data-fun');
-			if(fun){
-				try{
-					eval(''+fun+'');
-				}catch(e){
-					
+			if(fun) {
+				try {
+					eval('' + fun + '');
+				} catch(e) {
+
 				}
 			}
 			var loadFun = this.getAttribute('data-loadFun');
-			if(loadFun){
+			if(loadFun) {
 				this.removeAttribute('data-loadFun');
-				try{
-					eval(''+loadFun+'');
-				}catch(e){
-					
+				try {
+					eval('' + loadFun + '');
+				} catch(e) {
+
 				}
 			}
 		}
 	}
 	li[0].click();
 }
-function errorAction(codeData){
-	switch(codeData.code*1){
+
+function errorAction(codeData) {
+	switch(codeData.code * 1) {
 		case 301:
-			try{
-				window.parent.location.href=codeData.url;
-			}catch(e){
-				try{
-					window.location.href=codeData.url;
-				}catch(e2){
+			try {
+				window.parent.location.href = codeData.url;
+			} catch(e) {
+				try {
+					window.location.href = codeData.url;
+				} catch(e2) {
 					showMsg(codeData.Msg);
 				}
 			}
-		break;
+			break;
 		case 201:
 			showMsg(codeData.Msg);
-		break;
+			break;
 		default:
-		showMsg(codeData.Msg);
+			showMsg(codeData.Msg);
 	}
 }
-function showMsg(text){
-	try{
+
+function showMsg(text) {
+	try {
 		window.parent.easyDialog.open({
-			container : {
-				header : '信息提示',
-				content : text,
-				yesFn : function(){
+			container: {
+				header: '信息提示',
+				content: text,
+				yesFn: function() {
 					return true;
 				},
-				noFn : false
+				noFn: false
 			}
 		});
-	}catch(e){
-		try{
+	} catch(e) {
+		try {
 			window.easyDialog.open({
-				container : {
-					header : '信息提示',
-					content : text,
-					yesFn : function(){
+				container: {
+					header: '信息提示',
+					content: text,
+					yesFn: function() {
 						return true;
 					},
-					noFn : false
+					noFn: false
 				}
 			});
-		}catch(e2){
+		} catch(e2) {
 			alert(text);
 		}
 	}

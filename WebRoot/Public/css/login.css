@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
 	margin: 0;
 	padding: 0;
 	width: 100%;
@@ -80,7 +81,7 @@ body {
 
 #loginBox #yzm {
 	position: absolute;
-	left: calc( ( 100% - 300px) / 2 + 140px);
+	left: calc( ( 100% - 300px) / 2+ 140px);
 	margin-top: -60px;
 	width: 160px;
 	height: 40px;
@@ -93,7 +94,8 @@ body {
 	font-size: 12pt;
 }
 
-#loginBox .fen span:first-child, #loginBox .fen span:last-child {
+#loginBox .fen span:first-child,
+#loginBox .fen span:last-child {
 	display: inline-block;
 	width: 70px;
 	height: 2px;

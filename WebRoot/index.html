@@ -8,8 +8,9 @@
 		<meta name="Keywords" content="" />
 		<meta name="Description" content="" />
 		<title>易班日常管理系统</title>
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 		<link rel="stylesheet" type="text/css" href="Public/css/adminIndex.css" />
-		<link rel="stylesheet" type="text/css" href="Public/js/alert/easydialog.css"/>
+		<link rel="stylesheet" type="text/css" href="Public/js/alert/easydialog.css" />
 		<script src="Public/js/alert/easydialog.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="Public/js/function.js" type="text/javascript" charset="utf-8"></script>
 		<script src="Public/js/ajax.js" type="text/javascript" charset="utf-8"></script>
@@ -18,7 +19,7 @@
 	<body>
 		<div id="header">
 			<div id="logo">
-				<img src="Public/img/logo.png" onclick="goUrl('./');"/>
+				<img src="Public/img/logo.png" onclick="goUrl('./');" />
 			</div>
 			<div id="headerNav">
 				<ul id="userInfo">
@@ -63,7 +64,7 @@
 			<div class="clear"></div>
 		</div>
 		<script type="text/javascript">
-		ListingTag('Lnav');
+			ListingTag('Lnav');
 			window.onload = function() {
 				changeSectionSize();
 				$ajax({
@@ -73,13 +74,13 @@
 					dataType: "json",
 					callBack: function(data) {
 						console.log(data);
-						if(data.code){
+						if(data.code) {
 							errorAction(data);
 							return false;
 						}
-						document.getElementById('MyInfoStuName').innerHTML=data.stuName;
-						document.getElementById('MyInfoSectionName').innerHTML="("+(data.sectionName == "" || data.sectionName == "null" ? "未知部门" : data.sectionName )+")";
-						
+						document.getElementById('MyInfoStuName').innerHTML = data.stuName;
+						document.getElementById('MyInfoSectionName').innerHTML = "(" + (data.sectionName == "" || data.sectionName == "null" ? "未知部门" : data.sectionName) + ")";
+
 					},
 					error: function(status) {
 						console.log(status);

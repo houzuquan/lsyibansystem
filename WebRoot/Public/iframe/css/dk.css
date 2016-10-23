@@ -5,7 +5,8 @@
 	box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
 	width: 100%;
 	height: 100%;
 	background: rgb(250, 250, 250);
@@ -82,8 +83,7 @@ a {
 	line-height: 300px;
 	border-radius: 50%;
 	box-shadow: 0 0 10px #00DB00;
-	background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#0066CC),
-		to(rgba(255, 0, 0, 1)));
+	background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#0066CC), to(rgba(255, 0, 0, 1)));
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	margin-left: 150px;
@@ -93,8 +93,7 @@ a {
 
 #qian #btnQian:hover {
 	box-shadow: 0 0 10px #66B3FF;
-	background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#0066CC),
-		to(#D2E9FF));
+	background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(#0066CC), to(#D2E9FF));
 }
 
 #out {
@@ -135,6 +134,4 @@ a {
 	background: #8CEA00;
 }
 
-.bodyBox {
-	
-}
+.bodyBox {}
