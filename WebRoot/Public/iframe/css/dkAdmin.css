@@ -25,6 +25,7 @@ a {
 #header #nav {
 	list-style: none;
 	border-bottom: 2px dashed #66B3FF;
+	padding-bottom: 5px;
 }
 
 #header #nav li {
@@ -37,20 +38,22 @@ a {
 	cursor: pointer;
 	background: #CAFFFF;
 	color: #009393;
-	border-bottom: 4px solid #6A6AFF;
-	box-shadow: 0 0 10px #999999;
+	/*box-shadow: 0 0 10px #999999;*/
+	border: 1px dashed rgb(0, 165, 237);
+	border-radius: 10px;
+	margin-left: 5px;
 }
 
 #header #nav li.active {
-	background: #6A6AFF;
-	color: #D2E9FF;
+	background: rgb(0, 165, 237);
+	color: #F0F8FF;
 	box-shadow: 0 0 10px #6A6AFF;
 }
 
-#header #nav li.active:hover {
+/*#header #nav li.active:hover {
 	background: #6A6AFF;
 	color: #D2E9FF;
-}
+}*/
 
 #header #nav li.noactive {
 	background: #CAFFFF;
@@ -58,7 +61,7 @@ a {
 }
 
 #header #nav li:hover {
-	background: #00E3E3;
+	background: #00FFFF;
 	color: #0000E3;
 }
 
@@ -71,7 +74,7 @@ a {
 }
 
 #content>div#date {
-	border: 5px solid #6666FF;
+	border: 5px solid rgb(230,230,230);
 	position: absolute;
 	left: 50%;
 	top: 30px;
@@ -84,50 +87,29 @@ a {
 	margin-top: 30px;
 }
 
-#content>div#dateOther>div#searchBox>input,
-#content>div#dateOther>div#searchBox>select {
-	font-size: 20pt;
-	font-weight: 900;
-	font-family: "微软雅黑";
-	text-align: center;
-	border: 1px solid #669999;
-	background: #CCFFFF;
-	margin-bottom: 5px;
-}
-
-#content>div#dateOther>div#searchBox>input[type=button] {
-	padding: 5px 20px;
-	cursor: pointer;
-}
-
-#content>div#dateOther>div#searchBox>input[type=button]:hover {
-	background: #CCCC00;
-	border-radius: 5px;
-}
-
-#content>div#date {}
-
 #content>div#AllDKLog>span#AllDKLogTableShowMore,
 #content>div#dateOther>span#bmDKLogTableShowMore {
-	display: inline-block;
+	display: block;
 	height: 30pt;
 	line-height: 30pt;
-	padding: 0 20px;
-	font-size: 20pt;
+	width: 300px;
+	margin: 0 auto;
+	font-size: 14pt;
 	color: blue;
 	text-align: center;
 	font-weight: 900;
-	border: 1px solid blue;
 	cursor: pointer;
 }
 
 #content>div#AllDKLog>span#AllDKLogTableShowMore:hover {
-	background: #CCCC00;
+	background: rgb(230,230,250);
+	text-shadow: 0 0 5px rgb(250,250,250);
 	border-radius: 5px;
 }
 
 #content>div#dateOther>span#bmDKLogTableShowMore:hover {
-	background: #CCCC00;
+	background: rgb(230,230,250);
+	text-shadow: 0 0 5px rgb(250,250,250);
 	border-radius: 5px;
 }
 
@@ -142,14 +124,14 @@ a {
 #content>div>table.AllDKLogTable th {
 	font-size: 18pt;
 	font-weight: 900;
-	color: blue;
+	color: rgb(120,120,120);
+	font-family: "宋体";
 }
 
 #content>div>table.AllDKLogTable td {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
-	font-size: 1.1em;
 	font-weight: 900;
 	padding: 10px 0;
 	max-width: 200px;
@@ -158,10 +140,11 @@ a {
 
 #content>div>table.AllDKLogTable tr {
 	cursor: default;
+	border-bottom: 1px solid rgb(220,220,220);
 }
 
 #content>div>table.AllDKLogTable tr:hover:not(:first-child) {
-	background: #FFFFCC;
+	background: rgb(240,240,255);
 }
 
 div.dateTableDiv,
@@ -170,35 +153,22 @@ div.info {
 }
 
 div.dateTableDiv>div {
-	border-bottom: 2px dashed #6666FF;
+	border-bottom: 2px dashed rgb(200,200,200);
 	margin-bottom: 10px;
 	padding: 5px 5px 0 5px;
-	width: 500px;
+	min-width: 500px;
 }
-
-div.dateTableDiv>div>select,
-div.dateTableDiv>div>input[type=button] {
-	width: 5em;
-	font-size: 20pt;
-	font-weight: 900;
-	font-family: "微软雅黑";
-	text-align: center;
-	border: 1px solid #669999;
-	background: #CCFFFF;
-	margin-bottom: 5px;
-}
-
-div.dateTableDiv>div>select>option {}
 
 .dateTable {
 	border-collapse: collapse;
-	width: 500px;
+	min-width: 500px;
 	text-align: center;
+	border: 1px dashed rgb(200,200,200);
 }
 
 .dateTable th {
 	padding: 5px 0;
-	border-bottom: 2px solid black;
+	border-bottom: 2px solid rgb(220,220,250);
 }
 
 .dateTable th:first-of-type,
@@ -243,7 +213,7 @@ div.dateTableDiv>div>select>option {}
 .info {
 	width: 250px;
 	height: 500px;
-	border-left: 5px solid #6666FF;
+	border-left: 5px solid rgb(230,230,230);
 	overflow: auto;
 	overflow-y: hidden;
 }
@@ -251,6 +221,7 @@ div.dateTableDiv>div>select>option {}
 .info>h3.title {
 	text-align: center;
 	font-size: 20pt;
+	font-family: "微软雅黑";
 	padding: 5px 0;
 	font-weight: 900;
 	border-bottom: 2px dashed #6666FF;
@@ -266,20 +237,43 @@ ul.logList ul {
 
 ul.logList>li {
 	padding-top: 5px;
-	background: #99CCFF;
+	background: #CAFFFF;
 	border-bottom: 1px solid #FFFFFF;
 	font-weight: 900;
 	font-size: 1.2em;
 }
 
 ul.logList>li>ul {
-	background: #ABCDEF;
+	background: rgb(240,240,250);
 	margin-top: 5px;
 }
 
 ul.logList>li>ul>li {
-	border-bottom: 1px solid #CCCCCC;
+	border-bottom: 1px solid rgb(230,230,230);
 	padding-left: 20px;
 	font-weight: 500;
 	font-size: 1em;
+}
+
+input,select {
+	min-width: 3em;
+	font-size: 16pt;
+	font-weight: 900;
+	font-family: "微软雅黑";
+	text-align: center;
+	border: 1px solid #669999;
+	margin-bottom: 5px;
+	border-radius: 5px;
+}
+input[type=button] {
+	padding: 4px 20px;
+	cursor: pointer;
+	font-size: 14pt;
+	border-radius: 5px;
+	border-style: dashed;
+	background: #CAFFFF;
+}
+input[type=button]:hover {
+	background: #00FFFF;
+	color: #0000E3;
 }

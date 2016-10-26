@@ -56,7 +56,7 @@ function dateView(year, month, tableElmid) { //绘制日期表格
 				var logList = document.getElementById(logListid);
 				logList.innerHTML = '';
 				var li1 = document.createElement('li');
-				li1.innerHTML = "这天没有签到信息[" + theDate2 + "]";
+				li1.innerHTML = "这天没有签到信息<br>[" + theDate2 + "]";
 				logList.appendChild(li1);
 			}
 		}
@@ -74,7 +74,7 @@ function dateView(year, month, tableElmid) { //绘制日期表格
 	}
 	var info = document.getElementById(tableElmid[1]);
 	info.style.height = table.parentElement.offsetHeight + 'px';
-	info.parentElement.style.width = (table.offsetWidth + info.offsetWidth + 10) + 'px';
+//	info.parentElement.style.width = (table.offsetWidth + info.offsetWidth + 10) + 'px';
 	//	getDKDateLog(toDayDate, tableElmid[2]);
 	document.getElementById('D' + toDayDate).click();
 }
@@ -209,10 +209,10 @@ function getDKDateLog(theDate, logListid) { //按照日期，获取这天的签�
 				var ul = document.createElement('ul');
 				var li21 = document.createElement('li');
 				var li22 = document.createElement('li');
-				li1.innerHTML = info.dktext;
+				li1.innerHTML = info.dktext+'['+theDate+']';
 				ul.className = "logListMy";
-				var time1 = info.time1.replace(theDate, '');
-				var time2 = info.time2.replace(theDate, '');
+				var time1 = info.time1.replace(theDate, '').replace('.0','');
+				var time2 = info.time2.replace(theDate, '').replace('.0','');
 
 				li21.innerHTML = time1 + "签到";
 				li22.innerHTML = info.isqt * 1 == 1 ? time2 + "签退" : "未签退";
@@ -286,8 +286,8 @@ function getDKForPage(page) { //通过分页显示签到内容
 				td3.innerHTML = '否';
 				if(date1 > date2) {
 					td3.innerHTML = '是';
-					td3.style.background = 'rgba(255,0,0,0.5)';
-					td3.style.color = 'blue';
+//					td3.style.background = 'rgba(255,0,0,0.5)';
+					td3.style.color = 'red';
 				}
 				//				td3.innerHTML=date1 <= date2 ? "否" : "是" ;
 				tr.appendChild(td0);
@@ -310,8 +310,8 @@ function getDKForPage(page) { //通过分页显示签到内容
 					td6.innerHTML = '否';
 					if(date1 < date2) {
 						td6.innerHTML = '是';
-						td6.style.background = 'rgba(255,0,0,0.5)';
-						td6.style.color = 'blue';
+//						td6.style.background = 'rgba(255,0,0,0.5)';
+						td6.style.color = 'red';
 					}
 					//					td6.innerHTML=date1 <= date2 ? "否" : "是" ;
 					tr.appendChild(td4);
@@ -321,7 +321,8 @@ function getDKForPage(page) { //通过分页显示签到内容
 					var td7 = document.createElement('td');
 					td7.setAttribute('colspan', 3);
 					td7.innerHTML = '此次签到并未签退';
-					td7.style.background = 'rgba(180,180,180,0.3)';
+					td7.style.color = 'red';
+//					td7.style.background = 'rgba(240,240,240,1)';
 					tr.appendChild(td7);
 				}
 				table.appendChild(tr);
@@ -413,7 +414,7 @@ function searchOtherDK(page) {
 				return false;
 			}
 			if(page * 1 == 1) {
-				more.style.display = 'inline-block';
+				more.style.display = 'block';
 			}
 			var date1 = new Date();
 			var date2 = new Date();
@@ -448,8 +449,8 @@ function searchOtherDK(page) {
 				tdC.innerHTML = '否';
 				if(date1 > date2) {
 					tdC.innerHTML = '是';
-					tdC.style.background = 'rgba(255,0,0,0.5)';
-					tdC.style.color = 'blue';
+//					tdC.style.background = 'rgba(255,0,0,0.5)';
+					tdC.style.color = 'red';
 				}
 				//				td3.innerHTML=date1 <= date2 ? "否" : "是" ;
 				tr.appendChild(tdName);
@@ -474,8 +475,8 @@ function searchOtherDK(page) {
 					tdZ.innerHTML = '否';
 					if(date1 < date2) {
 						tdZ.innerHTML = '是';
-						tdZ.style.background = 'rgba(255,0,0,0.5)';
-						tdZ.style.color = 'blue';
+//						tdZ.style.background = 'rgba(255,0,0,0.5)';
+						tdZ.style.color = 'red';
 					}
 					//					td6.innerHTML=date1 <= date2 ? "否" : "是" ;
 					tr.appendChild(tdQt);
@@ -485,7 +486,8 @@ function searchOtherDK(page) {
 					var td7 = document.createElement('td');
 					td7.setAttribute('colspan', 3);
 					td7.innerHTML = '此次签到并未签退';
-					td7.style.background = 'rgba(180,180,180,0.3)';
+					td7.style.color='red';
+//					td7.style.background = 'rgba(240,240,240,1)';
 					tr.appendChild(td7);
 				}
 				table.appendChild(tr);
