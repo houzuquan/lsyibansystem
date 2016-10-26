@@ -31,6 +31,13 @@ public class YbUserDao extends YbUserStruct {
 			e.printStackTrace();
 		}
 	}
+	private Connection getConn() throws SQLException{
+		if(conn == null || conn.isClosed()){
+			conn=jdbcBean.getConnection();
+		}
+		System.out.println("数据库连接是否关闭："+conn.isClosed());
+		return conn;
+	}
 	/**
 	 * @param errorMsg
 	 * 设置错误信息，共外部调用
@@ -109,6 +116,7 @@ public class YbUserDao extends YbUserStruct {
 		ResultSet rs = null;
 		Logger log = Logger.getLogger(this.getClass().getName());
 		try {
+			Connection conn = this.getConn();
 			ps2 = conn.prepareStatement(sql);
 			ps2.setString(1, Integer.toString(stuId));
 			log.info("查找用户："+ps2.toString());
@@ -162,13 +170,15 @@ public class YbUserDao extends YbUserStruct {
 		HashMap<String,String> dk = new HashMap<String,String>();
 		String NowDkSql;
 		if(isQd){
-			NowDkSql ="select * from `dk` where curtime() >= start1 and curtime() < run2 and isrun=1";//获取签到时间
+			NowDkSql ="select * from `dk` where curtime() >= start1 and curtime() < end1 and isrun=1";//获取签到时间
 		}else{
 			NowDkSql ="select * from `dk` where curtime() >= end1 and curtime() <= end2 and isrun=1";//获取签退时间
 		}
+		ResultSet rs = null;
 		try {
+			Connection conn = this.getConn();
 			ps = conn.prepareStatement(NowDkSql);
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			ResultSetMetaData colname = rs.getMetaData();
 			int colnum = colname.getColumnCount();
 			int i;
@@ -180,7 +190,7 @@ public class YbUserDao extends YbUserStruct {
 			}else{
 				return null;
 			}
-			jdbcBean.free(rs, ps, null);
+			
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
@@ -188,6 +198,9 @@ public class YbUserDao extends YbUserStruct {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
 			return null;
+		}
+		finally{
+			jdbcBean.free(rs, ps, null);
 		}
 		return dk;
 	}
@@ -207,10 +220,12 @@ public class YbUserDao extends YbUserStruct {
 			setErrorMsg("签到失败，当前时间段已经签到过了！");
 			return false;
 		}
+		PreparedStatement ps2 = null;
 		try {
 			String dkid = nowdk.get("dkid");
 			String qdSql = "insert into `dklog` (`dkid`,`time1`,`ybuserid`,`isqd`) values (?,now(),?,'1')";
-			PreparedStatement ps2 = conn.prepareStatement(qdSql);
+			Connection conn = this.getConn();
+			ps2 = conn.prepareStatement(qdSql);
 			ps2.setString(1, dkid);
 			ps2.setString(2, this.getId());
 			int insertId = ps2.executeUpdate();
@@ -221,7 +236,6 @@ public class YbUserDao extends YbUserStruct {
 				re = false;
 			}
 			jdbcBean.addLog(this.getId(), this.getStuId(), this.getStuName(), "qd",this.getStuId() + this.getStuName()+"签到；结果："+re);
-			jdbcBean.free(null, ps2, null);
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
@@ -229,6 +243,9 @@ public class YbUserDao extends YbUserStruct {
 			// TODO 自动生成的 catch 块
 			setErrorMsg(e.getMessage());
 			e.printStackTrace();
+		}
+		finally{
+			jdbcBean.free(null, ps2, null);
 		}
 		return re;
 	}
@@ -246,22 +263,26 @@ public class YbUserDao extends YbUserStruct {
 		}
 		String dkid = nowdk.get("dkid");
 		String isqdSql = "select * from `dklog` where dkid=? and ybuserid = ? and date(`time1`) = curdate()";
-		PreparedStatement ps2;
+		PreparedStatement ps2 = null;
+		ResultSet rs2 = null;
 		try {
+			Connection conn = this.getConn();
 			ps2 = conn.prepareStatement(isqdSql);
 			ps2.setString(1, dkid);
 			ps2.setString(2, this.getId());
-			ResultSet rs2 = ps2.executeQuery();
+			rs2 = ps2.executeQuery();
 			if(rs2.next()){
 				re = true;
 			}else{
 				setErrorMsg("当前时间段没有打卡签到记录！");
 				re = false;
 			}
-			jdbcBean.free(rs2, ps2, null);
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
+		}
+		finally{
+			jdbcBean.free(rs2, ps2, null);
 		}
 		return re;
 	}
@@ -278,12 +299,14 @@ public class YbUserDao extends YbUserStruct {
 			setErrorMsg("不在打卡签退时间内！");
 			return false;
 		}
+		PreparedStatement ps2 = null;
 		try {
 			String dkid = nowdk.get("dkid");
 //			String start1 = nowdk.get("start1");
 //			String end2 = nowdk.get("end2");
 			String qtSql = "update `dklog` set isqt = '1',text=?,time2=now() where dkid = ? and ybuserid = ? and date(`time1`) = curdate()";
-			PreparedStatement ps2 = conn.prepareStatement(qtSql);
+			Connection conn = this.getConn();
+			ps2 = conn.prepareStatement(qtSql);
 			ps2.setString(1, qtText);
 			//ps2.setString(2, start1);
 			//ps2.setString(3, end2);
@@ -297,7 +320,6 @@ public class YbUserDao extends YbUserStruct {
 				re = false;
 			}
 			jdbcBean.addLog(this.getId(), this.getStuId(), this.getStuName(), "qt",this.getStuId() + this.getStuName()+"签退；结果："+re+"；签退内容："+qtText);
-			jdbcBean.free(null, ps2, null);
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
 			e.printStackTrace();
@@ -305,6 +327,9 @@ public class YbUserDao extends YbUserStruct {
 			// TODO 自动生成的 catch 块
 			setErrorMsg(e.getMessage());
 			e.printStackTrace();
+		}
+		finally{
+			jdbcBean.free(null, ps2, null);
 		}
 		return re;
 	}
@@ -315,8 +340,9 @@ public class YbUserDao extends YbUserStruct {
 	public void updateLoginInfo(HttpServletRequest request){
 		/*进行登录操作是更新登录数据*/
 		String Sql = "update `YbUser` set `loginTime`=now(),`loginIP`=?,`loginUa`=?,`loginNum`=`loginNum`+1 where `id`=?";
-		PreparedStatement ps2;
+		PreparedStatement ps2 = null;
 		try {
+			Connection conn = this.getConn();
 			ps2 = conn.prepareStatement(Sql);
 			ps2.setString(1, StringCode.getRealIp(request));
 			ps2.setString(2, request.getHeader("user-agent"));
@@ -331,6 +357,9 @@ public class YbUserDao extends YbUserStruct {
 			setErrorMsg(e.getMessage());
 			e.printStackTrace();
 		}
+		finally{
+			jdbcBean.free(null, ps2, null);
+		}
 	}
 	/**
 	 * @return HashMap<String,String> 返回打卡总数统计
@@ -342,22 +371,26 @@ public class YbUserDao extends YbUserStruct {
 		dkcount.put("qdNum", "0");
 		dkcount.put("qtNum", "0");
 		String Sql = "select sum(isqd) as 'qdNum',sum(isqt) as 'qtNum' from `dklog` where ybuserid=?";
-		PreparedStatement ps2;
+		PreparedStatement ps2 = null;
+		ResultSet rs2 = null;
 		try {
+			Connection conn = this.getConn();
 			ps2 = conn.prepareStatement(Sql);
 			ps2.setString(1, this.getId());
-			ResultSet rs2 = ps2.executeQuery();
+			rs2 = ps2.executeQuery();
 			if(rs2.next()){
 				String qdNum = rs2.getString("qdNum");
 				String qtNum = rs2.getString("qtNum");
 				dkcount.put("qdNum", qdNum == null ? "0" : qdNum );
 				dkcount.put("qtNum", qtNum == null ? "0" : qtNum );
 			}
-			jdbcBean.free(rs2, ps2, null);
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
 			this.setErrorMsg(e.getMessage());
 			e.printStackTrace();
+		}
+		finally{
+			jdbcBean.free(rs2, ps2, null);
 		}
 		return dkcount;
 	}
@@ -370,8 +403,10 @@ public class YbUserDao extends YbUserStruct {
 		/*通过传入一个月份，获取这个月份都有哪些日子有签到内容，并返回有签到内容的日期*/
 		ArrayList<String> list = new ArrayList<String>();
 		String sql;
-		PreparedStatement ps2;
+		PreparedStatement ps2 = null;
+		ResultSet rs2 = null;
 		try {
+			Connection conn = this.getConn();
 			if(dateMonth == null || dateMonth.equals("")){
 				sql = "select DISTINCT date(`time1`) as 'date' from `dklog` where `ybuserid`=? and date_format(`time1`,'%Y-%m')=date_format(now(),'%Y-%m')";
 				ps2 = conn.prepareStatement(sql);
@@ -382,18 +417,20 @@ public class YbUserDao extends YbUserStruct {
 				ps2.setString(1, this.getId());
 				ps2.setString(2, dateMonth);
 			}
-			ResultSet rs2 = ps2.executeQuery();
+			rs2 = ps2.executeQuery();
 			while(rs2.next()){
 				String date = rs2.getString("date");
 				if(date != null){
 					list.add(date);
 				}
 			}
-			jdbcBean.free(rs2, ps2, null);
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
 			this.setErrorMsg(e.getMessage());
 			e.printStackTrace();
+		}
+		finally{
+			jdbcBean.free(rs2, ps2, null);
 		}
 		return list;
 	}
@@ -407,7 +444,9 @@ public class YbUserDao extends YbUserStruct {
 		ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
 		String sql;
 		PreparedStatement ps2 = null;
+		ResultSet rs2 = null;
 		try {
+			Connection conn = this.getConn();
 			if(page == null){//按日期查找
 				if(toDate == null || toDate.equals("")){
 					sql = "select * from `viewdklog` where `ybuserid`=? and date(`time1`)=curdate()";
@@ -438,7 +477,7 @@ public class YbUserDao extends YbUserStruct {
 //			System.out.println("toDate:"+toDate+";page:"+page);
 //			System.out.println(ps2.toString());
 			
-			ResultSet rs2 = ps2.executeQuery();
+			rs2 = ps2.executeQuery();
 			ResultSetMetaData colname = rs2.getMetaData();
 			int colnum = colname.getColumnCount();
 			int i;
@@ -451,7 +490,6 @@ public class YbUserDao extends YbUserStruct {
 				list.add(map);
 			}
 			jdbcBean.addLog(this.getId(), this.getStuId(), this.getStuName(), "getDKDateLog",this.getStuId() + this.getStuName()+"获取日期："+toDate+"打卡内容");
-			jdbcBean.free(rs2, ps2, null);
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
 			this.setErrorMsg(e.getMessage());
@@ -459,6 +497,9 @@ public class YbUserDao extends YbUserStruct {
 		}catch(Exception e){
 			this.setErrorMsg(e.getMessage());
 			e.printStackTrace();
+		}
+		finally{
+			jdbcBean.free(rs2, ps2, null);
 		}
 		return list;
 	}
@@ -470,10 +511,12 @@ public class YbUserDao extends YbUserStruct {
 		ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
 		String sql;
 		PreparedStatement ps2 = null;
+		ResultSet rs2 = null;
 		try {
+			Connection conn = this.getConn();
 			sql = "SELECT `sectionId` as 'id',`sectionName` as 'text' FROM `section`";
 			ps2 = conn.prepareStatement(sql);
-			ResultSet rs2 = ps2.executeQuery();
+			rs2 = ps2.executeQuery();
 			ResultSetMetaData colname = rs2.getMetaData();
 			int colnum = colname.getColumnCount();
 			int i;
@@ -493,6 +536,9 @@ public class YbUserDao extends YbUserStruct {
 		}catch(Exception e){
 			this.setErrorMsg(e.getMessage());
 			e.printStackTrace();
+		}
+		finally{
+			jdbcBean.free(rs2, ps2, null);
 		}
 		return list;
 	}
@@ -512,6 +558,7 @@ public class YbUserDao extends YbUserStruct {
 		ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
 		String sql;
 		PreparedStatement ps2 = null;
+		ResultSet rs2 = null;
 		int start = 0;
 		if(StringCode.isInteger(page)){
 			start = (Integer.parseInt(page)-1)*10;
@@ -524,6 +571,7 @@ public class YbUserDao extends YbUserStruct {
 			ttime+=" and date(b.time1)<='"+time2+"' ";
 		}
 		try {
+			Connection conn = this.getConn();
 			if(section.equals("0")){
 				if(ttime.equals("")){
 					sql="SELECT c.stuName 'name',a.sectionName 'sectionName',b.time1,b.time2,b.text,b.isqd,b.isqt,d.text 'dktext',d.start1,d.start2,d.end1,d.end2,d.run1,d.run2 FROM `section` a,`dklog` b,`YbUser` c,`dk` d WHERE a.sectionid=c.sectionid and b.ybuserid=c.id and d.dkid=b.dkid order by b.time1 desc limit ?,10";
@@ -549,7 +597,7 @@ public class YbUserDao extends YbUserStruct {
 					ps2.setInt(2, start);
 				}
 			}
-			ResultSet rs2 = ps2.executeQuery();
+			rs2 = ps2.executeQuery();
 			ResultSetMetaData colname = rs2.getMetaData();
 			int colnum = colname.getColumnCount();
 			int i;
@@ -561,7 +609,6 @@ public class YbUserDao extends YbUserStruct {
 				}
 				list.add(map);
 			}
-			jdbcBean.free(rs2, ps2, null);
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
 			this.setErrorMsg(e.getMessage());
@@ -569,6 +616,9 @@ public class YbUserDao extends YbUserStruct {
 		}catch(Exception e){
 			this.setErrorMsg(e.getMessage());
 			e.printStackTrace();
+		}
+		finally{
+			jdbcBean.free(rs2, ps2, null);
 		}
 		return list;
 	}
@@ -594,5 +644,14 @@ public class YbUserDao extends YbUserStruct {
 			return true;
 		}
 		return false;
+	}
+	public void Destroyed(){
+		jdbcBean.free(null, ps, conn);
+		try {
+			this.finalize();
+		} catch (Throwable e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
 	}
 }

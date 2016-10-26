@@ -51,8 +51,9 @@ public class LoginAjaxFilter implements Filter {
 		String pass = (String)session.getAttribute("pass");
 		boolean s = false;
 		boolean isLogin = false;
+		YbUserDao user = null;
 		if(null != session.getAttribute("isLogin") && true == (boolean)session.getAttribute("isLogin")){
-			YbUserDao user = (YbUserDao)session.getAttribute("User");
+			user = (YbUserDao)session.getAttribute("User");
 			if(user == null){
 				s = true;
 //				System.out.println("莫名其妙失去用户数据");
@@ -72,6 +73,9 @@ public class LoginAjaxFilter implements Filter {
 		if(isLogin){
 			chain.doFilter(request, response);
 		}else{
+			if(user != null){
+				user.Destroyed();
+			}
 			out.print("{\"code\":301,\"Msg\":\"登录失败1\",\"url\":\""+req.getContextPath()+"/login.jsp\"}");
 		}
 	}

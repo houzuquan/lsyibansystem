@@ -96,6 +96,7 @@ public class LoginServlet extends HttpServlet {
 			}else{
 				out.print("{\"code\":200,\"Msg\":\"验证码错误\"}");
 			}
+			user.Destroyed();//登录失败，销毁对象
 		}catch(Exception e){
 			out.print("{\"code\":200,\"Msg\":\"请求出现错误，请刷新页面！\"}");
 //			System.out.println(e.getMessage());

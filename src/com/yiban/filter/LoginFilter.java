@@ -47,8 +47,9 @@ public class LoginFilter implements Filter {
 		String pass = (String)session.getAttribute("pass");
 		boolean s = false;
 		boolean isLogin = false;
+		YbUserDao user = null;
 		if(null != session.getAttribute("isLogin") && true == (boolean)session.getAttribute("isLogin")){
-			YbUserDao user = (YbUserDao)session.getAttribute("User");
+			user = (YbUserDao)session.getAttribute("User");
 			if(user == null){
 				s = true;
 //				System.out.println("莫名其妙失去用户数据");
@@ -68,6 +69,9 @@ public class LoginFilter implements Filter {
 		if(isLogin){
 			chain.doFilter(request, response);
 		}else{
+			if(user != null){
+				user.Destroyed();
+			}
 			res.sendRedirect(req.getContextPath()+"/login.jsp");
 		}
 	}

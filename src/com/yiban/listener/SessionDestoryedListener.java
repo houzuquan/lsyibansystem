@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import com.yiban.bean.jdbcBean;
+import com.yiban.dao.YbUserDao;
 
 /**
  * Application Lifecycle Listener implementation class SessionDestoryedListener
@@ -45,6 +46,10 @@ public class SessionDestoryedListener implements HttpSessionListener {
 				loginout="autoLoginOut";
 			}
 			jdbcBean.addLog((String)session.getAttribute("id"), (String)session.getAttribute("stuId"), (String)session.getAttribute("stuName"), loginout,str);
+			YbUserDao user = (YbUserDao)session.getAttribute("User");
+			if(user != null){
+				user.Destroyed();
+			}
 		}
     }
 }
