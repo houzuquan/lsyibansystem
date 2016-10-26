@@ -618,6 +618,7 @@ public class YbUserDao extends YbUserStruct {
 			e.printStackTrace();
 		}
 		finally{
+			jdbcBean.addLog(this.getId(), this.getStuId(), this.getStuName(), "searchOtherDK",this.getStuId() + this.getStuName()+"获取其他部门："+section+"第"+page+"页打卡内容");
 			jdbcBean.free(rs2, ps2, null);
 		}
 		return list;
