@@ -31,7 +31,7 @@
 	<body>
 		<form action="Login" method="post" id="loginBox" onsubmit="checkFormSubmit(this);return false;">
 			<h1>用户登陆</h1>
-			<input type="text" name="stuId" id="username" value="" placeholder="用户名/邮箱" /> <input type="password" name="pass" id="password" value="" placeholder="密码" />
+			<input type="text" name="stuId" id="username" value="" placeholder="学号" /> <input type="password" name="pass" id="password" value="" placeholder="密码" />
 			<!--
             	作者：1184511588@qq.com
             	时间：2016-10-08
