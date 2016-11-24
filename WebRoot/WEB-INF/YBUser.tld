@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+	<tlib-version>1.2</tlib-version>
+	<jsp-version>3.1</jsp-version>
+	<short-name>YBUser</short-name>
+	<description>用来获取登陆用户的信息</description>
+	<tag>
+		<name>getInfo</name>
+		<tag-class>com.yiban.yibanday.tag.TagYBUser</tag-class>
+		<body-content>jsp</body-content>
+		<description>获取用户信息标签</description>
+		<attribute>
+			<name>action</name>
+		</attribute>
+		<attribute>
+			<name>birthdayType</name>
+		</attribute>
+	</tag>
+</taglib>

@@ -1,0 +1,137 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+	min-width: 790px;
+	background: rgb(250, 250, 250);
+	padding: 10px;
+}
+
+a {
+	text-decoration: none;
+}
+
+.clear {
+	clear: both;
+	height: 0;
+}
+
+.info {
+	
+}
+
+.info #headerImg {
+	position: absolute;
+	width: 130px;
+	height: 170px;
+	padding: 5px;
+	border: 1px solid rgba(55, 55, 120, 0.8);
+	box-shadow: 0 0 5px rgba(55, 55, 120, 0.8);
+}
+
+.info * {
+	vertical-align: top;
+}
+
+.info>p {
+	margin-bottom: 5px;
+}
+
+.info .infoBox {
+	height: 20pt;
+	line-height: 20pt;
+	font-size: 12pt;
+	font-weight: 900;
+	font-family: "微软雅黑";
+	margin-left: 150px;
+	color: rgba(50, 50, 50, 1);
+}
+
+.info .infoBox .tab {
+	display: inline-block;
+	width: 50pt;
+	text-align: right;
+}
+
+.info input, .info select, .info input, .info textarea {
+	display: inline-block;
+	font-size: 12pt;
+	border-radius: 5px;
+	border: 1px solid rgba(100, 100, 255, 1);
+	height: 100%;
+	background: white;
+	padding: 2px;
+	font-weight: 900;
+	font-family: "微软雅黑";
+	display: none;
+}
+
+.info textarea {
+	height: 50pt;
+	resize: none;
+}
+
+.info input[type=button] {
+	display: inline-block;
+	font-size: 12pt;
+	border-radius: 5px;
+	border: 1px solid rgba(100, 100, 255, 1);
+	width: 40pt;
+	height: 100%;
+	background: white;
+	padding: 2px 2;
+	cursor: pointer;
+	margin-left: 10px;
+}
+
+.info input[type=button]:hover {
+	transition: all 0.5s;
+	background: rgba(240, 240, 240, 1);
+}
+
+.info #name {
+	font-size: 20pt;
+	font-family: "黑体";
+	height: 25pt;
+	line-height: 25pt;
+}
+
+.info #name>span#stuid {
+	vertical-align: bottom;
+	font-size: 12pt;
+	font-family: "maiandra gd";
+}
+
+.info #name>span#section {
+	color: rgba(100, 100, 100, 1);
+	vertical-align: bottom;
+	font-size: 16pt;
+}
+
+.info #bank {
+	
+}
+
+.info #phone {
+	
+}
+
+.info #birth {
+	
+}
+
+.info #myinfo {
+	
+}
+
+.info #myinfo #hobbyTxt {
+	max-width: 200pt;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}

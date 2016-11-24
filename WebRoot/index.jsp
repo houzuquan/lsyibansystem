@@ -1,3 +1,5 @@
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="/yibanUser" prefix="yb"  %>
 <!DOCTYPE html>
 <html>
 
@@ -31,9 +33,10 @@
 						</ul>
 					</li>
 					<li>
-						<span id="MyInfoStuName" style="font-weight: 900;"></span><br><span id="MyInfoSectionName" style="color:#0000FF;font-weight: 900;"></span>
+						<span id="MyInfoStuName" style="font-weight: 900;"><yb:getInfo action="getName" /></span><br><span id="MyInfoSectionName" style="color:#0000FF;font-weight: 900;">(<yb:getInfo action="getSectionName" />)</span>
 						<ul>
-							<li>个人资料</li>
+							<li onclick="goUrl('Public/iframe/myinfo.jsp','iContent');">个人资料</li>
+							<li>修改密码</li>
 						</ul>
 					</li>
 					<li onclick="goUrl('Login?action=loginout');">
@@ -47,7 +50,7 @@
 		<div id="section">
 			<div id="leftNav">
 				<ul id="Lnav">
-					<li data-fun="goUrl('Public/iframe/main.html','iContent');">概况</li>
+					<li data-fun="goUrl('Public/iframe/main.jsp','iContent');">概况</li>
 					<li>通知管理</li>
 					<li data-fun="goUrl('Public/iframe/dkAdmin.html','iContent');">打卡管理</li>
 					<li>部门管理</li>
@@ -67,26 +70,6 @@
 			ListingTag('Lnav');
 			window.onload = function() {
 				changeSectionSize();
-				$ajax({
-					url: "./MyInfo",
-					data: "",
-					method: "post",
-					dataType: "json",
-					callBack: function(data) {
-						console.log(data);
-						if(data.code) {
-							errorAction(data);
-							return false;
-						}
-						document.getElementById('MyInfoStuName').innerHTML = data.stuName;
-						document.getElementById('MyInfoSectionName').innerHTML = "(" + (data.sectionName == "" || data.sectionName == "null" ? "未知部门" : data.sectionName) + ")";
-
-					},
-					error: function(status) {
-						console.log(status);
-						showMsg("获取用户数据错误！");
-					}
-				});
 			}
 			window.onresize = function() {
 				changeSectionSize();
