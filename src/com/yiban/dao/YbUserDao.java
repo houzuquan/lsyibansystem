@@ -15,6 +15,9 @@ import com.yiban.bean.StringCode;
 import com.yiban.bean.jdbcBean;
 import com.yiban.struct.YbUserStruct;
 
+import cn.goour.auth.impl.AESImpl;
+import cn.goour.auth.impl.MD5Impl;
+
 public class YbUserDao extends YbUserStruct {
 	private Connection conn;
 	private PreparedStatement ps;
@@ -59,8 +62,9 @@ public class YbUserDao extends YbUserStruct {
 	 * @param pass
 	 * @return boolean
 	 * 传入学号和密码，判断是否能够登录，登录成功返回true否则返回false
+	 * @throws Exception 
 	 */
-	public boolean isLogin(String stuId,String pass){
+	public boolean isLogin(String stuId,String pass) throws Exception{
 		if(stuId == null || pass == null || stuId.equals("") == true || pass.equals("") == true ){
 			setErrorMsg("帐号或密码不能为空");
 			return false;
@@ -68,10 +72,19 @@ public class YbUserDao extends YbUserStruct {
 		if(true == this.findUser(stuId)){
 			if(this.getIsLogin().equals("0")){
 				setErrorMsg("该用户不可登录");
-			}else if(true == StringCode.MD5(pass).equals(this.getPass())){
-				return true;
 			}else{
-				setErrorMsg("帐号或密码错误");
+				String md5pass = this.getPass();
+				String pass_de = null;
+				String passMd5=null;
+				String key = md5pass.substring(0,16);
+				pass_de = AESImpl.getInstance().DecryptionToString(pass, key);
+				passMd5 = MD5Impl.getInstance().EncryptionToString(pass_de);
+
+				if(passMd5.equals(md5pass)==true){
+					return true;
+				}else{
+					setErrorMsg("帐号或密码错误");
+				}
 			}
 			return false;
 		}else{
