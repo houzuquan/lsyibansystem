@@ -55,15 +55,20 @@ public class LoginFilter implements Filter {
 //				System.out.println("莫名其妙失去用户数据");
 				user = new YbUserDao();
 			}
-			if(stuId != null && pass != null && true == user.isLogin((String)session.getAttribute("stuId"), (String)session.getAttribute("pass"))){
-				if(s == true){
-					session.setAttribute("User",user);
+			try {
+				if(stuId != null && pass != null && true == user.isLogin((String)session.getAttribute("stuId"), (String)session.getAttribute("pass"))){
+					if(s == true){
+						session.setAttribute("User",user);
+					}
+					isLogin = true;
+				}else{
+					session.removeAttribute("isLogin");
+					session.removeAttribute("stuId");
+					session.removeAttribute("pass");
 				}
-				isLogin = true;
-			}else{
-				session.removeAttribute("isLogin");
-				session.removeAttribute("stuId");
-				session.removeAttribute("pass");
+			} catch (Exception e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
 			}
 		}
 		if(isLogin){
