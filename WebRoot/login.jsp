@@ -17,6 +17,12 @@
 		<script src="Public/js/login.js" type="text/javascript" charset="utf-8"></script>
 		<script src="Public/js/function.js" type="text/javascript" charset="utf-8"></script>
 		<script src="Public/js/ajax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="Public/js/core-min.js"></script>
+		<script src="Public/js/tripledes.js"></script>
+		<script src="Public/js/mode-ecb.js"></script>
+		<script src="Public/js/aes.js"></script>
+		<script src="Public/js/md5.js"></script>
+		<script src="Public/js/store+json2.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			try {
 				if(window.parent != window) {
@@ -29,7 +35,7 @@
 	</head>
 
 	<body>
-		<form action="Login" method="post" id="loginBox" onsubmit="checkFormSubmit(this);return false;">
+		<form action="#" method="post" id="loginBox" onsubmit="checkFormSubmit(this);return false;">
 			<h1>用户登陆</h1>
 			<input type="text" name="stuId" id="username" value="" placeholder="学号" /> <input type="password" name="pass" id="password" value="" placeholder="密码" />
 			<!--
@@ -62,9 +68,29 @@
 					showMsg("请检查是否输入完整!");
 					return false;
 				}
+				try {
+					var key_hash = CryptoJS.MD5(password);
+					console.log(key_hash.toString());
+					var key = CryptoJS.enc.Utf8.parse(key_hash.toString().substring(0, 16));
+					var aes = CryptoJS.AES.encrypt(password, key, {
+						mode: CryptoJS.mode.ECB,
+						padding: CryptoJS.pad.Pkcs7
+					});
+					var aes_en = aes.ciphertext.toString();
+				} catch(e) {
+					console.log(e);
+				}
+				/*var pass = aes_en;
+				var data = {};
+				data.stuId=username;
+				data.pass=pass;
+				data.yzmText=yzmText;
+				var datastr = JSON.stringify(data);
+				*/
 				$ajax({
 					url: "./Login",
-					data: "stuId=" + username + "&pass=" + password + "&yzmText=" + yzmText,
+					data: "stuId=" + username + "&pass=" + aes_en + "&yzmText=" + yzmText,
+					//data: "data=" + datastr,
 					method: "post",
 					dataType: "json",
 					callBack: function(data) {
